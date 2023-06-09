@@ -36,16 +36,18 @@ export default function NicePage({ children, isTerminalOpen, terminalOpener }) {
     <div className='page overflow-x-hidden'>
       <Blob />
       <Hotkeys keyName='ctrl+space' onKeyDown={() => setTerminalOpen(!terminalOpen)}>
-        <div className='z-50 relative h-full'>
-          <Nav
-            className='hidden lg:block'
-            openTerminalCallback={() => {
-              setTerminalOpen(true);
-              console.log('clickki');
-            }}
-            selelcted={'learn'}
-          ></Nav>
-          <MobileNav className='lg:hidden'></MobileNav>
+        <div className={`z-50 relative h-full w-screen ${terminalOpen ? 'opacity-20' : ''}`}>
+          <div className='w-full h-full z-60 relative'>
+            <Nav
+              className='hidden lg:block'
+              openTerminalCallback={() => {
+                setTerminalOpen(true);
+                console.log('clickki');
+              }}
+              selelcted={'learn'}
+            ></Nav>
+            <MobileNav className='lg:hidden'></MobileNav>
+          </div>
           {children}
         </div>
       </Hotkeys>

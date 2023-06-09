@@ -3,6 +3,7 @@ import path from 'path'
 import matter from 'gray-matter'
 import { remark } from 'remark'
 import html from 'remark-html'
+import { ranks } from './nameMapping'
 
 const postsDirectory = path.join(process.cwd(), 'problems')
 
@@ -35,6 +36,45 @@ export function getSortedPostsData() {
     }
   })
 }
+
+export function getFilteredPostData(rank, topic) {
+  const fileNames = fs.readdirSync(postsDirectory)
+  let counter = 0
+  const filteredPostsData = fileNames.reduce((filteredData, fileName) => {
+    if (counter >= 50) {
+      return filteredData
+    }
+
+    const id = fileName.replace(/\.md$/, '')
+    const fullPath = path.join(postsDirectory, fileName)
+    const fileContents = fs.readFileSync(fullPath, 'utf8')
+    const matterResult = matter(fileContents)
+    const postData = {
+      id,
+      ...matterResult.data
+    }
+
+    // Check if the problem matches the given rank and credit
+    if (postData.rank === rank && (postData.topic === topic || topic == 'anytopic')) {
+      filteredData.push(postData)
+      counter++
+    }
+
+    return filteredData
+  }, [])
+
+  // Sort the filtered posts by date
+  const sortedPostsData = filteredPostsData.sort((a, b) => {
+    if (a.date < b.date) {
+      return 1
+    } else {
+      return -1
+    }
+  })
+
+  return sortedPostsData
+}
+
 
 export function getAllPostIds() {
   const fileNames = fs.readdirSync(postsDirectory)

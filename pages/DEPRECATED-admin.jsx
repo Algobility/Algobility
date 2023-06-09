@@ -15,7 +15,6 @@ import {
   PinInput,
   PinInputField,
 } from '@chakra-ui/react';
-import { setStorage, mergeObjects, getStorage, addStorage } from '../customStuff/useDB';
 import { useState } from 'react';
 import { useEffect } from 'react';
 

@@ -5,7 +5,7 @@
     }
     
     25% {
-      scale: 1 1.3;
+      scale: 1.1 1.3;
     }
     75%{
         scale: 1.3 1;
@@ -29,14 +29,14 @@
     background: linear-gradient(to right, rgba(67, 187, 201, 0.1), rgba(91, 67, 150, 0.1));
     animation: rotate 20s infinite;
     opacity: 0.8;
-    z-index: -2;
+    z-index: -200;
   }
   
   .blur {
     height: 100%;
     width: 100%;
     position: absolute;
-    z-index: -1;
-    backdrop-filter: blur(10vmax);
+    z-index: -100;
+    backdrop-filter: blur(8vmax);
   }
   

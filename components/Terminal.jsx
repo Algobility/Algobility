@@ -190,7 +190,7 @@ export function Terminal(props) {
 
   return (
     <div ref={tiltyRef} className='flex justify-center items-center top-0 left-0 fixed z-60 w-full h-full '>
-      <Tilty className={`shadow-xl w-1/2 h-3/4 bg-neutral-700  rounded-xl `} max='5' reverse>
+      <div className={`shadow-xl w-1/2 h-3/4 bg-neutral-700  rounded-xl `} max='5' reverse>
         <div className='flex justify-between border-b '>
           <div className='m-4 w-48 '></div>
           <div className='m-4 w-48    flex  justify-center '>
@@ -212,7 +212,7 @@ export function Terminal(props) {
           <br />
           <Proompt prompt={prompt} cliRef={cliRef}></Proompt>
         </div>
-      </Tilty>
+      </div>
       <Tooly text={'Close Terminal'} refo={closeButtons}></Tooly>
     </div>
   );

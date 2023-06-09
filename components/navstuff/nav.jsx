@@ -6,6 +6,7 @@ import Navel from './navel';
 import { useUser } from '../../customStuff/useDB';
 import { useRouter } from 'next/router';
 import { FaHome, FaChalkboardTeacher, FaCode } from 'react-icons/fa';
+import { BsConeStriped } from 'react-icons/bs';
 
 export default function Nav(props) {
   const { signedState } = useUser();
@@ -27,8 +28,8 @@ export default function Nav(props) {
         >
           <Navel name='Home' icon={FaHome} selected={props.selected == 'home'} onClicky={() => setSendPage('/')} />
           <Navel
-            name='Learn'
-            icon={FaChalkboardTeacher}
+            name='Train'
+            icon={BsConeStriped}
             selected={props.selected == 'learn'}
             onClicky={() => setSendPage('/learn')}
           />
@@ -42,13 +43,8 @@ export default function Nav(props) {
       </div>
       <div className='fixed top-8 right-16 flex justify-end items-center h-8 '>
         {signedState ? (
-          <Button
-            px='6'
-            _hover={{ bg: 'prim.700' }}
-            className='robo bg-backL'
-            color='chita'
-            rounded='full'
-            shadow='xl'
+          <button
+            className='big-shadow robo bg-backL text-neutral-200 rounded-full shadow-xl px-6 py-2 hover:bg-primc transition-all'
             onKeyDown={(e) => {
               if (e.key === ' ') {
                 e.preventDefault();
@@ -59,21 +55,14 @@ export default function Nav(props) {
             }}
           >
             Open Terminal
-          </Button>
+          </button>
         ) : (
-          <Button
-            variant='ghost'
-            px='6'
-            _hover={{ bg: 'prim.700' }}
-            className='robo'
-            color='chita'
-            rounded='full'
-            bg='backL'
-            shadow='xl'
+          <button
+            className='big-shadow robo bg-backL text-neutral-200 rounded-full shadow-xl px-6 py-2 hover:bg-primc transition-all'
             onClick={() => router.push('/signin')}
           >
             Sign In
-          </Button>
+          </button>
         )}
       </div>
     </div>
