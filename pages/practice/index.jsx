@@ -7,17 +7,18 @@ import { ranks } from '../../customStuff/nameMapping';
 import { Button } from '@chakra-ui/react';
 import { useUser } from '../../customStuff/useDB';
 import { useRouter } from 'next/router';
-import { getTopics } from '../../customStuff/getTopics';
+// import { getTopics } from '../../customStuff/getTopics';
 import useRank from '../../customStuff/useRank';
+import { getAllGuides } from '../../customStuff/guides';
 
-export default function practice() {
+export default function practice({ chaps }) {
   const [value, setValue] = useState();
   const [rankVal, setRankVal] = useState('loading');
   const [topicVal, setTopicVal] = useState('Any Topic');
   const anytop = ['Any Topic'];
   const [topicsList, setTopicsList] = useState(anytop);
   const [ranksList, setRanksList] = useState(ranks);
-  const { userData } = useUser();
+  const { userData, signedState } = useUser();
   const router = useRouter();
 
   function replaceFirstOccurrence(arr, searchValue, replaceValue) {
@@ -43,9 +44,10 @@ export default function practice() {
   }
 
   useEffect(() => {
-    useRank(userData, (rank) => {
+    useRank(userData, signedState, (rank) => {
+      console.log('callback');
       setRanksList(replaceFirstOccurrence(ranksList, rank, `${rank} (Current Rank)`));
-      setRankVal(`${capitalizeFirstCharacter(userData.pRank)} (Current Rank)`);
+      setRankVal(`${rank} (Current Rank)`);
     });
   }, [userData]);
 
@@ -53,7 +55,13 @@ export default function practice() {
     async function go() {
       if (rankVal && rankVal != 'loading') {
         const santizedVal = makeFirstCharacterLowercase(omitCurrentRank(rankVal));
-        const res = await getTopics(santizedVal);
+        // const res = await getTopics(santizedVal);
+
+        const res = [];
+        chaps[santizedVal].forEach((element) => {
+          res.push(element.id);
+        });
+
         console.log(res);
         setTopicsList(anytop.concat(res));
       }
@@ -104,4 +112,9 @@ export default function practice() {
       </div>
     </NicePage>
   );
+}
+
+export async function getStaticProps({ params }) {
+  const chaps = await getAllGuides();
+  return { props: { chaps: chaps } };
 }

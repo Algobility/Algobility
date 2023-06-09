@@ -16,7 +16,7 @@ export default function Landing() {
     <>
       <NicePage>
         <div className='w-full '>
-          <Center className='h-screen flex-col mt-24'>
+          <Center className='h-screen flex-col md:mt-24'>
             <div className='flex flex-col justify-center items-center'>
               <Hack text='PROJECT A' classy='text-3xl md:text-8xl text-primc'></Hack>
               <h2 className='text-base md:text-2xl mt-4 robo'>
@@ -29,7 +29,7 @@ export default function Landing() {
                 .getStarted()
               </Link>
             </div>
-            <div className='w-3/4 mt-44 flex justify-center gap-12 '>
+            <div className='w-3/4 mt-44  justify-center gap-12 hidden md:flex'>
               {/* Cards Layout  */}
               {/* <div>
                <div className='bg-backL w-80 rounded shadow-xl'>
@@ -90,7 +90,7 @@ export default function Landing() {
                 </div>
               </div> 
             </div> */}
-              <div className=' p-8 w-80'>
+              <div className=' p-8 w-80 '>
                 <div className='flex text-primc justify-start items-center robo text-xl  gap-3'>
                   <svg
                     stroke='currentColor'
@@ -198,7 +198,7 @@ export default function Landing() {
               </div>
             </div>
           </Center>
-          <div className='mt-24 p-8 mb-20'>
+          <div className='mt-24 p-8 mb-20 hidden md:block'>
             <h2 className='text-primc text-center text-6xl mont'>How it Works</h2>
           </div>
           {/* <div className='absolute top-h left-14 w-1/6 border aspect-square hidden md:block '> */}

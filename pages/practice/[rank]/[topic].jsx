@@ -9,11 +9,12 @@ import { ranks } from '../../../customStuff/nameMapping';
 import { Button } from '@chakra-ui/react';
 import { useUser } from '../../../customStuff/useDB';
 import { useRouter } from 'next/router';
-import { getTopics } from '../../../customStuff/getTopics';
+// import { getTopics } from '../../../customStuff/getTopics';
 import Link from 'next/link';
 import { GoCircle, GoCheckCircle } from 'react-icons/go';
+import { getAllGuides } from '../../../customStuff/guides';
 
-export default function Search({ probs, rank, topic }) {
+export default function Search({ probs, rank, topic, chaps }) {
   const [value, setValue] = useState();
   const [rankVal, setRankVal] = useState('loading');
   const [topicVal, setTopicVal] = useState('Any Topic');
@@ -67,7 +68,14 @@ export default function Search({ probs, rank, topic }) {
     async function go() {
       if (rankVal && rankVal != 'loading') {
         const santizedVal = makeFirstCharacterLowercase(omitCurrentRank(rankVal));
-        const res = await getTopics(santizedVal);
+
+        // const res = await getTopics(santizedVal);
+
+        const res = [];
+        chaps[santizedVal].forEach((element) => {
+          res.push(element.id);
+        });
+
         console.log(res);
         setTopicsList(anytop.concat(res));
       }
@@ -138,8 +146,8 @@ export default function Search({ probs, rank, topic }) {
                   <img src={`/rank-icons/${element.rank}.png`} alt='rank icon' />
                 </div>
                 <div>
-                  <h2 className='robo text-2xl'>The Meaning of Life</h2>
-                  <p className='robo'>Ahmad Bilal</p>
+                  <h2 className='robo text-2xl'>{element.title}</h2>
+                  <p className='robo'>{element.credits}</p>
                 </div>
                 <div className='absolute right-12 bg-backL rounded-full h-12 w-12'></div>
               </Link>
@@ -153,7 +161,8 @@ export default function Search({ probs, rank, topic }) {
 
 export async function getStaticProps({ params }) {
   const probs = await getFilteredPostData(params.rank, params.topic);
-  return { props: { probs: probs, rank: params.rank, topic: params.topic } };
+  const chaps = await getAllGuides();
+  return { props: { probs: probs, rank: params.rank, topic: params.topic, chaps: chaps } };
 }
 
 export async function getStaticPaths() {

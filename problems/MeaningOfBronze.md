@@ -1,9 +1,9 @@
 ---
-title: 'The Meaning of Life'
+title: 'The Meaning of Bronze'
 date: '2022-01-01'
-rank: iron
+rank: bronze
 credits: 'Ahmad Bilal'
-topic: functions-calling
+topic: arrays
 time: 1
 mem: 156
 tcIn: [1,
