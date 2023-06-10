@@ -22,7 +22,7 @@ import Tilty from 'react-tilty';
 import Tooly from '../components/Tooly';
 
 import { useUser } from '../customStuff/useDB.js';
-import { rankMap } from '../customStuff/nameMapping';
+import { prettyCRank } from '../customStuff/nameMapping';
 
 export default function DashBoard() {
   const terminalOpener = useRef();
@@ -59,7 +59,7 @@ export default function DashBoard() {
               className='hover:bg-primc cursor-pointer mx-4 flex justify-center items-center border border-primc px-24 py-4 rounded-full transition-all md:hover:px-48'
             >
               <h1
-                className={`slab absolute text-5xl transition-all opacity-0 ${hovering ? 'opacity-100' : 'opacity-0'}`}
+                className={`mont absolute text-5xl transition-all opacity-0 ${hovering ? 'opacity-100' : 'opacity-0'}`}
               >
                 Click To View Rank System
               </h1>
@@ -71,8 +71,8 @@ export default function DashBoard() {
                 className={`w-24 md:w-48 transition-all ${hovering ? 'opacity-0' : ''}`}
               ></Image>
               <div className={` transition-all flex flex-col justify-center  h-full ${hovering ? 'opacity-0' : ''}`}>
-                <h1 className=' md:mb-4 geo text-3xl md:text-8xl '>{rankMap(userData.cRank)}</h1>
-                <Slider className='mt-4' width={{ md: '36rem' }} pl='2'>
+                <h1 className=' md:mb-4 mont text-3xl md:text-8xl '>{prettyCRank(userData.cRank)}</h1>
+                <Slider className='mt-4' width={{ md: '36rem' }} pl='2' defaultValue={40}>
                   <SliderTrack>
                     <SliderFilledTrack />
                   </SliderTrack>
