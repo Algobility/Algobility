@@ -16,11 +16,12 @@ import {
   CardHeader,
   Kbd,
   useToast,
+  LinkOverlay,
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import Tilty from 'react-tilty';
 import Tooly from '../components/Tooly';
-
+import Link from 'next/link';
 import { useUser } from '../customStuff/useDB.js';
 import { prettyCRank } from '../customStuff/nameMapping';
 
@@ -89,15 +90,33 @@ export default function DashBoard() {
             >
               <h2 className='robo text-3xl mb-1'>Open Terminal</h2>
               <h3 className='robo text-base mb-4'>Navigate pages with your keyboard</h3>
-              <span className='text-xl absolute bottom-0 mb-4 hidden lg:show'>
-                <Kbd className='bg-backL px-2 py-1 rounded-md shadow-md'>ctrl</Kbd> +{' '}
+              <span className='text-xl absolute bottom-0 mb-4 hidden lg:show '>
+                <span className='bg-backL px-2 py-1 rounded-md shadow-md'>ctrl</span> +{' '}
                 <Kbd className='bg-backL px-2 py-1 rounded-md shadow-md'>space</Kbd>
               </span>
             </div>
-            <div className=' rounded-lg hover:bg-primc cursor-pointer  border-primc  transition-all border p-6'>
+            <Link
+              href={`/viewProfile/${userData.username}`}
+              className=' rounded-lg hover:bg-primc cursor-pointer  border-primc  transition-all border p-6 relative'
+            >
               <h1 className='robo text-3xl mb-4'>View Profile</h1>
               <span className='text-base robo'>Click here to view your profile page</span>
-            </div>
+              <button
+                className=' bottom-4 z-10 robo px-4 py-2 bg-neutral-700 hover:bg-neutral-600 rounded-md absolute left-4'
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigator.clipboard.writeText(`${window.location.origin}/viewProfile/${userData.username}`);
+                  toast({
+                    title: 'Profile link copied to clipboard',
+                    description: 'Send this link to whoever you wish to share your profile with',
+                    status: 'success',
+                    isClosable: true,
+                  });
+                }}
+              >
+                Copy link
+              </button>
+            </Link>
             <div className='row-span-2 rounded-lg hover:bg-primc cursor-pointer  border-primc  transition-all border p-6'>
               <h1 className='robo text-3xl mb-4'>Upcoming Contests</h1>
               <span className='text-base italic robo text-center w-full'>No Upcoming Contests</span>

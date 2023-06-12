@@ -1,9 +1,20 @@
 import { Input } from '@mui/material';
 import NicePage from '../components/nicepage';
 import { useUser } from '../customStuff/useDB';
+import { useEffect, useState } from 'react';
+import { StepDescription, Toast, useToast } from '@chakra-ui/react';
 
 export default function Settings() {
   const { userData } = useUser();
+  const [username, setUsername] = useState();
+  const [name, setName] = useState();
+
+  useEffect(() => {
+    setUsername(userData.username);
+    setName(userData.name);
+  }, [userData]);
+
+  const toast = useToast();
   return (
     <NicePage>
       <div className=' min-h-screen w-full border border-transparent px-24'>
@@ -15,17 +26,45 @@ export default function Settings() {
           <div className='flex justify-start gap-4'>
             <div className='robo '>Username: </div>
             <div className='flex justify-start gap-1 items-start'>
-              @<Input defaultValue={userData.username} className=''></Input>
+              @
+              <Input
+                value={username}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setUsername(e.target.value);
+                }}
+                className=''
+              ></Input>
             </div>
           </div>
           <div className='flex justify-start gap-4'>
             <div className='robo '>Display Name: </div>
             <div className='flex justify-start gap-1 items-center'>
-              <Input defaultValue={userData.name} className='px-2'></Input>
+              <Input
+                value={name}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setName(e.target.value);
+                }}
+                className='px-2'
+              ></Input>
             </div>
           </div>
         </div>
-        <button className='bg-primc px-4 py-2 rounded-md robo hover:bg-opacity-60'>Save Changes</button>
+        <button
+          className='bg-primc px-4 py-2 rounded-md robo hover:bg-opacity-60'
+          onClick={() => {
+            toast({
+              title: 'Failed to upload data',
+              description: 'Something went wrong on our side. We apologize for the inconvenience',
+              status: 'error',
+              isClosable: true,
+              duration: 6500,
+            });
+          }}
+        >
+          Save Changes
+        </button>
       </div>
     </NicePage>
   );

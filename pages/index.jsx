@@ -10,6 +10,8 @@ import Head from 'next/head.js';
 import Script from 'next/script.js';
 import Tilty from 'react-tilty';
 import Link from 'next/link.js';
+import Image from 'next/image.js';
+import useIntersectionObserver from '../customStuff/useIntersectionObserver.js';
 
 export default function Landing() {
   const [showScroll, setShowScroll] = useState(true);
@@ -34,10 +36,10 @@ export default function Landing() {
     <>
       <NicePage selected='home'>
         <div className='w-full overflow-hidden'>
-          <div className='h-screen flex-col lg:mt-24 '>
+          <div className='h-full flex-col lg:mt-24 mb-24 '>
             <div className='flex flex-col justify-center items-center lg:mt-44 mt-64 mb-12'>
               <Hack text='PROJECT A' classy='text-6xl md:text-9xl text-primc'></Hack>
-              <h2 className='text-xl md:text-4xl mt-4 mont'>
+              <h2 className='text-xl md:text-3xl mt-4 mont'>
                 Programming as a <span className='text-primc underline italic'>sport</span>{' '}
               </h2>
               <Link
@@ -113,7 +115,7 @@ export default function Landing() {
                 </div>
               </div> */}
 
-              <div className=' w-80 rounded p-4 text-center mb-4'>
+              <div className=' w-80 rounded p-4  text-center mb-4 '>
                 <h2 className='text-4xl text-primc mb-4 mont'>Train</h2>
                 <p className='robo text-lg'>Learn competitive programming topics through interactive tutorials</p>
               </div>
@@ -165,7 +167,62 @@ export default function Landing() {
               </div>
             </div>
           </div>
-          hello
+          <div className='bg-neutral-800 mb-24 pt-12'>
+            <div className='flex-col lg:grid grid-cols-2 grid-rows-2 my-12 w-3/4 mx-auto'>
+              <div className='h-96 p-8 flex flex-col justify-center'>
+                <h1 className='mont text-4xl text-primc pb-2'>Structured Progression </h1>
+                <p className='robo text-neutral-300'>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ipsam autem laudantium at
+                  molestias atque quasi perferendis quidem incidunt sequi.
+                </p>
+              </div>
+              <div className=' flex justify-center items-center gap-4'>
+                <div className='border rounded-md border-neutral-500 p-16 flex justify-center items-center gap-3 bg-neutral-700'>
+                  <Image src='/rank-icons/iron.png' width='100' height='100'></Image>
+                  <svg
+                    className=''
+                    stroke='currentColor'
+                    fill='currentColor'
+                    stroke-width='0'
+                    viewBox='0 0 24 24'
+                    height='2em'
+                    width='2em'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path d='M11.293 17.293L12.707 18.707 19.414 12 12.707 5.293 11.293 6.707 15.586 11 6 11 6 13 15.586 13z'></path>
+                  </svg>
+                  <Image src='/rank-icons/bronze.png' width='100' height='100'></Image>
+                  <svg
+                    className=''
+                    stroke='currentColor'
+                    fill='currentColor'
+                    stroke-width='0'
+                    viewBox='0 0 24 24'
+                    height='2em'
+                    width='2em'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path d='M11.293 17.293L12.707 18.707 19.414 12 12.707 5.293 11.293 6.707 15.586 11 6 11 6 13 15.586 13z'></path>
+                  </svg>
+                  <Image src='/rank-icons/gold.png' width='100' height='100'></Image>
+                </div>
+              </div>
+              <div className=''></div>
+              <div className=''>
+                <div className='h-96 p-8 flex flex-col justify-center'>
+                  <h1 className='mont text-4xl lg:text-right text-primc pb-2'>Begginner Friendly </h1>
+                  <p className='robo text-neutral-300 lg:text-right'>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ipsam autem laudantium at
+                    molestias atque quasi perferendis quidem incidunt sequi.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <div className='bg-neutral-500 w-full px-8 py-4 robo flex justify-start gap-4 '>
+            <h3>Project A</h3>
+            <h3>©️2023</h3>
+          </div> */}
           <Slide in={showScroll} direction='bottom'>
             <div className=' sticky  pb-12  robo lg:flex justify-center items-center gap-2 hidden w-96 '>
               <div className='px-4 py-2 bouncy rounded-md flex justify-start items-center gap-2 border'>

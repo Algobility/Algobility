@@ -9,6 +9,15 @@ import { useSignOut } from 'react-firebase-hooks/auth';
 
 
 const db = getFirestore(firebase);
+const loadingUserData = {
+  name: 'Loading ...',
+  username: 'Loading ...',
+  email: 'Loading ...',
+  pRank: 'Loading ...',
+  cRank: 'loading',
+  completed: []
+}
+
 
 
 const getStorage = async (collectionName, name) => {
@@ -29,6 +38,19 @@ const getStorage = async (collectionName, name) => {
 const  queryStorageFieldExists = async (collectionName, field, value)=>{
   const querySnapshot = await getDocs(query(collection(db,collectionName), where(field, '==', value)))
   return !querySnapshot.empty;
+}
+
+export const queryUser = async(userName)=>{
+  return new Promise(async (resolve, reject)=>{
+    try {
+      const querySnapshot = await getDocs(query(collection(db,'Users'), where('username', '==', userName)))
+      const userData = querySnapshot.docs[0].data();
+      return resolve(userData)
+    } catch (error) {
+      console.error('Error searching Firestore:', error);
+      return reject({ error: 'Internal server error' + error })
+    }
+  })
 }
 
 const existsStorage = async (collectionName, name) => {
@@ -77,14 +99,7 @@ const useUser = () => {
   const [signOut, loadingSignOut, errorSignOut] = useSignOut(auth);
   const [user, loading] = useAuthState(auth);
   const [signedState, setSignedState] = useState(true);
-  const loadingUserData = {
-    name: 'Loading ...',
-    username: 'Loading ...',
-    email: 'Loading ...',
-    pRank: 'Loading ...',
-    cRank: 'loading',
-    completed: []
-  }
+  
   const [userData, setUserData] = useState(loadingUserData);
 
   const logoutUser = async ()=>{
