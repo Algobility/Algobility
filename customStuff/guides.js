@@ -73,7 +73,7 @@ export async function getGuideData(rank, chap) {
       const rankPath = path.join(postsDirectory, `${rankName}/`)
       if(fs.existsSync(rankPath)){
         const fileNames = fs.readdirSync(rankPath)
-        const filteredPostsData = fileNames.reduce((filteredData, fileName) => {
+        let filteredPostsData = fileNames.reduce((filteredData, fileName) => {
           const id = fileName.replace(/\.mdx$/, '')
           const fullPath = path.join(rankPath, fileName)
           const fileContents = fs.readFileSync(fullPath, 'utf8')
@@ -88,6 +88,9 @@ export async function getGuideData(rank, chap) {
           return filteredData
         }, [])
       
+        filteredPostsData.sort( (a,b)=>{
+          return a.number < b.number? -1:1
+        })
         result[rankName] = filteredPostsData
       }
     })

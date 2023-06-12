@@ -18,10 +18,11 @@ export default function LearnIndex({ chaps }) {
   }, [userData, signedState]);
 
   return (
-    <NicePage>
+    <NicePage selected='learn'>
       <div className='mt-32 min-h-screen--32 relative'>
-        <p className='pt-10 mont text-6xl text-primc text-center'>Welcome to the Training Grounds</p>
-        <div className='mb-24 pt-4 mont text-2xl  text-center'>Get Started by choosing a chapter</div>
+        <p className='pt-10 mont text-6xl text-primc text-left w-3/4 mx-auto border-b-2 border-neutral-500 pb-4'>
+          Training Guides
+        </p>
         <div className='flex justify-center items-start w-full'>
           <div className='grid grid-cols-1 gap-4 w-3/4 mt-12 '>
             {rank != 'loading'
@@ -29,13 +30,16 @@ export default function LearnIndex({ chaps }) {
                   <Link
                     href={`/learn/${unpretty(rank)}/${element.id}`}
                     key={index}
-                    className='relative rounded-md bg-neutral-700 hover:bg-neutral-600 transition-all cursor-pointer px-6 py-4 flex justify-start items-center'
+                    className='relative rounded-md bg-neutral-700 border border-neutral-500 hover:bg-neutral-600 transition-all cursor-pointer px-6 py-4 flex justify-start items-center'
                   >
-                    <div>
-                      <h2 className='robo text-2xl'>{element.title}</h2>
-                      <p className='robo'>{element.credits}</p>
+                    <div className=' rounded-full mr-8 robo text-4xl text-primc pb-1'>{element.number}</div>
+                    <div className=''>
+                      <div>
+                        <h2 className='robo text-2xl'>{element.title}</h2>
+                        <p className='robo text-neutral-400'>{element.description}</p>
+                      </div>
+                      {/* <div className='absolute right-12 bg-backL rounded-full h-12 w-12'></div> */}
                     </div>
-                    <div className='absolute right-12 bg-backL rounded-full h-12 w-12'></div>
                   </Link>
                 ))
               : ''}

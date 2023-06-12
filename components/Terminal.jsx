@@ -205,12 +205,13 @@ export function Terminal(props) {
         <div className='w-full p-8 mono' ref={cliRef}>
           {prompt} {cme('help --breif', 'text-yellow-500')} <br />
           <br />
-          {cme('Welcome to Project A!', 'text-cyan-500')}Get started by using one of these commands <br />
+          {/* {cme('Welcome to Project A!', 'text-cyan-500')}Get started by using one of these commands <br />
           {cme('cd [page]', 'text-green-500')} - Navigate to a certain page <br />
           {cme('view [problem-name]', 'text-green-500')} - Navigate to the view page of a certain problem <br />
-          {cme('rank', 'text-green-500')} - View your rank and other useful competitive data <br />
+          {cme('rank', 'text-green-500')} - View your rank and other useful competitive data <br /> */}
+          {cme('Coming Soon', 'text-green-500')} - This feature is coming soon. We apologise for the delay <br />
           <br />
-          <Proompt prompt={prompt} cliRef={cliRef}></Proompt>
+          {/* <Proompt prompt={prompt} cliRef={cliRef}></Proompt> */}
         </div>
       </div>
       <Tooly text={'Close Terminal'} refo={closeButtons}></Tooly>

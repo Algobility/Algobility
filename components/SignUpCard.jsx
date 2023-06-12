@@ -180,9 +180,7 @@ export default function SignUpCard(props) {
         <div class='p-5'>
           <h1 class='text-primc robo text-4xl mb-2'>SIGN IN</h1>
           <h2 class='text-md mb-4 robo'>
-            Sign in to your account by choosing an authentication provider.
-            <br />
-            If you haven't created one before, an account will be created for you automatically
+            If you haven't created a Project A account before, one will automatically be created for you
           </h2>
         </div>
         <div className='flex flex-col justify-center gap-3 mb-6'>

@@ -39,7 +39,7 @@ export default function Hack(props) {
 
         iteration += 1 / 3;
       } catch {
-        router.reload(window.location.pathname);
+        // router.reload(window.location.pathname);
       }
     }, speed);
   };

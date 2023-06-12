@@ -5,10 +5,10 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, getDoc, where, get, query, doc, setDoc, getDocs, onSnapshot, getDocFromServer, addDoc, collection} from 'firebase/firestore';
 import { useContext } from 'react';
+import { useSignOut } from 'react-firebase-hooks/auth';
 
 
 const db = getFirestore(firebase);
-
 
 
 const getStorage = async (collectionName, name) => {
@@ -74,16 +74,32 @@ const useUser = () => {
   const auth = getAuth();
 
   //init
+  const [signOut, loadingSignOut, errorSignOut] = useSignOut(auth);
   const [user, loading] = useAuthState(auth);
   const [signedState, setSignedState] = useState(true);
-  const [userData, setUserData] = useState({
+  const loadingUserData = {
     name: 'Loading ...',
     username: 'Loading ...',
     email: 'Loading ...',
     pRank: 'Loading ...',
     cRank: 'loading',
     completed: []
-  });
+  }
+  const [userData, setUserData] = useState(loadingUserData);
+
+  const logoutUser = async ()=>{
+    if(signedState){
+      signOut().then(()=>{
+        setSignedState(false)
+        setUserData(loadingUserData)
+        localStorage.removeItem('ud');
+      }
+      )
+      .catch(()=>{
+        alert('There was an error signing out')
+      })
+    }
+  }
 
   const updateUserData = async (payload) => {
     new Promise(async (resolve, reject) => {
@@ -129,7 +145,7 @@ const useUser = () => {
     if(!loading && !user) setSignedState(false)
   }, [loading]);
 
-  return { userData, updateUserData, forceFetch, signedState };
+  return { userData, updateUserData, forceFetch, signedState, logoutUser };
 };
 
 export { useUser, getStorage, setStorage, existsStorage, mergeObjects, addStorage, queryStorageFieldExists};

@@ -24,7 +24,7 @@ export default function Learn({ content, frontMatter, chaps }) {
   };
 
   return (
-    <NicePage>
+    <NicePage selected='learn'>
       <div className='md:hidden w-screen h-screen flex justify-center items-center '>
         <div className='w-4/5 rounded-md bg-backL p-8'>
           <h1 className='robo text-center text-2xl mb-8 text-primc'>
