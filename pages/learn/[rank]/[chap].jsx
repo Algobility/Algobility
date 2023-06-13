@@ -4,13 +4,13 @@ import DropdownMenu from '../../../components/Menu';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import Exercise from '../../../components/Exercise';
 import ReactDOM from 'react-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import MdxRenderer from '../../../components/MdxRenderer';
 import { getAllGuides, getGuideData } from '../../../customStuff/guides';
 import Link from 'next/link';
 
 import { serialize } from 'next-mdx-remote/serialize';
-import { pretty, unpretty } from '../../../customStuff/nameMapping';
+import { pretty, ranks, unpretty } from '../../../customStuff/nameMapping';
 
 export default function Learn({ content, frontMatter, chaps }) {
   const customify = (content) => {
@@ -22,6 +22,8 @@ export default function Learn({ content, frontMatter, chaps }) {
       return `<div data-component="CustomComponent" data-props='{"number": "${input[0]}", "question": "${input[1]}", "answer": "${input[2]}"}'></div>`;
     });
   };
+
+  const [rank, setRank] = useState(frontMatter.rank);
 
   return (
     <NicePage selected='learn'>
@@ -42,7 +44,7 @@ export default function Learn({ content, frontMatter, chaps }) {
       /* -------------------------------------------------------------------------- */}
 
       <div className=' min-h-screen hidden md:flex justify-end '>
-        <div className=' w-3/4  overflow-auto px-32 pt-32 '>
+        <div className=' w-4/5  overflow-auto px-32 pt-32 pb-32 '>
           <div className='border rounded-lg border-neutral-300 p-8 '>
             <h1 className='mont text-6xl font-bold mb-4 text-primc flex justify-start items-center'>
               {' '}
@@ -70,19 +72,25 @@ export default function Learn({ content, frontMatter, chaps }) {
       {/* /* -------------------------------------------------------------------------- */
       /*                                Chapters.exe                                */
       /* -------------------------------------------------------------------------- */}
-      <div className='flex flex-col w-1/4  justify-center items-end pt-10 top-0 left-10 h-screen fixed  '>
-        <div className='rounded-md bg-backL  w-11/12 h-4/5 flex flex-col justify-start'>
-          <div className='flex justify-between border-b h-18 items-center  bg-neutral-700 rounded-t-md '>
-            <p className='m-4 w-96 mono text-lg  '>chapters.exe</p>
-            <div className='m-4 w-24    flex  justify-center '>
-              <p className='mono text-center w-full text-lg py-0'></p>
-            </div>
-            <div className='m-4 w-48  justify-end items-center hidden xl:flex'>
-              <div className='rounded-full bg-green-500 w-5 h-5 mx-1'></div>
-              <div className='rounded-full bg-orange-500 w-5 h-5 mx-1'></div>
-              <div className='rounded-full bg-red-500 w-5 h-5 mx-1'></div>
-            </div>
-          </div>
+      <div className='z-100 flex-col w-1/5  justify-center items-end top-0 left-0 h-screen fixed hidden md:flex '>
+        <div className='rounded-none bg-backL  w-full h-full flex flex-col justify-start'>
+          <Link
+            href='/learn'
+            className='hover:bg-neutral-700 cursor-pointer mt-12 px-6 robo text-lg flex justify-start gap-3 mb-12 border-t border-b py-4 border-neutral-500 items-center'
+          >
+            <svg
+              stroke='currentColor'
+              fill='currentColor'
+              stroke-width='0'
+              viewBox='0 0 24 24'
+              height='1em'
+              width='1em'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path d='M21 11L6.414 11 11.707 5.707 10.293 4.293 2.586 12 10.293 19.707 11.707 18.293 6.414 13 21 13z'></path>
+            </svg>
+            Go Back
+          </Link>
           <div className=' flex-1 py-6 pl-6  overflow-auto overflow-x-hidden w-full '>
             {/* Chapters Begin */}
 

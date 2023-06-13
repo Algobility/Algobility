@@ -2,7 +2,7 @@ import Blob from '../components/blob.jsx';
 import Nav from '../components/navstuff/nav.jsx';
 import CircleBtn from '../components/circleBtn.jsx';
 import Hack from '../components/hack.jsx';
-import { Button, Center, Tooltip, Heading, Stack, Fade, Slide } from '@chakra-ui/react';
+import { Button, Center, Tooltip, Heading, Stack, Fade, Slide, IconButton } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import NicePage from '../components/nicepage.jsx';
 import ScrollProgress from '../components/ScrollProgress.jsx';
@@ -167,62 +167,170 @@ export default function Landing() {
               </div>
             </div>
           </div>
-          <div className='bg-neutral-800 mb-24 pt-12'>
-            <div className='flex-col lg:grid grid-cols-2 grid-rows-2 my-12 w-3/4 mx-auto'>
+
+          {/* -------------------------------------------------------------------------- */
+          /*                                  Features                                  */
+          /* -------------------------------------------------------------------------- */}
+
+          <div className='bg-gradient mb-24'>
+            <div className='flex-col lg:grid grid-cols-2 grid-rows-2 my-12 w-4/6 mx-auto'>
               <div className='h-96 p-8 flex flex-col justify-center'>
-                <h1 className='mont text-4xl text-primc pb-2'>Structured Progression </h1>
+                <h1 className='mont text-4xl text-primc pb-2 glow'>Structured Learning Roadmap </h1>
                 <p className='robo text-neutral-300'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ipsam autem laudantium at
-                  molestias atque quasi perferendis quidem incidunt sequi.
+                  Forget trying to learn complex data strucutres and algorithms. Project A divides topics into
+                  well-organized ranks to help you grasp topics with ease.
                 </p>
               </div>
               <div className=' flex justify-center items-center gap-4'>
-                <div className='border rounded-md border-neutral-500 p-16 flex justify-center items-center gap-3 bg-neutral-700'>
-                  <Image src='/rank-icons/iron.png' width='100' height='100'></Image>
-                  <svg
-                    className=''
-                    stroke='currentColor'
-                    fill='currentColor'
-                    stroke-width='0'
-                    viewBox='0 0 24 24'
-                    height='2em'
-                    width='2em'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path d='M11.293 17.293L12.707 18.707 19.414 12 12.707 5.293 11.293 6.707 15.586 11 6 11 6 13 15.586 13z'></path>
-                  </svg>
-                  <Image src='/rank-icons/bronze.png' width='100' height='100'></Image>
-                  <svg
-                    className=''
-                    stroke='currentColor'
-                    fill='currentColor'
-                    stroke-width='0'
-                    viewBox='0 0 24 24'
-                    height='2em'
-                    width='2em'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path d='M11.293 17.293L12.707 18.707 19.414 12 12.707 5.293 11.293 6.707 15.586 11 6 11 6 13 15.586 13z'></path>
-                  </svg>
-                  <Image src='/rank-icons/gold.png' width='100' height='100'></Image>
+                <div className='fade-into-bg relative rounded-md   bg-neutral-700'>
+                  <div className=' border-2 w-full h-full p-16 flex border-neutral-500 justify-center items-center gap-3'>
+                    <Image src='/rank-icons/iron.png' width='100' height='100'></Image>
+                    <svg
+                      className=''
+                      stroke='currentColor'
+                      fill='currentColor'
+                      stroke-width='0'
+                      viewBox='0 0 24 24'
+                      height='2em'
+                      width='2em'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path d='M11.293 17.293L12.707 18.707 19.414 12 12.707 5.293 11.293 6.707 15.586 11 6 11 6 13 15.586 13z'></path>
+                    </svg>
+                    <Image src='/rank-icons/bronze.png' width='100' height='100'></Image>
+                    <svg
+                      className=''
+                      stroke='currentColor'
+                      fill='currentColor'
+                      stroke-width='0'
+                      viewBox='0 0 24 24'
+                      height='2em'
+                      width='2em'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path d='M11.293 17.293L12.707 18.707 19.414 12 12.707 5.293 11.293 6.707 15.586 11 6 11 6 13 15.586 13z'></path>
+                    </svg>
+                    <Image src='/rank-icons/gold.png' width='100' height='100'></Image>
+                  </div>
                 </div>
               </div>
-              <div className=''></div>
+              <div className=' flex justify-center items-center fade-right'>
+                <div className='border border-neutral-500 rounded-md bg-neutral-700 w-full h-45 flex justify-start items-center'>
+                  <Image src='/rank-icons/iron.png' width='200' height='200' className='rounded-md px-8 py-6'></Image>
+                  <div className='flex flex-col justify-start '>
+                    <h3 className='text-4xl robo mb-2'>Iron</h3>
+                    <p className='robo'>
+                      To pass this rank, you are only required to have a solid understanding of fundemental programming
+                      concepts such as variables, conditions, loops, etc.{' '}
+                    </p>
+                  </div>
+                </div>
+                {/* <Image src='/Images/soeasy.png' width='600' height='100' className='rounded-md'></Image> */}
+              </div>
               <div className=''>
                 <div className='h-96 p-8 flex flex-col justify-center'>
-                  <h1 className='mont text-4xl lg:text-right text-primc pb-2'>Begginner Friendly </h1>
-                  <p className='robo text-neutral-300 lg:text-right'>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ipsam autem laudantium at
-                    molestias atque quasi perferendis quidem incidunt sequi.
+                  <h1 className='mont text-4xl lg:text-right text-primc pb-2 glow'>Begginner Friendly </h1>
+                  <p className='robo text-neutral-300 lg:text-right '>
+                    Whether you are a seasoned competitive programmer or completely new to programming, Project A helps
+                    you master the sport
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          {/* <div className='bg-neutral-500 w-full px-8 py-4 robo flex justify-start gap-4 '>
-            <h3>Project A</h3>
-            <h3>©️2023</h3>
-          </div> */}
+
+          {/* -------------------------------------------------------------------------- */
+          /*                                   Socials                                  */
+          /* -------------------------------------------------------------------------- */}
+
+          <div className=' mb-36 mt-24 w-3/4 mx-auto grid grid-cols-2 h-96 gap-12'>
+            <div className='flex justify-center flex-col  robo py-8'>
+              <h2 className='text-6xl mb-4 mont'>
+                {' '}
+                <span className='text-primc  underline'>Community</span> Centered
+              </h2>
+              <p className='text-neutral-400'>
+                We value our community over everything. It's what drives us forward. Follow our socials and join our
+                discord to be a part of our thriving community.
+              </p>
+            </div>
+            <div className='flex justify-center items-center '>
+              <div className=' h-45  flex justify-evenly items-center w-96'>
+                <div className='border p-4 scale-150 rounded-full hover:bg-primc transition-all '>
+                  <svg
+                    stroke='currentColor'
+                    fill='cyan'
+                    stroke-width='0'
+                    viewBox='0 0 512 512'
+                    height='1em'
+                    width='1em'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path d='M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z'></path>
+                  </svg>
+                </div>
+                <div className='border p-4 scale-150 rounded-full hover:bg-pink-400 transition-all '>
+                  <svg
+                    stroke='pink'
+                    fill='pink'
+                    stroke-width='0'
+                    role='img'
+                    viewBox='0 0 24 24'
+                    height='1em'
+                    width='1em'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <title></title>
+                    <path d='M24 4.5v15c0 .85-.65 1.5-1.5 1.5H21V7.387l-9 6.463-9-6.463V21H1.5C.649 21 0 20.35 0 19.5v-15c0-.425.162-.8.431-1.068C.7 3.16 1.076 3 1.5 3H2l10 7.25L22 3h.5c.425 0 .8.162 1.069.432.27.268.431.643.431 1.068z'></path>
+                  </svg>
+                </div>
+                <div className='border p-4 scale-150 rounded-full hover:bg-blue-300 transition-all '>
+                  <svg
+                    stroke='currentColor'
+                    fill='rgb(30,130,190)'
+                    stroke-width='0'
+                    viewBox='0 0 448 512'
+                    height='1em'
+                    width='1em'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path d='M297.216 243.2c0 15.616-11.52 28.416-26.112 28.416-14.336 0-26.112-12.8-26.112-28.416s11.52-28.416 26.112-28.416c14.592 0 26.112 12.8 26.112 28.416zm-119.552-28.416c-14.592 0-26.112 12.8-26.112 28.416s11.776 28.416 26.112 28.416c14.592 0 26.112-12.8 26.112-28.416.256-15.616-11.52-28.416-26.112-28.416zM448 52.736V512c-64.494-56.994-43.868-38.128-118.784-107.776l13.568 47.36H52.48C23.552 451.584 0 428.032 0 398.848V52.736C0 23.552 23.552 0 52.48 0h343.04C424.448 0 448 23.552 448 52.736zm-72.96 242.688c0-82.432-36.864-149.248-36.864-149.248-36.864-27.648-71.936-26.88-71.936-26.88l-3.584 4.096c43.52 13.312 63.744 32.512 63.744 32.512-60.811-33.329-132.244-33.335-191.232-7.424-9.472 4.352-15.104 7.424-15.104 7.424s21.248-20.224 67.328-33.536l-2.56-3.072s-35.072-.768-71.936 26.88c0 0-36.864 66.816-36.864 149.248 0 0 21.504 37.12 78.08 38.912 0 0 9.472-11.52 17.152-21.248-32.512-9.728-44.8-30.208-44.8-30.208 3.766 2.636 9.976 6.053 10.496 6.4 43.21 24.198 104.588 32.126 159.744 8.96 8.96-3.328 18.944-8.192 29.44-15.104 0 0-12.8 20.992-46.336 30.464 7.68 9.728 16.896 20.736 16.896 20.736 56.576-1.792 78.336-38.912 78.336-38.912z'></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* -------------------------------------------------------------------------- */
+          /*                                   Help us                                  */
+          /* -------------------------------------------------------------------------- */}
+
+          <div className=' mx-auto mb-24 flex flex-col lg:grid grid-cols-2 w-4/6 gap-8 lg:gap-16 '>
+            <div className='bg-backL border border-neutral-600 py-8 px-12 robo rounded-md'>
+              <h2 className='text-4xl text-center mb-4'>Join Us</h2>
+              <p className='text-center text-neutral-400'>
+                Project A is a non-profit project aimed to promote competitive programming. Wheather you are a web
+                developer, project manager, or problem-setter, we would love to have you on our journey.{' '}
+              </p>
+              <button className='bg-neutral-700 mt-12 w-full px-4 py-2  hover:bg-primc transition-all mono rounded-md'>
+                .joinUs()
+              </button>
+            </div>
+            <div className='bg-backL border border-neutral-600 py-8 px-12 robo rounded-md'>
+              <h2 className='text-4xl text-center mb-4'>Support Us</h2>
+              <p className='text-center text-neutral-400'>
+                Being non-profit, Project A is supported financially only by its community. To keep our servers running
+                and services online, we need your help.
+              </p>
+              <button className='bg-neutral-700 mt-12 w-full px-4 py-2  hover:bg-primc transition-all mono rounded-md'>
+                .donateNow()
+              </button>
+            </div>
+          </div>
+          <div className='bg-neutral-800 w-full px-8 py-8 robo flex flex-col text-center justify-start gap-2 text-neutral-600 '>
+            <h3>©️2023 Project A. Founded with ❤️ by Ahmad Bilal</h3>
+            <h3>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</h3>
+          </div>
           <Slide in={showScroll} direction='bottom'>
             <div className=' sticky  pb-12  robo lg:flex justify-center items-center gap-2 hidden w-96 '>
               <div className='px-4 py-2 bouncy rounded-md flex justify-start items-center gap-2 border'>

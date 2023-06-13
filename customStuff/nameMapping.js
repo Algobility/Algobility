@@ -45,5 +45,9 @@ const unpretty = (inp)=>{
 
 const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum']
 const codedRanks = ['iron', 'bronze', 'silver', 'gold', 'platinum']
+const rankDescription = {
+    'iron': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you should be familliar with basic programming concepts such as variables, conditions, loops, etc. '
+}
 
-export {ranks, codedRanks, pretty, unpretty, prettyCRank};
+
+export {ranks, codedRanks, pretty, unpretty, prettyCRank, rankDescription};

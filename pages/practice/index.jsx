@@ -76,7 +76,7 @@ export default function practice({ chaps }) {
   };
 
   return (
-    <NicePage>
+    <NicePage selected='practice'>
       <div className=' min-h-screen h-full mt-32'>
         <div className='w-full flex flex-col justify-start items-center rounded-lg '>
           <div className='bg-backL rounded-lg w-3/4 robo p-16'>
@@ -102,7 +102,10 @@ export default function practice({ chaps }) {
                 />
               </div>
               <div className=' w-1/3 px-4'>
-                <Button onClick={handleSearch} className='bg-primc rounded-md w-full text-left h-full'>
+                <Button
+                  onClick={handleSearch}
+                  className='bg-neutral-700 hover:bg-neutral-600 transition-all rounded-md w-full text-left h-full'
+                >
                   Search
                 </Button>
               </div>

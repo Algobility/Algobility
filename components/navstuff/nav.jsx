@@ -53,12 +53,12 @@ export default function Nav(props) {
             selected={props.selected == 'learn'}
             onClicky={() => setSendPage('/learn')}
           />
-          <Navel
+          {/* <Navel
             name='Practice'
             icon={FaCode}
             selected={props.selected == 'practice'}
             onClicky={() => setSendPage('/practice')}
-          />
+          /> */}
           <Navel
             name='Dashboard'
             icon={myDashboardIcon}

@@ -98,23 +98,15 @@ export default function viewQ({postData}) {
           /*                             Test cases menu bar                            */
           /* -------------------------------------------------------------------------- */}
 
-          <div className='flex justify-between border-b h-18 items-center bg-neutral-700 rounded-t-md '>
-            <p className='m-4 w-96 mono text-lg  '>test-cases.exe</p>
-            <div className='m-4 w-24    flex  justify-center '>
-              <p className='mono text-center w-full text-lg py-0'></p>
-            </div>
-            <div className='m-4 w-48 flex justify-end items-center'>
-              <div className='rounded-full bg-green-500 w-5 h-5 mx-1'></div>
-              <div className='rounded-full bg-orange-500 w-5 h-5 mx-1'></div>
-              <div className='rounded-full bg-red-500 w-5 h-5 mx-1'></div>
-            </div>
+          <div className='p-4 border-b h-18 items-center bg-neutral-700 rounded-t-md '>
+            <p className='w-96 robo text-2xl  '>Test Cases</p>
+          <h2 className=' robo '> Test your solution by running it on these test cases</h2>
           </div>
 
           {/* -------------------------------------------------------------------------- */
           /*                                 Test Cases                                 */
           /* -------------------------------------------------------------------------- */}
           <div className='text-left robo px-8 mt-8 '>
-              <h2 className='text-lg italic text-center mb-12 '> Test your solution by running it on these test cases</h2>
             <div className='flex justify-start items-center '>
               <h2 className='text-lg font-bold'>Test Input: </h2>
               <button
