@@ -37,11 +37,9 @@ export default function Landing() {
       <NicePage selected='home'>
         <div className='w-full overflow-hidden'>
           <div className='h-full flex-col lg:mt-24 mb-24 '>
-            <div className='flex flex-col justify-center items-center lg:mt-44 mt-64 mb-12'>
+            <div className='flex flex-col justify-center items-center lg:mt-64 mt-64 mb-12'>
               <Hack text='PROJECT A' classy='text-6xl md:text-9xl text-primc'></Hack>
-              <h2 className='text-xl md:text-3xl mt-4 mont'>
-                Programming as a <span className='text-primc underline italic'>sport</span>{' '}
-              </h2>
+              <h2 className='text-xl md:text-xl mt-4 mont'>A begginer-friendly competitive programming platform </h2>
               <Link
                 href='signin'
                 className='mono text-white bg-transparent hover:bg-primc border-primc  rounded-full mt-8 px-8 py-2 hover:px-14 transition-all border '
@@ -53,7 +51,7 @@ export default function Landing() {
             {/* -------------------------------------------------------------------------- */
             /*                                Cards method                                */
             /* -------------------------------------------------------------------------- */}
-            <div className=' flex flex-col lg:flex-row scale-75 lg:scale-100 items-center justify-center pt-32 lg:gap-12 w-3/4 mx-auto '>
+            <div className=' flex flex-col lg:flex-row scale-75 items-center justify-center pt-32 lg:gap-12 w-3/4 mx-auto '>
               {/* <div className='bg-backL w-80 rounded shadow-xl'>
                 <div className='rounded-md bg-primc px-8 py-4 mont text-xl flex justify-start gap-3 items-center'>
                   <svg

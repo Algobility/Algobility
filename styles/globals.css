@@ -122,7 +122,7 @@ h1{
 
 .bg-gradient{
   background-image: linear-gradient(to bottom right,
-  rgba(20, 155, 196, 0.05),
+  rgba(42, 140, 170, 0.05),
   rgba(38, 38, 38, 0.1)
   );
   @apply bg-neutral-800

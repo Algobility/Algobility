@@ -89,7 +89,7 @@ export async function getGuideData(rank, chap) {
         }, [])
       
         filteredPostsData.sort( (a,b)=>{
-          return a.id < b.id? -1:1
+          return parseInt(a.id) < parseInt(b.id)? -1:1
         })
         result[rankName] = filteredPostsData
       }
