@@ -44,20 +44,14 @@ export default function Learn({ content, frontMatter, chaps }) {
       /* -------------------------------------------------------------------------- */}
 
       <div className=' min-h-screen hidden md:flex justify-end '>
-        <div className=' w-4/5  overflow-auto px-32 pt-32 pb-32 '>
-          <div className='border rounded-lg border-neutral-300 p-8 '>
-            <h1 className='mont text-6xl font-bold mb-4 text-primc flex justify-start items-center'>
-              {' '}
-              {frontMatter.title}
-            </h1>
-            <h2 className='mont '>
-              {' '}
-              Rank: <strong> {pretty(frontMatter.rank)}</strong>
-            </h2>
-            <h2 className='mont '>
-              Credits:<strong> {frontMatter.credits}</strong>
-            </h2>
-          </div>
+        <div className=' w-4/5  overflow-auto px-32 pt-32 pb-12 '>
+          <h1 className='mont text-6xl font-bold mb-2 text-primc flex justify-start items-center pt-12'>
+            {frontMatter.title}
+          </h1>
+          <h2 className='mont border-b border-white  mb-2 pb-8  flex justify-start items-center'>
+            {frontMatter.description}
+          </h2>
+          <div className=' h-16'></div>
 
           {/* <div
             className='mt-12'
@@ -66,6 +60,10 @@ export default function Learn({ content, frontMatter, chaps }) {
           ></div> */}
           {/* <ParsedContentWrapper text={customify(guideData.contentHtml)}></ParsedContentWrapper> */}
           <MdxRenderer mdxSource={content} />
+          <p className='text-center  mt-12 text-neutral-400 mont pt-24'>
+            Credits: {frontMatter.credits} <br /> If you notice any issues with the above article, please send us
+            feedback via discord{' '}
+          </p>
         </div>
       </div>
 
@@ -100,7 +98,7 @@ export default function Learn({ content, frontMatter, chaps }) {
                   key={index}
                   className={`${
                     loopedChapter.title == frontMatter.title ? 'bg-primc border-primc !w-11/12' : ''
-                  } border px-4 mb-4 py-2 rounded-md w-10/12 relative flex justify-start items-center hover:w-11/12 hover:bg-neutral-700 transition-all`}
+                  } border border-neutral-500 px-4 mb-4 py-2 rounded-md w-10/12 relative flex justify-start items-center hover:w-11/12 hover:bg-neutral-700 transition-all`}
                 >
                   <span className='robo'>{loopedChapter.title}</span>
                   <span className='flex-1 text-right robo text-2xl pb-1'>{'>'}</span>

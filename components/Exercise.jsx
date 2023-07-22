@@ -32,14 +32,14 @@ export default function Exercise({ question, answer, number }) {
           <div className='p-8' id='ExerciseMdWrapper' dangerouslySetInnerHTML={{ __html: qText }}></div>
           {viewAns ? (
             <>
-              <div className='p-8 bg-neutral-600 rounded-md' id='ExerciseMdWrapper'>
-                <div className='w-full' dangerouslySetInnerHTML={{ __html: aText }}></div>
+              <div className='p-8 bg-neutral-600 rounded-md'>
+                <div className='w-full' id='ExerciseMdWrapper' dangerouslySetInnerHTML={{ __html: aText }}></div>
               </div>
             </>
           ) : (
             <div className='w-full flex justify-center items-center  my-4 pb-8  '>
               <div
-                className='w-10/12 py-2 text-center  border rounded-md hover:bg-primc hover:border-primc hover:cursor-pointer transition-all'
+                className='w-full mx-8 py-2 text-center  bg-neutral-600 rounded-md hover:bg-primc hover:border-primc hover:cursor-pointer transition-all'
                 onClick={() => {
                   setViewAns(true);
                 }}

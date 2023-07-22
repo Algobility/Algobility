@@ -1,0 +1,113 @@
+---
+title: CIN, COUT, and the STD namespace
+credits: Ahmad Bilal
+description: Learn how to call an external function from your code
+---
+
+# Input
+
+We have previously seen how we can use the `std::cout <<` keyword to output some text to the CLI. It turns out, we can use a similar keyword to try and get some input from the CLI.
+
+To get input from the user, we can use the `std::cin >>` keyword followed by the name of a variable where we want to store the input. This will wait for the user to enter some text in the CLI, and then store it in the specified variable.
+
+Here is an example
+
+```
+#include <iostream>
+
+int main() {
+  int number;
+  std::cout << "Please enter a number: ";
+  std::cin >> number;
+}
+```
+
+In this example, we first use `std::cout <<` to tell the user what to input. This is known as a prompt. We then use `std::cin >>` to get input from the user and store it in the `number` variable.
+
+# `std` namespace and the `>>` operator
+
+Until now I have been referring to `std::cout <<` as one keyword. However, this is a partial lie as there are many parts to this phrase. First there is the `std::`. C++ allows you to group code keywords under a label known as a namespace. This helps avoid naming clashes. For example, if two variables have the same name but are declared in different namespaces, the compiler will not complain. If you recall, the `cout` keyword was defined in some pre-written code inside of the header file we always include at the top of our code. That header file defines the `cout` keyword in the `std` namespace so that if you ever create a variable or other keyword called `cout`, it will not cause conflict with the `cout` used to output text . This is why we always have to put `std::` before `cout` in our codes. We have to specify to the compiler that we are talking about the `cout` in the `std` namespace whenever outputting text.
+
+However, realistically, we will never name our variable something like `cout` and it is quite annoying to have to write `std::` before every `cin` or `cout`. Therefore, most competitive programmers simply add the following line at the top of their code
+
+```
+using namespace std;
+```
+
+This tells the compiler to consider everything as part of the `std` namespace. In other words, the compiler simply attaches an invisible `std::` before every variable or keyword. With this line, I no longer need to write `std::` before `cout`. On the flip side, now if I try to declare a variable by the name of `cout`, the compiler **will** get confused since all variables will automatically become part of the std namespace. However, this makes the code much easier to write and read. The example above can be simplified to
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+  int number;
+  cout << "Please enter a number: ";
+  cin >> number;
+}
+```
+
+**Note**: `using namespace std;` is only recommended for small programs such as those you write for competitive programming solves.
+
+Now `cout` and `cin` are special keyword in the fact that they are not exactly variables or functions. They can be read from and written to using the `>>` and `<<` operators for reading and writing respectively. These operators are also quite special in the fact that they do not work like the operators you saw in last chapter (e.g. +, -, \*, /). They are meant specifically to be used with `cin` and `cout`.
+
+# Multiple Inputs/Outputs
+
+C++ offers a useful shorthand notation for writing multiple input and output statements. Let's say you wanted to write some code which takes a character as input from the user and outputs, "The character you entered was: ", followed by the inputted character. Here is one way you could do that.
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+  char inputtedCharacter;
+  cout << "Please enter a character: ";
+  cin >> inputtedCharacter;
+  cout << "\\nThe character that you inputted was: ";
+  cout << inputtedCharacter;
+}
+```
+
+However, in C++, you can also merge the last two `cout` statements like so:
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+  char inputtedCharacter;
+  cout << "Please enter a character: ";
+  cin >> inputtedCharacter;
+  cout << "\\nThe character that you inputted was:" << inputtedCharacter;
+}
+```
+
+<Exercise
+  number='1'
+  question='Using Repl.it to test your code, write some code that takes two numbers as inputs and outputs the sum.'
+  answer={`We can write some code to do that by creating two variables. I'll call them \`inputA\` and \`inputB\`. Then we can use \`cin\` to feed the user's input into those two variables. After that, we can add the two variables and store their result in a variable called \`result\`. Then we can simply output the value of \`result\`.
+
+\`\`\`
+#include <iostream>
+using namespace std;
+
+int main() {
+
+    int inputA;
+    int inputB;
+
+    cout << "Please enter first number: ";
+    cin >> inputA;
+    cout << "\\nPlease enter second number: ";
+    cin >> inputB;
+
+    int result = inputA + inputB;
+    cout << "\\nThe sum of these numbers is: ";
+    cout << result << "\\n";
+
+}
+
+\`\`\`
+`}
+
+> </Exercise>

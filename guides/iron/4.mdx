@@ -1,0 +1,204 @@
+---
+title: 'Variables'
+credits: Ahmad Bilal
+description: Learn how to declare and manipulate variables
+---
+
+# Variables
+
+In programming, a variable is a symbolic name that represents a value stored in the memory of the computer. Think of it as a container that holds a particular piece of data, which can be a number, text, or any other type of information. If you want your computer to remember anything, you have to put it in a variable. While they take inspiration from variables in math, it's better to avoid confusion by not connecting the two for the time being.
+
+In C++, to declare a variable (i.e. create a container), you need to specify its data type (number, text, etc.) followed by the variable name (a label on the container which can be used to reference the container later on). For example:
+
+```c++
+#include <iostream>
+
+int main()
+{
+  int age;
+}
+```
+
+In this example I have used the `int` data type which is used to store integers. In other words, I have told the compiler that the container I am about to create will only store numerical data with whole numbers. This is important so that the compiler can make enough space in the memory of the computer to store this information.
+
+Notice how I have also added a semi-colon right after the declaration because declaring a variable is an operation and in C++, every operation (e.g. declaring a variable, doing some arithmetic, spitting some output text to the CLI) must end with a semi-colon.
+
+Let’s look at some more examples.
+
+```
+#include <iostream>
+
+int main(){
+  int age; // Declares a variable named "age" of type integer (whole numbers).
+  float pi; // Declares a variable named "pi" of type float (decimal numbers).
+  char letter; // Declares a variable named "letter" of type char (single characters).
+}
+```
+
+Here I have also added some English text prefixed with a double slash. This is known as a comment. All text that is preceded by a double slash (in the same line) is ignored by the compiler (does not count as part of the actual code) and can be used for adding notes to make code more easier to understand for other humans.
+
+You can also assign values to variables (i.e. put some data inside the container) when you declare them by using the assignment operator `=` (not to be confused with the equal sign used in math):
+
+```
+#include <iostream>
+
+int main()
+{
+  int age = 25; // Declares a variable named "age" and initializes it with the value 25.
+  double   pi    =3.14159      ; // Declares a variable named "pi" and initializes it with the value 3.14159.
+}
+```
+
+Note: I have used some weird spacing in the last line to demonstrate how the compiler eventually ignores the number of spaces. You can put as many or as little spaces between words. Between symbols, spaces are optional.
+
+Note: The character
+
+# Rules for variables names
+
+There are certain rules that you must follow when choosing a variable name.
+
+- Variable names may never contain spaces
+- Variable names can only contain letters, numbers, and underscores.
+- Variable names must start with a letter or an underscore.
+- Variable names cannot start with a number.
+- Variable names are case sensitive, meaning `myVar` and `MyVar` are considered two different variables.
+
+# Using Variables
+
+Whenever a variable name is written in code, the compiler simply replaces the variable name with the value of the variable just before executing the program. For example
+
+```c++
+#include <iostream>
+
+int main()
+{
+  int myFirstVariable = 10;
+  std::cout << myFirstVariable;   //10 is outputted to the CLI
+  int mySecondVariable = myFirstVariable; //a new variable is declared with an initial value of 10
+}
+```
+
+# Data Types
+
+By default C++ comes with a handful of data types. Here are the most common
+
+- **int**: Used for storing whole numbers, e.g., 1, -5, 1000.
+- **float**: Used for storing floating-point numbers (i.e. numbers with decimal places) e.g. 3.14, -0.5.
+- **char**: Used for storing single characters, e.g., 'A', 'b', '$'.
+- **bool**: Used for storing boolean values (i.e. a value which can be either true or false).
+
+# Operators
+
+C++ also allows you to put some special characters (known as **operators**) between two different values (or variables) in order to do some arithmetic.
+
+- **+ (Addition)**: Adds two values together.
+- \- **(Subtraction)**: Subtracts one value from another.
+- \* **(Multiplication)**: Multiplies two values.
+- **/ (Division)**: Divides one value by another.
+- **% (Modulus)**: Calculates the remainder after division.
+
+```
+#include <iostream>
+
+int main()
+{
+  int a = 10;
+  int b = 5;
+  int myVariable = a + 1; //this will simplify to 10 + 1 which is 11
+  int sum = a + b; // sum will be 15
+  int difference = a - b; // difference will be 5
+  int product = a * b; // product will be 50
+  int quotient = a / b; // quotient will be 2
+  int remainder = a % b; // remainder will be 0
+}
+
+```
+
+# Updating Variables
+
+In programming, updating a variable means changing the value stored in the container. This is done by using the assignment operator `=` followed by the new value you want to put in the container. For example:
+
+```
+#include <iostream>
+
+int main()
+{
+  int age = 25;
+  age = 26; //the variable age will now have a value of 26
+}
+```
+
+You can also update a variable using arithmetic operators. For example:
+
+```
+#include <iostream>
+
+int main()
+{
+  int myNumber = 10;
+  myNumber = myNumber + 5;
+  //the variable myNumber will now have a value of 15
+}
+```
+
+C++ also offers a shorthand for the above code
+
+```c++
+#include <iostream>
+
+int main()
+{
+  int var = 10;
+  var += 5; // same as var = var + 5;
+  var -= 5; // same as var = var - 5;
+  var *= 5; // same as var = var - 5;
+  var /= 5; // same as var = var / 5;
+}
+```
+
+<Exercise number='1' question={`What would be the output of the following code if executed: 
+\`\`\`
+#include <iostream>
+int main()
+{
+  int a = 10;
+  int c;
+  c = a;
+  std::cout << c;
+}
+\`\`\`
+
+`} 
+answer={`
+If you were to execute the above code, the number 10 would be outputted. This is because we have created a variable called \`a\` (with value 10) as well as an empty variable called \`c\` and then assigned the value of \`c\` to that of \`a\` (which was 10). After that \`c\` was outputted to the CLI.
+`}></Exercise>
+
+<Exercise number='2' question={`What would be the output of the following code if executed: 
+\`\`\`
+#include <iostream>
+int main()
+{
+  int a = 10;
+  int b = 20;
+  int c;
+  c = a;
+  b = c;
+  a = b;
+  std::cout << a;
+}
+\`\`\`
+
+`} 
+answer={`
+This one is a bit more confusing. The correct answer is 10. The variable \`a\` is first set to 10 and \`b\` to 20. Another variable, \`c\` is created and immediatly set to the value of \`a\` (which is 10). Then \`b\` is set to the value of \`c\` (which is now 10). Lastly, \`a\` is set to the value of \`b\` (which is now 10 as well). Finally, since \`a\` is outputted, the correct answer is 10.
+`}></Exercise>
+
+# Characters
+
+One data type I have been refraining from using is the char datatype. This datatype is a bit more complex and is used to store characters such as ‘A’ and ‘%’. In C++ whenever we want to write an English character we use the single quotation mark `'`
+
+```jsx
+char myChar = 'A';
+```
+
+With the quotation mark, the compiler knows that we are referring to the character A and not some other variable that happened to be named A.

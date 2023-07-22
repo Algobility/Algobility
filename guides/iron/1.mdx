@@ -1,9 +1,67 @@
 ---
-title: 'Hello World - Getting Started'
+title: Getting Started with Programming
 credits: Ahmad Bilal
-description: Learn about competitive programming and write your first solution
+description: Write and execute your first program.
 ---
 
-# What Even is Competitive Programming?
+# What Even is Programming?
 
-Generally speaking, Competitive Programming refers to a mind-sport which can be practiced in online programming competitions. Simillar to math competitions, these programming competitions, require participants to solve some set problems within a given time frame (often a few hours). These problems are
+Computers, at their core, are simply machines capable of processing information at lightning fast speed. Similar to calculators, they can only perform a finite set of operations. These operations may include displaying something on the users screen, performing an arithmetic operation on some numbers, or storing some data in the memory of the computer. Programming is the art of instructing computers to perform specific tasks by writing out a series of these operations, known as **code**, which the computer follows to execute a desired sequence of actions. The real skill of a programmer is to be able to express whatever they want their computer to do in terms of these operations.
+
+For example, if I wanted to create a simple computer program that adds 2 numbers, which are provided by the user, and save them in the computer's memory, the series of operations I might instruct the computer to perform (i.e. code) may look something like this:
+
+```
+
+INPUT first_number
+
+INPUT second_number
+
+ADD first_number and second_number
+
+SAVE result
+
+```
+
+Of course, this is an highly simplified example code and wouldn't actually work if fed into a computer. However, it is these types of building blocks that are used to create all your favorite applications.
+
+When people use the term ‘programming’, they generally refer to the act of creating unique computer programs that are designed to solve a problem that some target audience faces. For example, the people who created Twitter or Instagram programmed (i.e. created) an application that allowed for people to communicate with each other virtually. Competitive programming is a sport in which the goal is not to create something new, but rather to solve, during a timed competition, as efficiently as possible an algorithmic problem which has been solved previously by the problem author. Competitive programming is a great way to help build the problem-solving skill that is required in any programming field. For instance, you may come across a question in a competition which asks you to write some code to sort 100 numbers in ascending order. While the question in it of itself may seem quite abstract, a social media application may need to do something very similar every minute to find which posts have the most likes.
+
+# Programming Languages
+
+Modern computers can only natively understand what is known as machine language or machine code which is pretty much a language consisting of only two words: '1' and '0'. This language, as you might be able to tell, is extremely difficult for a human to read and write in. Thankfully, early programmers have created special computer programs, known as **compilers** which are able to translate code from what is known as a **programming language** into machine language. A programming language is a language that is more human-friendly than machine language but less so than English. Each programming language has its own compiler that can be used to translate code written in the language into machine language so that it can be run on a computer. Different people have created different programming languages, however in the competitive programming community, the C++ language is by far the most used. This is because the C++ compiler is one of the fastest in terms of executing code.
+
+# Writing your first C++ Code using Repl.it
+
+There are many way to start writing and executing code, however most options require some tedious work to get set up. One website that makes the process much simpler is [Repl.it](http://repl.it/). Repl.it allows you to write and execute code directly in your browser. To get started, simply create an account on [Repl.it](http://repl.it/) and create a Repl (a coding project) with the C++ Template. When you open your Repl you should see two large panels. For now we will focus on the one with some C++ code. It should already have some code written in it and should look something like this:
+
+```jsx
+#include <iostream>
+
+int main() {
+  std::cout << "Hello World!\n";
+}
+```
+
+Don’t worry if you don’t understand what this means yet. Click the green run button at the top and your code should be executed. You’ll know you have done it correctly once you see something like this on the other large panel
+
+```jsx
+> sh -c make -s
+> ./main
+Hello World!
+```
+
+# Understanding the command line
+
+The second panel is known as a CLI (Command Line Interface). Every computer comes with some sort of app that allows you to use the CLI. On Windows, this app is called Command Prompt and on Mac it’s called Terminal. You can open this app right now and take a look for yourself. A CLI is essentially an alternate way to communicate with your computer using only your keyboard. You can use the CLI to create, edit, and delete files on your computer by inputting specific commands. You can also install CLI apps which do not open as new windows but rather as simply text. Most compilers are simply CLI apps since there really is no need for them to have a graphical interface with buttons and icons. In competitive programming, we create CLI apps instead of graphical ones for the same reason. When working on a repl, [Repl.it](http://Repl.it) provides you with a virtual computer which you can talk to using the CLI. When you pressed the big green ‘Run’ button, Repl.it automatically ran some commands for you that executed your program. If you look back at the second panel, you will see the first line reads something like
+
+```jsx
+> sh -c make -s
+```
+
+This command tells your virtual computer to run the compiler app and translate the C++ code you just wrote into machine language. The second line which says,
+
+```jsx
+> ./main
+```
+
+is telling the computer to execute the translated code. Since the template code was simply a program that writes ‘Hello World’ to the CLI, the next line shows just that.

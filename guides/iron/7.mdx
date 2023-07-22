@@ -1,0 +1,203 @@
+---
+title: Conditions
+credits: Ahmad Bilal
+description: Understand how to craft conditional expressions and use the different condition statements in C++
+---
+
+In this guide, we'll cover one of the most fundamental concepts in programming: conditions. Conditions allow us to make decisions in our code, executing different parts of the program based on whether certain conditions are true or false.
+
+In C++, such decisions are expressed using if, else if, and else statements. These **conditional statements** enable us to control the flow of our program and execute specific blocks of code based on different situations. However, to understand how to use these conditional statments, its important to first understand what conditions are.
+
+# Comparison Operators
+
+A condition is an expression that evaluates to either `true` or `false`. We use comparison operators to create conditions. Here are the commonly used comparison operators:
+
+- `>`: Greater than
+- `<`: Less than
+- `>=`: Greater than or equal to
+- `<=`: Less than or equal to
+- `==`: Equal to
+- `!=`: Not equal to
+
+To write a condition, you simply combine these operators with variables or constants (i.e. fixed values of some data type such as 10, 1.5, 'G', '#', etc.). For example:
+
+```
+age >= 18
+```
+
+In this example, the condition age >= 18 will only evaluate to true if the variable age is 18 or greater.
+
+Here is another example of a condition
+
+```
+height == 5
+```
+
+This condition only evaluates to true when the height variable is set to 5.
+
+Note: It's important not to confuse the assignment operator `=` with the comparison operator `==`. The assignment operator is used to assign a value to a variable, while the comparison operator is used to check if two values are equal.
+
+# Combining Conditions
+
+In addition to comparison operators, we have **boolean operators** that allow us to combine multiple conditions into one larger condition. The common boolean operators are:
+
+## && (logical AND)
+
+This operator, denoted by `&&`, is placed between two conditions and creates a larger condition which only evaluates to true when both sub-conditions are true. For example:
+
+```
+age > 18 && height == 5
+```
+
+This condition only evaluates to true when **both** the variable age is greater than 18 **and** the height variable is set to 5.
+
+A common use case of the AND operator is to use it to specify a range for a variable like so:
+
+```
+age > 18 && age < 25
+```
+
+This condition is only true if the age variable has a value between 18 and 25
+
+## || (logical OR)
+
+The logical OR operator, denoted by `||`, is used to combine two conditions, and the resulting condition evaluates to true if at least one of the sub-conditions is true.
+
+For example:
+
+```
+age > 18 || height == 5
+```
+
+In this example, the condition will be true if **either** age is greater than 18 _or_ height == 5.
+
+## ! (logical NOT)
+
+This operator, denoted by `!`, is placed before one sub-condition rather than between two. It simply inverts the value of the sub-condition so if the sub-condition was true, the larger condition becomes false and if the sub-condition was false the larger condition becomes true. Let's take a look at an example
+
+```
+! (age > 18)
+```
+
+This condition would only be true when the age is **NOT** greater than 18. However, in such cases a programmer would much rather just write `age <= 18`. The NOT operator really becomes powerful when used with boolean variables which we will discuss later.
+
+# Stacking boolean expressions
+
+```
+(temperature <= 35 && temperature >= 5) || humidity == 5
+```
+
+We can create more complex conditions, like the one above, my using multiple boolean expressions. In this case, the larger condition is only true if **one of the following** is true:
+
+- the humidity variable has a value of 5
+- the temperature variable falls between 35 and 5 (inclusive)
+
+Note: Parethesis have been used to make the order of operations explicit to the compiler. This is recommended when you are using more than one boolean operator.
+
+# The `if` statement
+
+The above code snippets have only shown us what a condition looks like in C++. The `if` statements allows us to use those conditions in our code to create blocks of code which only execute if the condition is true (if the condition is false, the compiler will skip to any code code below it). The syntax (grammatical format) of an `if` statement looks something like this:
+
+```
+if ( some condition ){
+    some code (to be run if condition is true)
+}
+```
+
+Let's look at an example:
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+  int myVar;
+  cout << "Please input a number: "
+  cin >> myVar;
+  if(myVar >= 0){
+    cout << "\\nYou have inputted a positive number\\n";
+  }
+  if(myVar < 0){
+    cout << "\\nYou have inputted a negative number\\n";
+  }
+}
+```
+
+Here we take some input and store it in the `myVar` variable. Then we only output `You have inputted a positive number`, if the variable's value is positive (greater than 0).
+Otherwise, if the variable's value is negative, we output `You have inputted a negative number`.
+
+# The `else` Statement
+
+Sometimes we want to tell our compiler to do two different things depending on wheather a condition is true or false. In the above example, we wrote another condition which was the reverse of the first in order to get that functionality. However, C++ offers us a much cleaner way to do this. The else statement works similar to the `if` statement, but only executes it's block of code `if` the previous if statement was skipped (i.e. the condition inside the previous if statement was false). The syntax looks something like this
+
+```
+if (condition) {
+// Code to be executed if the condition is true
+} else {
+// Code to be executed if the condition is false
+}
+```
+
+Let's modify our previous example to include the else statement to help make the code much more cleaner and easier to read/maintain.
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+  int myVar;
+  cout << "Please input a number: "
+  cin >> myVar;
+  if(myVar >= 0){
+    cout << "\\nYou have inputted a positive number\\n";
+  }
+  else {
+    cout << "\\nYou have inputted a negative number\\n";
+  }
+}
+```
+
+# The else if Statement: Handling Multiple Conditions
+
+In some situations, we need to check multiple conditions before making a decision. This is where the `else if` statement becomes handy. It allows us to add multiple conditions to check one after another. The syntax is as follows:
+
+```
+if (condition1) {
+    // Code to be executed if condition1 is true
+} else if (condition2) {
+    // Code to be executed if condition1 is false and condition2 is true
+} else if (condition3){
+    // Code to be executed if condition1 and condition2 are false and condition3 is true
+} else {
+    // Code to be executed if all conditions are false
+}
+```
+
+Note: You can add as many or as few `else if` statements as you want. The `else` in the end is also optional. If you do not choose to inclued a final `else` statement and all your conditions are false, the compiler will simply skip all of the conditional statements and proceed to execute the code below it.
+
+Let's create an example where we check whether a number is positive, negative, or zero:
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+    int number;
+    cout << "Enter a number: ";
+    cin >> number;
+
+    if (number > 0) {
+        cout << "The number is positive." << endl;
+    } else if (number < 0) {
+        cout << "The number is negative." << endl;
+    } else {
+        cout << "The number is zero." << endl;
+    }
+
+    cout << "End of program." << endl;
+    return 0;
+
+}
+```
+
+With this code, if the number is greater than zero, "The number is positive." will be printed. If it's less than zero, "The number is negative." will be displayed. Otherwise, if the number is zero, "The number is zero." will be printed.

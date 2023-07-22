@@ -1,9 +1,79 @@
 ---
-title: 'Functions - Declaring'
+title: 'Understanding Errors'
 credits: Ahmad Bilal
-description: Learn how to call an external function from your code
+description: Learn how to interpret errors when running code
 ---
 
-# Motivation
+**Note**: From this guide onwards, it is **highly recommended** that you try out every single code snippet provided in the guides for yourself using Replit.
 
-lorem ipsum declaring
+At some point along your journey of learning C++, you will come across some unexpected red colored text in the console whilst running a program. This is known as an error and the cryptic red text is known as an error message. These occur when you have written bad code - code that either the compiler cannot understand or produces unexpected results due to poor design. Understanding how to fix errors comes with practice, however with this guide I hope to outline a few of the common ones.
+
+# Syntax errors
+
+Syntax is essentially grammer in programming languages. They are rules that programmers must follow for the compiler to be able to work. They include rules such as always putting a semi-colon at the end of every operation. Syntax errors occur when your code violates the rules of C++ syntax. They happen at 'compiler-time' which means they are identified by the compiler. Recall that the first command in the console when the big green run button is pressed is the command to run the compiler. You'll know that an error is a compile-time error if the error message is shown just after the first command and not the second (in which case it would be a run-time error)
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, World!" << endl  // Missing semicolon
+}
+```
+
+**Error Message**: `error: expected ';' before 'return'`
+
+**Explanation**: The error message points to the line with the missing semicolon before the return statement. The semicolon is necessary to complete the statement.
+
+```
+#include <iostream>
+using namespace std;
+
+int main()
+    cout << "Hello, World!" << endl;
+}
+```
+
+**Error Message:** `error: expected '{' at the beginning of the function definition`
+
+**Explanation**: The error message indicates that there is a missing opening curly brace \{ at the beginning of the main() function definition.
+
+# Runtime Errors
+
+These errors are not possible for the compiler to spot during compilation but are fatal to the execution of the program. Division by zero is a very common example.
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a = 10;
+    int b = 0;
+    int result = a / b; // Division by zero
+    cout << result << endl;
+
+}
+```
+
+**Error:** This error will not be caught during compilation but might produce a runtime error like "Floating point exception" or "Division by zero."
+
+**Explanation:** The program tries to divide a by b, but since b is set to 0, it results in a division by zero, which is undefined in mathematics.
+
+# Logic Errors
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a = 5;
+    int b = 3;
+    int product = a + b; // Programmer accidently wrote + instead of *
+    cout << "The product of the two numbers is: " << product << endl;
+
+}
+```
+
+**Error:** No specific error message. The program will compile and run, but the output will be incorrect.
+
+**Explanation**: The logic error occurs because the program performs addition (a + b) instead of multiplication (a \* b) when the latter was intended.
