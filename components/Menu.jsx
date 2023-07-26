@@ -2,14 +2,9 @@ import React, { useEffect } from 'react';
 import { Button, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 
-const DropdownMenu = ({ defaultValue, opts, whenChange }) => {
+const DropdownMenu = ({ opts, whenChange }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [val, setVal] = useState(defaultValue);
-
-  console.log(defaultValue);
-  useEffect(() => {
-    setVal(defaultValue);
-  }, [defaultValue]);
+  const [val, setVal] = useState('iron');
 
   useEffect(() => {
     whenChange(val);
@@ -26,15 +21,15 @@ const DropdownMenu = ({ defaultValue, opts, whenChange }) => {
 
   return (
     <span>
-      <Button
+      <div
         aria-controls='dropdown-menu'
         aria-haspopup='true'
         onClick={handleClick}
         variant='contained'
-        className='bg-neutral-600 py-1'
+        className='bg-neutral-700 px-4 py-2 mt-6 mid-shadow mont flex justify-center rounded-md'
       >
-        {val}
-      </Button>
+        View another rank
+      </div>
       <Menu
         id='dropdown-menu'
         anchorEl={anchorEl}
@@ -42,12 +37,12 @@ const DropdownMenu = ({ defaultValue, opts, whenChange }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: 'bottom',
+          horizontal: 'center',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right',
+          horizontal: 'center',
         }}
       >
         {opts.map((rank, i) => (

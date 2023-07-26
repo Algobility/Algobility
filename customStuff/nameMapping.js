@@ -46,7 +46,11 @@ const unpretty = (inp)=>{
 const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum']
 const codedRanks = ['iron', 'bronze', 'silver', 'gold', 'platinum']
 const rankDescription = {
-    'iron': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you should be familliar with basic programming concepts such as variables, conditions, loops, etc. '
+    'iron': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you should be familliar with basic programming concepts such as variables, conditions, loops, etc. ',
+    'bronze': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, dasdas dlas kdlaskd l;ask d ps, etc. ',
+    'silver': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you shouconcepts such as variables, conditions, loops, etc. ',
+    'gold': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you should be familliar with basic programming concepts such as variables, conditions, ad uasdhj asjdlasjd lkasjd lkasjd89ajd oasn loops, etc. ',
+    'platinum': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you should be familliar with basic programming concepts such as variables, conditions, ad uasdhj asjdlasjd lk'
 }
 
 

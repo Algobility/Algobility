@@ -149,7 +149,7 @@ export default function SignUpCard(props) {
           break;
 
         default:
-          console.log(`uncaught error: ${errorMessage}`);
+          console.log(`uncaught error: ${error}`);
           displayError = `If you contact support, tell them this error code: ${errorMessage}`;
           break;
       }

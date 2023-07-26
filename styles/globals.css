@@ -161,6 +161,21 @@ h1{
   animation: bounce 1s infinite ease-in-out;
 }
 
+@keyframes scalefade {
+  0% {
+    opacity: 0%;
+    scale: 90%;
+  }
+  100% {
+    opacity: 100%;
+    scale: 100%;
+  }
+}
+
+.scalefade {
+  animation: scalefade 0.1s ease-in;
+}
+
 #ProblemMdWrapper{
   @apply robo;
 }

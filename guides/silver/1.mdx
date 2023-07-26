@@ -1,0 +1,126 @@
+---
+title: 'Arrays'
+description: 'Lists of variables'
+date: '2022-01-01'
+credits: Ahmad Bilal
+number: 2
+---
+
+# The limitation of single variables
+
+Let's start by considering a scenario where we want to store all prime numbers under 10 in our C++ program. We could use separate variables to store each prime number like this:
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+int prime1 = 2;
+int prime2 = 3;
+int prime3 = 5;
+int prime4 = 7;
+
+    // Suppose we want to add 1 to each prime number
+    prime1 = prime1 + 1;
+    prime2 = prime2 + 1;
+    prime3 = prime3 + 1;
+    prime4 = prime4 + 1;
+
+    // Code to use the updated prime numbers
+
+    return 0;
+
+}
+```
+
+While this code works, it becomes highly unmaintainable. For instance, it would become extremely tedious to write some code that stores all prime numbers under 100 and then does some operation on all of them.
+
+# Arrays
+
+If you think of variables as containers, you can think of arrays as ordered sequences of those containers. They allow us to store multiple values of a single data type in one structure instead of having to declare different variables for each value. These arrays contain a series of **elements**, with each element containing some value of the array's data type. Elements act exactly like variables and can be read/written to just like any other variable.
+
+Here is the syntax for declaring an array:
+
+```
+dataType arrayName[arraySize];
+```
+
+For example, here is an array of 4 numbers:
+
+```
+int myFavouriteNumbers[4];
+```
+
+We can also declare the array with some values just like we can do with single variables like so:
+
+```
+int myFavouriteNumbers[4] = {2,5,7,11};
+```
+
+Note: From here on out, I won't include the `#include <iostream>` or the `int main()` in all code snippets because it is understood that without these, the code will not actually compile.
+
+# Declaring and Accessing Array Elements
+
+Each element in an array has an **index** or a number assigned to it which indicates its position in the array. These index numberings start from 0 so the first element in an array has an index of 0, the second has an index of 1, the third has an index of 2 and so on. We can access an element of an array using the following syntax.
+
+```
+arrayName[index]
+```
+
+Since elements act exactly like variables, we can write (assign values) to them just like any other variable.
+
+```
+myFavouriteNumbers[2] = 6;
+```
+
+The above code changes the 3rd element in the `myFavouriteNumbers` array to the number.
+
+We can similarly output the value of an element like so:
+
+```
+cout << myFavouriteNumbers[2];
+```
+
+# Looping over an array
+
+We often want to run some code on every element of an array. A simple way to do that is using the `for` loop. Here is an example:
+
+<br />
+
+In this example, we've assigned values to the elements of the numbers array using the array notation numbers[index], just like assigning values to regular variables. We then used the same array notation to read and print the values of the array elements.
+Array Notation in Detail
+
+The array notation allows you to access or modify individual elements of the array. It uses the array name followed by the index number enclosed in square brackets. Here are some key points to understand:
+
+    Indexing: Array indices start from 0 and go up to arraySize - 1. For an array of size 5, the indices are 0, 1, 2, 3, and 4.
+
+    Reading Array Elements: To read the value of an element at a specific index, use the array notation on the right side of an expression or within a cout statement.
+
+    Modifying Array Elements: To change the value of an element at a specific index, use the array notation on the left side of an assignment.
+
+    Out-of-Bounds Access: Be cautious not to access elements outside the array bounds, as it can lead to undefined behavior or unexpected results. Accessing numbers[5] or beyond in our previous example would be out of bounds.
+
+    Looping Through Arrays: Loops are often used to iterate over array elements. You can use a for loop to traverse the array by using the array size as the upper bound.
+
+Here's an example of using a for loop to print the elements of the numbers array:
+
+cpp
+
+#include <iostream>
+using namespace std;
+
+int main() {
+int numbers[5] = {10, 20, 30, 40, 50}; // Initializing the array with values
+
+    // Loop to print the elements of the array
+    for (int i = 0; i < 5; i++) {
+        cout << "Element at index " << i << ": " << numbers[i] << endl;
+    }
+
+    return 0;
+
+}
+
+Conclusion
+
+Arrays in C++ are powerful data structures that act as trays of containers, where each element holds a single value of the specified data type. You can read from and write to array elements just like you would with any other variable, using the array notation with the index number. Understanding arrays and their notation is a crucial step in becoming proficient in C++ programming. With arrays, you can efficiently manage and process collections of data in your programs. Happy coding!
