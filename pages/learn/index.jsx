@@ -41,7 +41,7 @@ export default function LearnIndex({ chaps }) {
               </button>
               {isOpen && (
                 <div className=' fixed top-0 left-0 z-10 p-4 w-full h-full flex justify-center items-center '>
-                  <div className='scalefade w-4/5 gap-14 p-14 shadow-2xl h-3/4 mt-8 rounded-lg bg-backL grid grid-rows-2 grid-cols-3'>
+                  <div className='scalefade w-4/5 gap-14 p-14 shadow-2xl h-4/5 mt-8 rounded-lg bg-backL grid grid-rows-2 grid-cols-3 relative'>
                     {ranks.map((e) => (
                       <div className='rounded-md p-8' key={e}>
                         <h1 className='text-4xl text-bold mont border-l-2 border-primc pl-2'>{e}</h1>
@@ -57,17 +57,25 @@ export default function LearnIndex({ chaps }) {
                         </button>
                       </div>
                     ))}
-                    <div className='flex justify-center items-center flex-col gap-8 '>
+                    <div
+                      onClick={onClose}
+                      className='absolute cursor-pointer hover:bg-neutral-600 top-8 right-10 mont scale-150 bg-neutral-700 rounded-full w-10 h-10 flex justify-center items-center'
+                    >
+                      {' '}
+                      X
+                    </div>
+                    {/* <div></div>
+                    <div className='flex justify-center items-center flex-col gap-8 mt-8 '>
                       <div onClick={onClose} className='rounded-md px-4 py-2 transition-all italic text-center  mont'>
                         You can view guides of other ranks but you will still have to compete in your rank.
-                      </div>
+                      </div> 
                       <button
                         onClick={onClose}
                         className='rounded-md px-4 py-2 transition-all hover:bg-primc bg-neutral-600 mont'
                       >
                         Close
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               )}
