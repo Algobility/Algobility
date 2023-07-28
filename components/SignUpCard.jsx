@@ -76,6 +76,8 @@ export default function SignUpCard(props) {
       const token = credential.accessToken;
       const user = result.user;
 
+      localStorage.setItem('signedState', true);
+
       const UserExists = await existsStorage('User', user.uid);
 
       console.log('User Exists returned ', UserExists);
@@ -148,6 +150,11 @@ export default function SignUpCard(props) {
           return;
           break;
 
+        case 'Firebase: Error (auth/popup-closed-by-user).':
+          displayError = `Popup was closed`;
+          return;
+          break;
+
         default:
           console.log(`uncaught error: ${error}`);
           displayError = `If you contact support, tell them this error code: ${errorMessage}`;
@@ -175,17 +182,17 @@ export default function SignUpCard(props) {
     //     </Button>
     //   </Card>
     // </div>
-    <div class='lighten w-2/3 md:w-1/3 rounded-lg'>
-      <div class='bg-transparent rounded-lg shadow-xl sep w-full md:full text-chita'>
-        <div class='p-5'>
-          <h1 class='text-primc robo text-4xl mb-2'>SIGN IN</h1>
-          <h2 class='text-md mb-4 robo'>
+    <div class='bg-backL w-2/3 md:w-1/3 rounded-lg shadow-xl'>
+      <div class='bg-transparent rounded-lg  sep w-full md:full text-chita'>
+        <div class='p-8'>
+          <h1 class='text-primc mont font-bold text-4xl mb-2'>Sign In</h1>
+          <h2 class='text-md mb-4 robo text-neutral-400'>
             If you haven't created a Project A account before, one will automatically be created for you
           </h2>
         </div>
-        <div className='flex flex-col justify-center gap-3 mb-6'>
+        <div className='flex flex-col justify-center gap-3 mb-12 '>
           <button
-            class='robo bg-neutral-700 mx-5 flex justify-center items-center py-2 rounded-md hover:bg-neutral-600'
+            class='robo bg-neutral-700 mx-8 flex justify-center items-center py-2 rounded-md hover:bg-neutral-600'
             onClick={signIn('Google')}
           >
             <span class='mr-2'>
@@ -204,7 +211,7 @@ export default function SignUpCard(props) {
             <p>Continue with Google</p>
           </button>
           <button
-            class='robo bg-neutral-700 mx-5 flex justify-center items-center py-2 rounded-md hover:bg-neutral-600'
+            class='robo bg-neutral-700 mx-8  flex justify-center items-center py-2 rounded-md hover:bg-neutral-600'
             onClick={signIn('Github')}
           >
             <span class='mr-2'>

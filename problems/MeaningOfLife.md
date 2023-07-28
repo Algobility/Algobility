@@ -3,7 +3,7 @@ title: 'The Meaning of Life'
 date: '2022-01-01'
 rank: iron
 credits: 'Ahmad Bilal'
-topic: functions-calling
+topic: Variables
 time: 1
 mem: 156
 tcIn: [1,

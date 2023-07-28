@@ -73,7 +73,7 @@ export default function Search({ probs, rank, topic, chaps }) {
 
         const res = [];
         chaps[santizedVal].forEach((element) => {
-          res.push(element.id);
+          if (element.practicable) res.push(element.title);
         });
 
         console.log(res);
@@ -91,7 +91,7 @@ export default function Search({ probs, rank, topic, chaps }) {
 
   return (
     <NicePage>
-      <div className='md:hidden w-screen h-screen flex justify-center items-center '>
+      <div className=' w-screen h-screen hidden justify-center items-center '>
         <div className='w-4/5 rounded-md bg-backL p-8'>
           <h1 className='robo text-center text-2xl mb-8 text-primc'>
             Please Use a larger screen size to view this page
@@ -102,12 +102,16 @@ export default function Search({ probs, rank, topic, chaps }) {
           </p>
         </div>
       </div>
-      <div className=' min-h-screen h-full mt-32 hidden md:block'>
-        <div className='w-full flex flex-col justify-start items-center rounded-lg '>
-          <div className='bg-backL rounded-lg w-3/4 robo p-16'>
-            <h1 className='jose text-6xl text-primc '>Search Problems</h1>
-            <div className='mt-16 flex justify-center  items-stretch w-full px-4 '>
-              <div className=' w-1/3 px-4'>
+      <div className='block min-h-screen h-full mt-32'>
+        <div className='w-full flex flex-col justify-start items-center rounded-lg  '>
+          <div className='rounded-lg w-3/4 robo py-8 '>
+            <h1 className='mont text-5xl md:text-6xl text-primc '>Search Problemset</h1>
+            <h2 className='mt-3 text-neutral-300'>
+              Practice your implementation skills by solving sample problems. You can find problems from past contests
+              here as well.
+            </h2>
+            <div className='mt-16 flex flex-col gap-4 md:gap-0 md:flex-row justify-center  items-stretch w-full md:px-4 border-b pb-12'>
+              <div className=' md:w-1/3 ,md:px-4'>
                 <Autocomplete
                   options={ranksList}
                   value={rankVal}
@@ -115,7 +119,7 @@ export default function Search({ probs, rank, topic, chaps }) {
                   renderInput={(params) => <TextField {...params} label='Rank' className='bg-backL' />}
                 />
               </div>
-              <div className=' w-1/3 px-4'>
+              <div className=' md:w-1/3 md:px-4'>
                 <Autocomplete
                   options={topicsList}
                   getOptionDisabled={(option) => option === 'Any Rank'}
@@ -126,8 +130,8 @@ export default function Search({ probs, rank, topic, chaps }) {
                   renderInput={(params) => <TextField {...params} label='Topic' className='bg-backL' />}
                 />
               </div>
-              <div className=' w-1/3 px-4'>
-                <Button onClick={handleSearch} className='bg-primc rounded-md w-full text-left h-full'>
+              <div className=' md:w-1/3 md:px-4'>
+                <Button onClick={handleSearch} className='bg-primc rounded-md w-full text-left h-full py-4 md:py-0'>
                   Search
                 </Button>
               </div>
@@ -152,6 +156,13 @@ export default function Search({ probs, rank, topic, chaps }) {
                 <div className='absolute right-12 bg-backL rounded-full h-12 w-12'></div>
               </Link>
             ))}
+            {probs.length == 0 ? (
+              <div className='w-full h-24 robo text-center'>
+                There are no problems for this topic yet. Check again soon!
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </div>

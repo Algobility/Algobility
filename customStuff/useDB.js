@@ -98,11 +98,39 @@ const useUser = () => {
   //init
   const [signOut, loadingSignOut, errorSignOut] = useSignOut(auth);
   const [user, loading] = useAuthState(auth);
-  const [signedState, setSignedState] = useState(true);
+  // const [signedStateState, setSignedStateState] = useState(true);
+
+
+  //Signed state is stored in local storage
+  const getSignedState = async ()=>{
+    const fetchLocal = await localStorage.getItem('signedState');
+    if(fetchLocal != null){
+      return (fetchLocal=='true'?true:false)
+    }
+    else{
+      await localStorage.setItem('signedState', 'false');
+      signOut().then(()=>{
+        setUserData(loadingUserData)
+        localStorage.removeItem('ud');
+      }
+      )
+      .catch(()=>{
+        alert('There was an error signing out')
+      })
+      return false
+    }
+  }
+
+  const setSignedState = async(newVal)=>{
+    await localStorage.setItem('signedState', (newVal?'true':'false'));
+  }
+
   
   const [userData, setUserData] = useState(loadingUserData);
 
+  //update signedstae and clear ud (userdata)
   const logoutUser = async ()=>{
+    let signedState = await getSignedState()
     if(signedState){
       signOut().then(()=>{
         setSignedState(false)
@@ -125,7 +153,7 @@ const useUser = () => {
         setStorage('Users', user.uid, newUserData, false);
         resolve();
       } catch (e) {
-        reject(e);
+        reject(e); 
       }
     });
   };
@@ -160,7 +188,7 @@ const useUser = () => {
     if(!loading && !user) setSignedState(false)
   }, [loading]);
 
-  return { userData, updateUserData, forceFetch, signedState, logoutUser };
+  return { userData, updateUserData, forceFetch, getSignedState, logoutUser };
 };
 
 export { useUser, getStorage, setStorage, existsStorage, mergeObjects, addStorage, queryStorageFieldExists};

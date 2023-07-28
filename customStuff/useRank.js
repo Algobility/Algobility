@@ -19,9 +19,11 @@ import { useUser } from "./useDB";
  const useRank = (userData, signedState, callback)=>{
   
   if(signedState == false){
+    console.log('SINGEDD STATE FALSEEEEEEEEE')
     callback('Iron')
   }
   else{
+    console.log('SINGEDD STATE TRUEEE')
     if (userData.cRank != 'loading') {
         if (userData.cRank == 'unranked') { // use p rank if c unranked
           if (userData.pRank != 'unranked') 

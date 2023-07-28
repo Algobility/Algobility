@@ -9,11 +9,22 @@ import { useUser } from '../../customStuff/useDB';
 import { useRouter } from 'next/router';
 import { FaHome, FaChalkboardTeacher, FaCode } from 'react-icons/fa';
 import { BsConeStriped } from 'react-icons/bs';
+import { RiSwordFill } from 'react-icons/ri';
 
 export default function Nav(props) {
-  const { signedState, userData, logoutUser } = useUser();
+  const { getSignedState, userData, logoutUser } = useUser();
   const [sendPage, setSendPage] = useState('-1');
   const router = useRouter();
+
+  //Get signed state
+  const [signedState, setMebutYouWont] = useState(true);
+  useEffect(() => {
+    const go = async () => {
+      const no = await getSignedState();
+      setMebutYouWont(no);
+    };
+    go();
+  }, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -64,6 +75,12 @@ export default function Nav(props) {
             icon={myDashboardIcon}
             selected={props.selected == 'dashboard'}
             onClicky={() => setSendPage('/dashboard')}
+          />
+          <Navel
+            name='Compete'
+            icon={RiSwordFill}
+            selected={props.selected == 'compete'}
+            onClicky={() => setSendPage('/compete')}
           />
         </div>
       </div>

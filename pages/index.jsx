@@ -22,7 +22,7 @@ export default function Landing() {
       if (window) scrollPosition = window.scrollY || window.pageYOffset;
       if (scrollPosition > 0) {
         setShowScroll(false);
-        console.log('nice');
+        // console.log('nice');
       }
 
       var interval = 500;
@@ -37,9 +37,11 @@ export default function Landing() {
       <NicePage selected='home'>
         <div className='w-full overflow-hidden'>
           <div className='h-full flex-col lg:mt-24 mb-24 '>
-            <div className='flex flex-col justify-center items-center lg:mt-64 mt-64 mb-12'>
+            <div className='flex flex-col justify-center items-center lg:mt-64 mt-52 mb-12 px-8'>
               <Hack text='PROJECT A' classy='text-6xl md:text-9xl text-primc'></Hack>
-              <h2 className='text-xl md:text-xl mt-4 mont'>A begginer-friendly competitive programming platform </h2>
+              <h2 className='text-xl md:text-xl mt-4 mont text-center'>
+                A begginer-friendly competitive programming platform{' '}
+              </h2>
               <Link
                 href='signin'
                 className='mono text-white bg-transparent hover:bg-primc border-primc  rounded-full mt-8 px-8 py-2 hover:px-14 transition-all border '
@@ -51,7 +53,7 @@ export default function Landing() {
             {/* -------------------------------------------------------------------------- */
             /*                                Cards method                                */
             /* -------------------------------------------------------------------------- */}
-            <div className=' flex flex-col lg:flex-row scale-75 items-center justify-center pt-32 lg:gap-12 w-3/4 mx-auto '>
+            <div className=' flex flex-col lg:flex-row scale-75 items-center justify-center pt-28 lg:pt-32 lg:gap-12 w-3/4 mx-auto '>
               {/* <div className='bg-backL w-80 rounded shadow-xl'>
                 <div className='rounded-md bg-primc px-8 py-4 mont text-xl flex justify-start gap-3 items-center'>
                   <svg
@@ -172,7 +174,7 @@ export default function Landing() {
 
           <div className='bg-gradient mb-24'>
             <div className='flex-col lg:grid grid-cols-2 grid-rows-2 my-12 w-4/6 mx-auto'>
-              <div className='h-96 p-8 flex flex-col justify-center'>
+              <div className='md:h-96 pb-8 md:pt-0 md:pb-0 pt-24  px-8 flex flex-col justify-center'>
                 <h1 className='mont text-4xl text-primc pb-2 glow'>Structured Learning Roadmap </h1>
                 <p className='robo text-neutral-300'>
                   Forget trying to learn complex data strucutres and algorithms. Project A divides topics into
@@ -180,7 +182,7 @@ export default function Landing() {
                 </p>
               </div>
               <div className=' flex justify-center items-center gap-4'>
-                <div className='fade-into-bg relative rounded-md   bg-neutral-700'>
+                <div className='fade-into-bg hidden md:block relative rounded-md   bg-neutral-700'>
                   <div className=' border-2 w-full h-full p-16 flex border-neutral-500 justify-center items-center gap-3'>
                     <Image src='/rank-icons/iron.png' width='100' height='100'></Image>
                     <svg
@@ -212,7 +214,7 @@ export default function Landing() {
                   </div>
                 </div>
               </div>
-              <div className=' flex justify-center items-center fade-right'>
+              <div className=' md:flex justify-center items-center fade-right hidden'>
                 <div className='border border-neutral-500 rounded-md bg-neutral-700 w-full h-45 flex justify-start items-center'>
                   <Image src='/rank-icons/iron.png' width='200' height='200' className='rounded-md px-8 py-6'></Image>
                   <div className='flex flex-col justify-start '>
@@ -226,8 +228,8 @@ export default function Landing() {
                 {/* <Image src='/Images/soeasy.png' width='600' height='100' className='rounded-md'></Image> */}
               </div>
               <div className=''>
-                <div className='h-96 p-8 flex flex-col justify-center'>
-                  <h1 className='mont text-4xl lg:text-right text-primc pb-2 glow'>Begginner Friendly </h1>
+                <div className='md:h-96 pb-24 pt-8 md:pb-0 md:pt-0 px-8 flex flex-col justify-center'>
+                  <h1 className='mont text-4xl lg:text-right text-primc pb-2 glow'>Beginner Friendly </h1>
                   <p className='robo text-neutral-300 lg:text-right '>
                     Whether you are a seasoned competitive programmer or completely new to programming, Project A helps
                     you master the sport

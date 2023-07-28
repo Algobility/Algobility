@@ -17,11 +17,18 @@ export default function Settings() {
   const toast = useToast();
   return (
     <NicePage>
+      <div className='flex flex-col justify-center items-center h-screen'>
+        <h1 className='robo text-4xl font-bold'>🚧Under Construction🚧</h1>
+        <h2 className='robo mt-2'>This page is still being developed. We apologize for the inconvenience.</h2>
+      </div>
+      {/*
       <div className=' min-h-screen w-full border border-transparent px-24'>
+
         <div className='mt-44  pb-12 border-b-2 border-neutral-500 '>
           <h1 className='mont text-6xl '>Preferences</h1>
           <h2 className='mont mt-2'>Manage account settings and preferences</h2>
-        </div>
+         </div>
+         
         <div className='mb-24 mt-24 text-xl flex flex-col gap-4 bg-backL rounded-md p-6 '>
           <div className='flex justify-start gap-4'>
             <div className='robo '>Username: </div>
@@ -64,8 +71,9 @@ export default function Settings() {
           }}
         >
           Save Changes
-        </button>
+        </button> 
       </div>
+      */}
     </NicePage>
   );
 }

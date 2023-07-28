@@ -18,7 +18,7 @@ export default function practice({ chaps }) {
   const anytop = ['Any Topic'];
   const [topicsList, setTopicsList] = useState(anytop);
   const [ranksList, setRanksList] = useState(ranks);
-  const { userData, signedState } = useUser();
+  const { userData, getSignedState } = useUser();
   const router = useRouter();
 
   function replaceFirstOccurrence(arr, searchValue, replaceValue) {
@@ -44,11 +44,15 @@ export default function practice({ chaps }) {
   }
 
   useEffect(() => {
-    useRank(userData, signedState, (rank) => {
-      console.log('callback');
-      setRanksList(replaceFirstOccurrence(ranksList, rank, `${rank} (Current Rank)`));
-      setRankVal(`${rank} (Current Rank)`);
-    });
+    const go = async () => {
+      const signedState = await getSignedState();
+      useRank(userData, signedState, (rank) => {
+        console.log('callback got the rank: ', rank);
+        setRanksList(replaceFirstOccurrence(ranksList, rank, `${rank} (Current Rank)`));
+        setRankVal(`${rank} (Current Rank)`);
+      });
+    };
+    go();
   }, [userData]);
 
   useEffect(() => {
@@ -59,7 +63,7 @@ export default function practice({ chaps }) {
 
         const res = [];
         chaps[santizedVal].forEach((element) => {
-          res.push(element.id);
+          if (element.practicable) res.push(element.title);
         });
 
         console.log(res);
@@ -75,14 +79,20 @@ export default function practice({ chaps }) {
     router.push(`/practice/${routeParam}/${topicParam}`);
   };
 
+  const [searchPressed, setSearchPressed] = useState(false);
+
   return (
     <NicePage selected='practice'>
       <div className=' min-h-screen h-full mt-32'>
         <div className='w-full flex flex-col justify-start items-center rounded-lg '>
-          <div className='bg-backL rounded-lg w-3/4 robo p-16'>
-            <h1 className='jose text-6xl text-primc '>Search Problems</h1>
-            <div className='mt-16 flex justify-center  items-stretch w-full px-4 '>
-              <div className=' w-1/3 px-4'>
+          <div className='rounded-lg w-3/4 robo py-8'>
+            <h1 className='mont text-6xl text-primc '>Search Problemset</h1>
+            <h2 className='mt-3 text-neutral-300'>
+              Practice your implementation skills by solving sample problems. You can find problems from past contests
+              here as well.
+            </h2>
+            <div className='mt-16 flex flex-col gap-4 md:gap-0 md:flex-row justify-center  items-stretch w-full md:px-4 '>
+              <div className=' md:w-1/3 ,md:px-4'>
                 <Autocomplete
                   options={ranksList}
                   value={rankVal}
@@ -90,7 +100,7 @@ export default function practice({ chaps }) {
                   renderInput={(params) => <TextField {...params} label='Rank' className='bg-backL' />}
                 />
               </div>
-              <div className=' w-1/3 px-4'>
+              <div className=' md:w-1/3 md:px-4'>
                 <Autocomplete
                   options={topicsList}
                   getOptionDisabled={(option) => option === 'Any Rank'}
@@ -101,10 +111,15 @@ export default function practice({ chaps }) {
                   renderInput={(params) => <TextField {...params} label='Topic' className='bg-backL' />}
                 />
               </div>
-              <div className=' w-1/3 px-4'>
+              <div className=' md:w-1/3 md:px-4'>
                 <Button
-                  onClick={handleSearch}
-                  className='bg-neutral-700 hover:bg-neutral-600 transition-all rounded-md w-full text-left h-full'
+                  onClick={() => {
+                    setSearchPressed(true);
+                    handleSearch();
+                  }}
+                  className={`${
+                    !searchPressed ? 'bg-primc' : 'bg-neutral-600'
+                  } rounded-md w-full text-left h-full py-4 md:py-0`}
                 >
                   Search
                 </Button>

@@ -9,17 +9,21 @@ import { rankDescription, ranks, unpretty } from '../../customStuff/nameMapping'
 import { useDisclosure, ScaleFade } from '@chakra-ui/react';
 
 export default function LearnIndex({ chaps }) {
-  let { userData, signedState } = useUser();
+  let { userData, getSignedState } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [rank, setRank] = useState('loading');
 
   console.log(isOpen);
 
   useEffect(() => {
-    useRank(userData, signedState, (newRank) => {
-      setRank(newRank);
-    });
-  }, [userData, signedState]);
+    const go = async () => {
+      const signedState = await getSignedState();
+      useRank(userData, signedState, (newRank) => {
+        setRank(newRank);
+      });
+    };
+    go();
+  }, [userData]);
 
   return (
     <>
