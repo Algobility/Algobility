@@ -31,7 +31,7 @@ export default function SignUpCard(props) {
   const loginOldUser = async () => {
     console.log('Welcome back, ');
     toast({
-      title: 'Account creation Succeeded.',
+      title: 'Account sign in Succeeded.',
       description: 'You will be redirected to your dashboard shortly',
       status: 'success',
       duration: 6000,

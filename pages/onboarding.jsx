@@ -37,8 +37,8 @@ export default function onboarding() {
   /* -------------------------------------------------------------------------- */
 
   const [text, helper] = useTypewriter({
-    // words: ['Looks like you are new here ...', 'Welcome to Project A ...', 'Lets get started'],
-    words: ['L'],
+    words: ['Looks like you are new here ...', 'Welcome to Project A ...', 'Lets get started'],
+    // words: ['L'],
     loop: 1,
     typeSpeed: 10,
     deleteSpeed: 5,
@@ -178,11 +178,11 @@ export default function onboarding() {
 
   return (
     <NicePage className='h-full'>
-      <Center className='min-h-screen h-full flex flex-col mt-24 '>
+      <Center className='min-h-screen--32 h-full flex flex-col mt-24 '>
         <h1 className='mono text-4xl mb-12'>{text}|</h1>
         {displayCard == 'Step 1' && (
           <SlideFade in={displayCard} className='w-full flex justify-center '>
-            <Card className=' robo mt-8 mx-2 w-full md:w-1/2 rounded-lg' bg='backL'>
+            <Card className=' robo mt-8 mx-2 w-full md:w-1/2 rounded-lg p-8' bg='backL'>
               <CardHeader className='text-3xl font-bold w-full'>
                 <div className='flex items-center'>
                   <Icon as={TbHexagonNumber1} color='primc' className='mr-4 scale-150'></Icon>
@@ -194,6 +194,7 @@ export default function onboarding() {
                 <div className='w-full flex justify-start items-center mt-6'>
                   <span className='mr-2'>@</span>
                   <Input
+                    className='py-1 px-3'
                     value={usernameInputValue}
                     onChange={handleInputChange}
                     placeholder='Enter your username'
@@ -211,7 +212,7 @@ export default function onboarding() {
                   </Text>
                 )}
                 <Button
-                  className='mt-8 bg-neutral-700'
+                  className='mt-8 bg-neutral-700 hover:bg-neutral-600 px-4 py-2 rounded-md'
                   onClick={handleContinue}
                   isLoading={isContinueBtnLoading}
                   isDisabled={!isusernameValid}
@@ -224,7 +225,7 @@ export default function onboarding() {
         )}
         {displayCard == 'Step 2' && (
           <SlideFade in={displayCard} className='w-full flex justify-center '>
-            <Card className=' robo mt-8 mx-2 w-full md:w-1/2 rounded-lg h-full' bg='backL'>
+            <Card className=' robo mt-8 p-8 mx-2 w-full md:w-1/2 rounded-lg h-full' bg='backL'>
               <CardHeader className='text-3xl font-bold w-full'>
                 <div className='flex items-center'>
                   <Icon as={TbHexagonNumber2} color='primc' className='mr-4 scale-150'></Icon>
@@ -261,7 +262,10 @@ export default function onboarding() {
                   </Carousel>
                 </div>
 
-                <Button className='mt-8 mb-0 bg-neutral-700' onClick={handleFinish}>
+                <Button
+                  className='mt-8 px-4 py-2 mb-0 bg-neutral-700 hover:bg-neutral-600 rounded-md'
+                  onClick={handleFinish}
+                >
                   Finish
                 </Button>
               </CardBody>
