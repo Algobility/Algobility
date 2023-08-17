@@ -51,8 +51,6 @@
   scroll-behavior: smooth;
 }
 
-
-
 .top-h{
   top: 80vh;
 }
@@ -142,7 +140,8 @@ h1{
 }
 
 .big-shadow{
-  box-shadow: 0px 0px 50px 50px #1f1f1f;
+  /* box-shadow: 0px 0px 50px 50px #1f1f1f; */
+  box-shadow: 0px -20px 40px 80px #1f1f1f;
 } 
 .mid-shadow{
   box-shadow: 0px 0px 10px 10px #1f1f1f;
@@ -216,3 +215,51 @@ h1{
   @apply mt-2 rounded-md bg-backL px-2 py-1;
 }
 
+
+.customScroll{
+
+
+      /* width */
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 10px;
+      margin: 5px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: #4d4d4d;
+      border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+}
+
+/* width */
+&::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+&::-webkit-scrollbar-track {
+  background: #1f1f1f;
+}
+
+/* Handle */
+&::-webkit-scrollbar-thumb {
+  background: #4d4d4d;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+&::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

@@ -167,11 +167,9 @@ const useUser = () => {
       try {
         const fetchLocal = await localStorage.getItem('ud');
         if (fetchLocal != null && !forceFetch) {
-          console.log('got from loacl', JSON.parse(fetchLocal));
           setUserData(JSON.parse(fetchLocal));
         } else {
           const res = await getStorage('Users', user.uid);
-          console.log('got from firestore: ', res);
           setUserData(res);
           localStorage.setItem('ud', JSON.stringify(res));
         }

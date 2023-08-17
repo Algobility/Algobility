@@ -25,19 +25,19 @@ int main() {
 
 In this example, we first use `std::cout <<` to tell the user what to input. This is known as a **prompt**. We then use `std::cin >>` to get input from the user and store it in the `number` variable.
 
-Note: In competitive programming solves, prompts are not used as the solves are graded by a computer (all inputs are fed by a grading machine). However, these guides will often contain code snippets in which prompts were used to make the code more understandable.
+Note: In competitive programming solves, prompts are not used as the solves are graded by a computer (all inputs are fed by a grading machine). However, these guides will sometimes contain code snippets in which prompts were used to make the code more understandable.
 
 # `std` namespace and the `>>` operator
 
-Until now I have been referring to `std::cout <<` as one keyword. However, this is a partial lie as there are many parts to this phrase. First there is the `std::`. C++ allows you to group code keywords under a label known as a namespace. This helps avoid naming clashes. For example, if two variables have the same name but are declared in different namespaces, the compiler will not complain. If you recall, the `cout` keyword was defined in some pre-written code inside of the header file we always include at the top of our code. That header file defines the `cout` keyword in the `std` namespace so that if you ever create a variable or other keyword called `cout`, it will not cause conflict with the `cout` used to output text . This is why we always have to put `std::` before `cout` in our codes. We have to specify to the compiler that we are talking about the `cout` in the `std` namespace whenever outputting text.
+Until now I have been referring to `std::cout <<` as one keyword. However, this is a partial lie as there are many parts to this phrase. First there is `std::`. C++ allows you to group code keywords under a label known as a namespace. This helps avoid naming clashes. For example, if two variables have the same name but are declared in different namespaces, the compiler will not complain. If you recall, the `cout` keyword was defined in some pre-written code inside of the header file we always include at the top of our code. That header file defines the `cout` keyword in the `std` namespace so that if you ever create a variable or other keyword called `cout`, it will not cause conflict with the `cout` used to output text . In other words, we have to specify to the compiler that we are talking about the `cout` in the `std` namespace whenever we output text as it was defined in the `std` namespace.
 
-However, realistically, we will never name our variable something like `cout` and it is quite annoying to have to write `std::` before every `cin` or `cout`. Therefore, most competitive programmers simply add the following line at the top of their code
+However, practically, competitive programmers know to not name their variables something like `cout`. It also becomes quite tedious to write `std::` before each occurance of `cout` or `cin`. Therefore, most competitive programmers simply add the following line at the top of their code
 
 ```
 using namespace std;
 ```
 
-This tells the compiler to consider everything as part of the `std` namespace. In other words, the compiler simply attaches an invisible `std::` before every variable or keyword. With this line, I no longer need to write `std::` before `cout`. On the flip side, now if I try to declare a variable by the name of `cout`, the compiler **will** get confused since all variables will automatically become part of the std namespace. However, this makes the code much easier to write and read. The example above can be simplified to
+This tells the compiler to consider everything as part of the `std` namespace. In other words, the compiler simply attaches an invisible `std::` before every variable or keyword. With this line, a programmer no longer needs to write `std::` before `cout`. On the flip side, now if a programmer try to declare a variable by the name of `cout`, the compiler **will** give an error since all variables will automatically become part of the std namespace.
 
 ```
 #include <iostream>

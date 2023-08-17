@@ -132,7 +132,7 @@ export default function onboarding() {
     // Add more ranks as needed
   ];
 
-  const [slideIndex, setSlideIndex] = useState(0);
+  const [slideIndex, setSlideIndex] = useState('iron');
   const handleChangeSlide = (index) => {
     setSlideIndex(ranks[index].name.toLowerCase());
   };
@@ -151,6 +151,7 @@ export default function onboarding() {
     }
 
     console.log('slide index is', slideIndex);
+    localStorage.removeItem('ud');
     await setStorage('Users', user.uid, {
       username: usernameInputValue,
       pRank: slideIndex,

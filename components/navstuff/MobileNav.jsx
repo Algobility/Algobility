@@ -14,7 +14,7 @@ function myDashboardIcon(props) {
       <svg
         stroke='currentColor'
         fill='currentColor'
-        stroke-width='0'
+        strokeWidth='0'
         viewBox='0 0 24 24'
         height='1em'
         width='1em'
@@ -38,7 +38,6 @@ export default function MobileNav(props) {
   const router = useRouter();
   useEffect(() => {
     if (sendPage != '-1') router.push(sendPage);
-    console.log(props);
   }, [sendPage]);
   return (
     <>
@@ -50,13 +49,13 @@ export default function MobileNav(props) {
             variant='ghost'
             icon={<HamburgerIcon />}
             onClick={handle}
-            className='scale-150 border rounded-full big-shadow bg-back'
+            className='scale-150 border rounded-full bg-back'
           />
         </div>
       </div>
       <Slide direction='right' in={isOpen} style={{ zIndex: 49 }}>
         <Box color='white' p='14' className='bg-neutral-700' rounded='md' shadow='md' h='full'>
-          <CloseButton boxSize='14' mt='0' onClick={onToggle} className='scale-150' />
+          <CloseButton boxSize='14' mt='0' onClick={onToggle} className='scale-150 border rounded-full' />
           <div className='flex flex-col justify-start items-start h-1/2 mt-24'>
             <Mnavel name='Home' icon={FaHome} selected={props.selected == 'home'} onClicky={() => setSendPage('/')} />
             <Mnavel

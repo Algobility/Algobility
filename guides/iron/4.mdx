@@ -9,7 +9,7 @@ practicable: true
 
 In programming, a variable is a symbolic name that represents a value stored in the memory of the computer. Think of it as a container that holds a particular piece of data, which can be a number, text, or any other type of information. If you want your computer to remember anything, you have to put it in a variable. While they take inspiration from variables in math, it's better to avoid confusion by not connecting the two for the time being.
 
-In C++, to declare a variable (i.e. create a container), you need to specify its data type (number, text, etc.) followed by the variable name (a label on the container which can be used to reference the container later on). For example:
+In C++, to declare a variable (i.e. create a container), you need to specify its data type (e.g. number, text, etc.) followed by the variable name (a label on the container which can be used to reference the container later on). For example:
 
 ```c++
 #include <iostream>
@@ -20,9 +20,9 @@ int main()
 }
 ```
 
-In this example I have used the `int` data type which is used to store integers. In other words, I have told the compiler that the container I am about to create will only store numerical data with whole numbers. This is important so that the compiler can make enough space in the memory of the computer to store this information.
+In this example I have used the `int` data type which is used to store integers. In other words, I have told the compiler that the container I am about to create will only store numerical data with whole numbers.
 
-Notice how I have also added a semi-colon right after the declaration because declaring a variable is an operation and in C++, every operation (e.g. declaring a variable, doing some arithmetic, spitting some output text to the CLI) must end with a semi-colon.
+Notice how I have also added a semi-colon right after the declaration because declaring a variable is an operation and in C++, every statement must end with a semi-colon.
 
 Let’s look at some more examples.
 
@@ -38,7 +38,7 @@ int main(){
 
 Here I have also added some English text prefixed with a double slash. This is known as a comment. All text that is preceded by a double slash (in the same line) is ignored by the compiler (does not count as part of the actual code) and can be used for adding notes to make code more easier to understand for other humans.
 
-You can also assign values to variables (i.e. put some data inside the container) when you declare them by using the assignment operator `=` (not to be confused with the equal sign used in math):
+You can also assign values to variables (i.e. put some data inside the container) when you declare them by using the assignment operator `=` (not to be confused with the equal sign used in math). This is known as **initialization**:
 
 ```
 #include <iostream>
@@ -50,9 +50,9 @@ int main()
 }
 ```
 
-Note: I have used some weird spacing in the last line to demonstrate how the compiler eventually ignores the number of spaces. You can put as many or as little spaces between words. Between symbols, spaces are optional.
+In programming terminology, a **literal** is something that can be stored inside a variable. All numbers, characters, and pieces of text (as will become clear in the next rank) are considered literals.
 
-Note: The character
+Note: I have used some weird spacing in the last line to demonstrate how the compiler eventually ignores the number of spaces. You can put as many or as little spaces between words. Between symbols, spaces are optional.
 
 # Rules for variables names
 
@@ -66,7 +66,7 @@ There are certain rules that you must follow when choosing a variable name.
 
 # Using Variables
 
-Whenever a variable name is written in code, the compiler simply replaces the variable name with the value of the variable just before executing the program. For example
+Whenever a variable name is written in code, the compiler replaces the variable name with the value of the variable just before executing the statement. For example
 
 ```c++
 #include <iostream>
@@ -90,7 +90,7 @@ By default C++ comes with a handful of data types. Here are the most common
 
 # Operators
 
-C++ also allows you to put some special characters (known as **operators**) between two different values (or variables) in order to do some arithmetic.
+C++ also allows you to place some special characters (known as **operators**) between two different values (or variables) in order to do some arithmetic.
 
 - **+ (Addition)**: Adds two values together.
 - \- **(Subtraction)**: Subtracts one value from another.
@@ -129,7 +129,7 @@ int main()
 }
 ```
 
-You can also update a variable using arithmetic operators. For example:
+Since operators can be used wherever normal numbers can be used, you can also update a variable using arithmetic operators. For example:
 
 ```
 #include <iostream>

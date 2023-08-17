@@ -1,13 +1,17 @@
 ---
-title: 'The Meaning of Bronze'
+title: 'The Scary Question'
 date: '2022-01-01'
-rank: bronze
+rank: iron
 credits: 'Ahmad Bilal'
-topic: arrays
+topic: Variables
 time: 1
 mem: 156
-tcIn: ['1 2 3\n3 4 5', '1 2 3\n3 4 5', '1 2 3\n3 4 5', '1 2 3\n3 4 5']
-tcOut: [2, 3, 4, 5]
+tcIn: [1,
+2,
+3
+,4]
+tcOut: [2,3,4,5]
+invisible: true
 ---
 
 # Problem Explanation

@@ -8,10 +8,50 @@ number: 1
 
 # Motivation
 
-There is no Motivation
-
-# Code
+Let's say you are writing some code that takes the average of 3 numbers. The code may look something like this:
 
 ```
-int arr[10] = [0,1,0,4]
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int number1;
+    int number2;
+    int number3;
+    cin >> number1 >> number2 >> number3;
+    cout << "\nThe average of the three numbers is: " <<  (number1+number2+number3)/3
+}
+```
+
+This code works, but if we wanted to do the same with more numbers, this approach would soon become impractical since we have to create a seperate variable for each number.
+
+Arrays help solve this by offering us a way to store a fixed-size list of variables. These variables are known as elements. Elements must be of the same type. They are identified by their position in the array rather than by variable names.
+
+To declare an array, define the variable type, specify the name of the array followed by square brackets and specify the number of elements it should store:
+
+```
+string myFavouriteNumber[4];
+```
+
+Similar to normal variables, arrays can be initialized with some values
+
+```
+string myFavouriteNumber[4] = {1,4,5,9};
+```
+
+# Accessing Array Elements
+
+Array elements are referred to by their index or position in the array. The first element in an array has an index of 0, the second has an index of 1, and so on. To access an element, write the name of the array followed by the index in square-brackets
+
+```
+myFavouriteNumber[2]
+```
+
+Array elements can be treated just like variables. We can assign and retreive their values like ordinary variables.
+
+```
+myFavouriteNumber[0] = 1;       //changes first element to 1
+myFavouriteNumber[1] = 3;       //changes second element to 3
+myFavouriteNumber[2] = 5;       //changes third element to 5
+cout << myFavouriteNumber[2];   //should output 5
 ```

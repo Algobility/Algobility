@@ -49,9 +49,10 @@ export default function SignUpCard(props) {
       {
         name: user.displayName,
         email: user.email,
-        handle: `Please-change-your-handle-${user.email}`,
-        pRank: `unranked`,
+        pRank: `iron`,
+        username: `Please-change-your-handle-${user.email}`,
         cRank: `unranked`,
+        rp: 0,
       },
       false
     );

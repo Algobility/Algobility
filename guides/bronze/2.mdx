@@ -1,17 +1,104 @@
 ---
-title: 'Complex Operations'
-description: 'Learn where and how to use operations such as modulus and integer division'
+title: 'Linear Search & Big O Notation'
+description: 'Search through an array efficiently'
 date: '2022-01-01'
 credits: Ahmad Bilal
-number: 3
+number: 2
 ---
 
-# Motivation
+# Looping Through Arrays
 
-There is no Motivation
-
-# Code
+Often times when working with arrays, you will come across situations where you need to look at every element in an array. For loops are great for this purpose. Here is an example in which we look at every element in an array and simply output its value.
 
 ```
-int arr[10] = [0,1,0,4]
+for (int i = 0; i < 4; ++i) {   //loop 4 times (since the array has a size of 4)
+    cout << myFavouriteNumber[i] << " "; // Print each element
+}
 ```
+
+Here, we create a for loop that executes `cout << myFavouriteNumber[i]` 4 times. On the first iteration, i is 0 and so the first element is outputted. On the second iteration, i is 1 and so the second element is outputted. This process continues until all 4 elements are outputted.
+
+# Searching for an element
+
+Another common occurance when working with arrays is searching for a specific value amongst all array elements. Here is one method of doing so:
+
+```
+int numbers[] = {12, 45, 7, 23, 56, 89, 34};
+
+
+int target = 56; // The number you're looking for
+bool found = false; // To keep track if the element is found
+
+for (int i = 0; i < 7; ++i) {
+    if (numbers[i] == target) {
+        found = true;
+    }
+}
+
+if(found){
+    cout << "Found";
+}
+else{
+    cout << "Not found";
+}
+```
+
+# Efficiency
+
+Computers are extremely fast at executing all the statements we have looked at thus far. However, they cannot perform these complex operations instantly. While the above code only takes milliseconds to execute right now, if we bump up the size of the array to a few million elements, this same code may take a handful of seconds. In competitive programming, most problems have a limit to the number of seconds a program can take to execute. This forces programmers to be creative in their solves in order to reduce the number of operations their code performs, and thus reduce the time their code takes to execute.
+
+Let's look at a way to make the previous code much faster. Notice how our for loop runs through every element of the `number[]` array, even if it has found the target element early on. We can reduce the number of operations this code has to perform by making sure the for loop automatically ends as soon as the target element is found. We can do this like so:
+
+```
+for (int i = 0; i < 7 && !found; ++i) {
+    if (numbers[i] == target) {
+        found = true;
+    }
+}
+```
+
+# Efficiency
+
+Let's say the following problem comes in a contest:
+
+\_\_
+Given a sequence of `n` numbers, return the index of the first number that is divisible by 3.
+
+## Input Format
+
+The first line will contain the number `n`
+The second line will contain all `n` numbers, seperated by spaces
+
+## Example Test case 1
+
+6
+1 4 3 2 5 9
+\_\_
+
+Let's decipher this problem statement. We are givendddddddddddddddd
+
+A simple response to this problem would be:
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int numbers[10];        //create an array of 10 numbers
+    for(int i = 0; i < 10; i++){
+        cin >> numbers[i];      //one by one, put all numbers into the correct element of numbers
+    }
+
+    bool found = false;  //this keeps track of wheather we have found the number or not (since we only want to output the first occurance)
+    for(int i = 0; i<10; i++){
+        if(numbers[i]%3 && !found){ //if the number is divisible by 3 AND we haven't found the first occurance yet
+            cout << i;  //output index
+            found = true;
+        }
+    }
+}
+```
+
+This program would loop over all the numbers and only output a number if it is divisible by 3 and if a previous number was not already outputted (since the problem statement specified that only the first occurance of such a number should be outputted)
+
+This program works fine, but it may encounter something known as a TLE (Time Limit Exceeded) verdict on some of the test cases. This is because,

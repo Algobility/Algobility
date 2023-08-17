@@ -1,18 +1,19 @@
 ---
-title: 'The Meaning of Bronze'
+title: 'The Funny Question'
 date: '2022-01-01'
-rank: bronze
+rank: iron
 credits: 'Ahmad Bilal'
-topic: arrays
+topic: Variables
 time: 1
 mem: 156
-tcIn: ['1 2 3\n3 4 5', '1 2 3\n3 4 5', '1 2 3\n3 4 5', '1 2 3\n3 4 5']
-tcOut: [2, 3, 4, 5]
+tcIn: [2, 3, 4, 5, 6, 7, 8, 9, 10]
+tcOut: [2, 3, 4, 5, 6, 7, 8, 9, 10]
+invisible: true
 ---
 
 # Problem Explanation
 
-What is the Meaning of Life? This is, no doubt, an incredibily difficult question to answer. The question of the meaning of life has been a subject of contemplation and debate throughout human history. Philosophers, theologians, and thinkers from various backgrounds have offered diverse perspectives on this profound inquiry. Existentialism, for instance, posits that the meaning of life is not predetermined or bestowed upon individuals by external forces, but rather it is something each person must create for themselves. According to existentialist philosophers like Jean-Paul Sartre and Albert Camus, life is inherently devoid of inherent meaning, and it is up to individuals to infuse their lives with purpose and significance through their actions and choices.
+What is the Meaning of Funny? This is, no doubt, an incredibily difficult question to answer. The question of the meaning of life has been a subject of contemplation and debate throughout human history. Philosophers, theologians, and thinkers from various backgrounds have offered diverse perspectives on this profound inquiry. Existentialism, for instance, posits that the meaning of life is not predetermined or bestowed upon individuals by external forces, but rather it is something each person must create for themselves. According to existentialist philosophers like Jean-Paul Sartre and Albert Camus, life is inherently devoid of inherent meaning, and it is up to individuals to infuse their lives with purpose and significance through their actions and choices.
 
 On the other hand, religious beliefs offer a different lens through which to explore the meaning of life. Many religious traditions posit that life is a gift from a higher power and that its purpose is intricately tied to fulfilling a divine plan. For example, in Christianity, believers may find the meaning of life in cultivating a relationship with God, following moral principles, and striving for eternal salvation. Similarly, in Buddhism, the meaning of life is often sought through the pursuit of enlightenment and liberation from the cycle of birth and death.
 

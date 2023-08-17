@@ -40,6 +40,19 @@ export default function viewQ({postData}) {
   // const [tcIn, setTcIn] = useState(Array.from({ length: 10 }, (_, index) => `loading ${index}`));
   // const [tcOut, setTcOut] = useState(Array.from({ length: 10 }, (_, index) => `loading ${index}`));
 
+  if(postData === 'hidden'){
+    return (
+      <NicePage>
+        <div className='h-screen flex flex-col justify-center items-center'>
+      <h1 className='hidden md:block robo text-4xl px-8 text-center '>⚠️You should'nt be here⚠️</h1>
+      <h1 className='md:hidden robo text-4xl px-8 text-center '>You should'nt be here</h1>
+      <h2 className='robo text-lg mt-2 px-8 text-neutral-400 text-center'>This is a hidden problem. If you got here, chances are you mistyped the correct URL of the problem you were trying to access.</h2>
+      <a className='mt-10 robo bg-primc rounded-md px-4 py-2' href='/practice'>Back to all questions</a>
+        </div>
+      </NicePage>
+    )
+  }
+
   return (
     <NicePage>
       <div className='flex justify-start  w-3/4'>

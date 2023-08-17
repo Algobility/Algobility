@@ -55,7 +55,7 @@ export function getFilteredPostData(rank, topic) {
     }
 
     // Check if the problem matches the given rank and credit
-    if (postData.rank === rank && (postData.topic === topic || topic == 'anytopic')) {
+    if (postData.rank === rank && (postData.topic === topic || topic == 'anytopic') && !postData.invisible) {
       filteredData.push(postData)
       counter++
     }
@@ -87,12 +87,18 @@ export function getAllPostIds() {
   })
 }
 
-export async function getPostData(id) {
+export async function getPostData(id, xray=false) {
   const fullPath = path.join(postsDirectory, `${id}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
 
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents)
+
+
+  //If a question is hidden and the caller does not have xray powers, don't return the question content
+  if(matterResult.data.invisible && !xray){
+    return 'hidden'
+  }
 
   // Use remark to convert markdown into HTML string
   const processedContent = await remark()
@@ -100,7 +106,9 @@ export async function getPostData(id) {
     .process(matterResult.content)
   const contentHtml = processedContent.toString()
 
-  // Combine the data with the id and contentHtml
+
+  
+  // Combine the data with the id and contentHtml and return
   return {
     id,
     contentHtml,
