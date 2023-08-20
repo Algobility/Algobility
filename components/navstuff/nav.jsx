@@ -2,13 +2,14 @@ import styles from '../cssModules/nav.module.css';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@chakra-ui/react';
 import Navel from './navel';
+import Link from 'next/link';
 
 import { Menu, MenuItem } from '@mui/material';
 
 import { useUser } from '../../customStuff/useDB';
 import { useRouter } from 'next/router';
-import { FaHome, FaChalkboardTeacher, FaCode } from 'react-icons/fa';
-import { BsConeStriped } from 'react-icons/bs';
+import { FaHome, FaChalkboardTeacher, FaBook } from 'react-icons/fa';
+import { AiFillFileText } from 'react-icons/ai';
 import { RiSwordFill } from 'react-icons/ri';
 
 export default function Nav(props) {
@@ -58,22 +59,16 @@ export default function Nav(props) {
         >
           <Navel name='Home' icon={FaHome} selected={props.selected == 'home'} onClicky={() => setSendPage('/')} />
           <Navel
-            name='Train'
-            icon={BsConeStriped}
+            name='Guides'
+            icon={FaBook}
             selected={props.selected == 'learn'}
             onClicky={() => setSendPage('/learn')}
           />
-          {/* <Navel
+          <Navel
             name='Practice'
-            icon={FaCode}
+            icon={myDashboardIcon}
             selected={props.selected == 'practice'}
             onClicky={() => setSendPage('/practice')}
-          /> */}
-          <Navel
-            name='Dashboard'
-            icon={myDashboardIcon}
-            selected={props.selected == 'dashboard'}
-            onClicky={() => setSendPage('/dashboard')}
           />
           <Navel
             name='Compete'
@@ -85,34 +80,15 @@ export default function Nav(props) {
       </div>
       <div className='fixed top-8 right-16 flex justify-end items-center h-8 '>
         {signedState ? (
-          <div className=' relative'>
-            <button
-              className=' robo bg-backL text-neutral-200 rounded-full shadow-xl px-6 py-2 hover:bg-primc transition-all'
-              onKeyDown={(e) => {
-                if (e.key === ' ') {
-                  e.preventDefault();
-                }
-              }}
-              onClick={handleClick}
+          <div className='relative'>
+            <Link
+              href='/dashboard'
+              className={`robo text-neutral-200 rounded-full shadow-xl px-6 py-2 hover:bg-primc ${
+                props.selected == 'dashboard' ? 'bg-primc' : 'bg-backL'
+              } transition-all`}
             >
-              My Account
-            </button>
-            <Menu
-              id='account'
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose()}
-              MenuListProps={{
-                'aria-labelledby': 'basic-button',
-              }}
-              className='mt-4 ml-2 text-right'
-            >
-              <MenuItem onClick={handleClose('profile')}>View Profile</MenuItem>
-              <MenuItem onClick={handleClose('settings')}>Settings</MenuItem>
-              <MenuItem onClick={handleClose('logout')} className='text-red-400'>
-                Logout
-              </MenuItem>
-            </Menu>
+              Dashboard
+            </Link>
           </div>
         ) : (
           <button

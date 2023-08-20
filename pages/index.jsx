@@ -1,17 +1,10 @@
-import Blob from '../components/blob.jsx';
-import Nav from '../components/navstuff/nav.jsx';
-import CircleBtn from '../components/circleBtn.jsx';
 import Hack from '../components/hack.jsx';
-import { Button, Center, Tooltip, Heading, Stack, Fade, Slide, IconButton } from '@chakra-ui/react';
-import { useEffect, useRef, useState } from 'react';
+import { Slide } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import NicePage from '../components/nicepage.jsx';
-import ScrollProgress from '../components/ScrollProgress.jsx';
-import Head from 'next/head.js';
-import Script from 'next/script.js';
-import Tilty from 'react-tilty';
 import Link from 'next/link.js';
 import Image from 'next/image.js';
-import useIntersectionObserver from '../customStuff/useIntersectionObserver.js';
+import Head from 'next/head';
 
 export default function Landing() {
   const [showScroll, setShowScroll] = useState(true);
@@ -38,7 +31,7 @@ export default function Landing() {
         <div className='w-full overflow-hidden'>
           <div className='h-full flex-col lg:mt-24 mb-24 '>
             <div className='flex flex-col justify-center items-center lg:mt-64 mt-52 mb-12 px-8'>
-              <Hack text='PROJECT A' classy='text-6xl md:text-9xl text-primc'></Hack>
+              <Hack text='.DOT/SLASH' classy='text-6xl md:text-9xl text-primc'></Hack>
               <h2 className='text-xl md:text-xl mt-4 mont text-center'>
                 A begginer-friendly competitive programming platform{' '}
               </h2>
@@ -70,7 +63,7 @@ export default function Landing() {
                   <span>Strucuted Progression</span>
                 </div>
                 <div className='p-8 robo text-md'>
-                  With a clearly laid out roadmap, <br /> <br /> Project A helps you master the sport with ease
+                  With a clearly laid out roadmap, <br /> <br /> DotSlash helps you master the sport with ease
                 </div>
               </div>
               <div className='bg-backL w-80 rounded shadow-xl'>
@@ -95,7 +88,7 @@ export default function Landing() {
                   or completely new to programming,
                   <br />
                   <br />
-                  Project A is lets you hone your skill
+                  DotSlash is lets you hone your skill
                 </div>
               </div>
               <div className='bg-backL w-80 rounded shadow-xl'>
@@ -177,7 +170,7 @@ export default function Landing() {
               <div className='md:h-96 pb-8 md:pt-0 md:pb-0 pt-24  px-8 flex flex-col justify-center'>
                 <h1 className='mont text-4xl text-primc pb-2 glow'>Structured Learning Roadmap </h1>
                 <p className='robo text-neutral-300'>
-                  Forget trying to learn complex data strucutres and algorithms. Project A divides topics into
+                  Forget trying to learn complex data strucutres and algorithms. DotSlash divides topics into
                   well-organized ranks to help you grasp topics with ease.
                 </p>
               </div>
@@ -231,7 +224,7 @@ export default function Landing() {
                 <div className='md:h-96 pb-24 pt-8 md:pb-0 md:pt-0 px-8 flex flex-col justify-center'>
                   <h1 className='mont text-4xl lg:text-right text-primc pb-2 glow'>Beginner Friendly </h1>
                   <p className='robo text-neutral-300 lg:text-right '>
-                    Whether you are a seasoned competitive programmer or completely new to programming, Project A helps
+                    Whether you are a seasoned competitive programmer or completely new to programming, DotSlash helps
                     you master the sport
                   </p>
                 </div>
@@ -243,13 +236,13 @@ export default function Landing() {
           /*                                   Socials                                  */
           /* -------------------------------------------------------------------------- */}
 
-          <div className=' mb-36 mt-24 w-3/4 mx-auto grid grid-cols-2 h-96 gap-12'>
+          <div className=' mb-36 mt-24 w-3/4 mx-auto flex flex-col lg:grid grid-cols-2 h-96 gap-12'>
             <div className='flex justify-center flex-col  robo py-8'>
-              <h2 className='text-6xl mb-4 mont'>
+              <h2 className='text-6xl mb-4 mont lg:text-left text-center'>
                 {' '}
                 <span className='text-primc  underline'>Community</span> Centered
               </h2>
-              <p className='text-neutral-400'>
+              <p className='text-neutral-400 lg:text-left text-center'>
                 We value our community over everything. It's what drives us forward. Follow our socials and join our
                 discord to be a part of our thriving community.
               </p>
@@ -309,26 +302,30 @@ export default function Landing() {
             <div className='bg-backL border border-neutral-600 py-8 px-12 robo rounded-md'>
               <h2 className='text-4xl text-center mb-4'>Join Us</h2>
               <p className='text-center text-neutral-400'>
-                Project A is a non-profit project aimed to promote competitive programming. Wheather you are a web
+                DotSlash is a non-profit DotSlashimed to promote competitive programming. Wheather you are a web
                 developer, project manager, or problem-setter, we would love to have you on our journey.{' '}
               </p>
-              <button className='bg-neutral-700 mt-12 w-full px-4 py-2  hover:bg-primc transition-all mono rounded-md'>
+              <a
+                href='https://forms.gle/wvhfa1ncoiSkqtwE8'
+                target='_blank'
+                className='bg-neutral-700 mt-12 w-full px-4 py-2 block hover:bg-primc transition-all mono rounded-md text-center cursor-pointer'
+              >
                 .joinUs()
-              </button>
+              </a>
             </div>
             <div className='bg-backL border border-neutral-600 py-8 px-12 robo rounded-md'>
               <h2 className='text-4xl text-center mb-4'>Support Us</h2>
               <p className='text-center text-neutral-400'>
-                Being non-profit, Project A is supported financially only by its community. To keep our servers running
+                Being non-profit, DotSlash is supported financially only by its community. To keep our servers running
                 and services online, we need your help.
               </p>
-              <button className='bg-neutral-700 mt-12 w-full px-4 py-2  hover:bg-primc transition-all mono rounded-md'>
+              <a className='bg-neutral-700 mt-12 w-full px-4 py-2 block  hover:bg-primc transition-all mono rounded-md text-center cursor-pointer '>
                 .donateNow()
-              </button>
+              </a>
             </div>
           </div>
           <div className='bg-neutral-800 w-full px-8 py-8 robo flex flex-col text-center justify-start gap-2 text-neutral-600 '>
-            <h3>©️2023 Project A. Founded with ❤️ by Ahmad Bilal</h3>
+            <h3>©️2023 DotSlash</h3>
             <h3>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</h3>
           </div>
           <Slide in={showScroll} direction='bottom'>
@@ -440,7 +437,7 @@ export default function Landing() {
                       or completeley new to programming
                       <br />
                       <br />
-                      Project A lets you hone your skill
+                      DotSlash lets you hone your skill
                     </p>
                   </div>
                 </div>

@@ -16,7 +16,7 @@ export default function Settings() {
 
   const toast = useToast();
   return (
-    <NicePage>
+    <NicePage title='Settings'>
       <div className='flex flex-col justify-center items-center h-screen'>
         <h1 className='robo text-4xl font-bold'>🚧Under Construction🚧</h1>
         <h2 className='robo mt-2'>This page is still being developed. We apologize for the inconvenience.</h2>

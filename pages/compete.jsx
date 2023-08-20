@@ -5,18 +5,18 @@ import Table from '../components/table';
 export default function Compete({ contests }) {
   console.log(contests);
   return (
-    <NicePage selected='compete'>
+    <NicePage selected='compete' title='Contest Schedule'>
       <div className='h-screen flex justify-center items-center '>
         <div className='w-1/2 h-full  flex flex-col justify-center items-center'>
           <div className='w-2/3'>
             <h1 className='robo text-primc text-5xl'>Contest Schedule</h1>
             <h3 className='robo text-neutral-400  mt-2'>
-              Contests are held every few days at specific times. They contain 2-4 problems. Solve the problems and get
-              as many test cases correct to promote to the next rank.
+              Contests are held every few days at specific times. They contain 2-4 problems. Solve the problems during
+              the contest time and get as many test cases correct as possible to promote to the next rank.
             </h3>
             <h3 className='robo text-neutral-200 text-lg mt-6'>
               There is no need to sign up for a contest in advance. Simply view this page during the contest time and
-              click participate
+              click participate to join a contest
             </h3>
             {/* <h3 className='robo text-neutral-200  mt-6'>Once a contest is live, click on it to participate</h3> */}
           </div>

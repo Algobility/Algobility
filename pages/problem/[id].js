@@ -54,7 +54,7 @@ export default function viewQ({postData}) {
   }
 
   return (
-    <NicePage>
+    <NicePage selected='practice' title='Practice'>
       <div className='flex justify-start  w-3/4'>
         <div className='h-full min-h-screen mt-24  pr-24 pl-14 py-10 w-full relative '>
           {/* <div className='relative flex justify-start items-center h-64  border-neutral-300 rounded-md p-4 w-auto '> */}

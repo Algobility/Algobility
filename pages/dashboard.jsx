@@ -1,34 +1,18 @@
 import NicePage from '../components/nicepage';
 import { useState, useRef, useEffect } from 'react';
-import {
-  Flex,
-  Center,
-  Heading,
-  Icon,
-  Slider,
-  SliderFilledTrack,
-  SliderTrack,
-  SliderThumb,
-  HStack,
-  useDisclosure,
-  Card,
-  CardBody,
-  CardHeader,
-  Kbd,
-  useToast,
-  LinkOverlay,
-} from '@chakra-ui/react';
+import { Center, Kbd, useToast } from '@chakra-ui/react';
 import Image from 'next/image';
-import Tilty from 'react-tilty';
-import Tooly from '../components/Tooly';
 import Link from 'next/link';
 import { useUser } from '../customStuff/useDB.js';
 import { prettyCRank } from '../customStuff/nameMapping';
+import { getAllContests } from '../customStuff/contest';
+import { useRouter } from 'next/router';
 
-export default function DashBoard() {
+export default function DashBoard({ contests }) {
   const terminalOpener = useRef();
   const toast = useToast();
-  const { userData, updateUserData, forceFetch } = useUser();
+  const { userData, updateUserData, forceFetch, logoutUser } = useUser();
+  const router = useRouter();
   // const rankCard = useRef();
   const [terminalOpen] = useState(false);
   const [hovering, setHovering] = useState(false);
@@ -44,6 +28,8 @@ export default function DashBoard() {
     go();
   }, []);
 
+  console.log(contests);
+
   // useEffect(() => {
   //   document.addEventListener('mousemove', (event) => {
   //     if (rankCard && rankCard.current) {
@@ -58,7 +44,7 @@ export default function DashBoard() {
   // }, []);
 
   return (
-    <NicePage terminalOpener={terminalOpener} isTerminalOpen={terminalOpen} selected='dashboard'>
+    <NicePage terminalOpener={terminalOpener} isTerminalOpen={terminalOpen} selected='dashboard' title='Dashboard'>
       {!signedState ? (
         <div className='w-full h-screen flex flex-col justify-center items-center'>
           <h1 className='mont text-4xl '>Sign in required</h1>
@@ -76,24 +62,25 @@ export default function DashBoard() {
       ) : (
         <div className=' w-full'>
           <Center className=' w-full mt-52 lg:mt-36 '>
-            <HStack
+            <div
               // ref={rankCard}
-              gap={{ md: 12, sm: 100 }}
-              className='w-full lg:w-7/12   cursor-pointer justify-center items-center  px-32 py-6  transition-all '
+              className='flex w-full gap-12 lg:w-7/12  cursor-pointer justify-center items-center  px-8 lg:px-32 py-6   transition-all '
             >
               <Image
                 alt='rank-icon'
                 src={`/rank-icons/${userData.cRank}.png`}
                 width={1000}
                 height={1000}
-                className={` w-24 md:w-48 transition-all ${hovering ? 'opacity-0' : ''}`}
+                className={`hidden lg:block lg:w-48 transition-all ${hovering ? 'opacity-0' : ''}`}
               ></Image>
               <div
-                className={` w-full transition-all flex flex-col justify-center  h-full ${hovering ? 'opacity-0' : ''}`}
+                className={` w-full flex-1   transition-all flex flex-col justify-center  h-full items-center lg:items-stretch ${
+                  hovering ? 'opacity-0' : ''
+                }`}
               >
-                <h1 className=' md:mb-4 mont text-3xl md:text-8xl w-max '>{prettyCRank(userData.cRank)}</h1>
+                <h1 className=' mb-8 lg:mb-4  mont text-6xl lg:text-8xl w-max '>{prettyCRank(userData.cRank)}</h1>
                 {userData.cRank != 'unranked' ? (
-                  <div className=' hidden md:block'>
+                  <div className='w-3/4 lg:w-full'>
                     <div className='justify-between mb-2 flex'>
                       <p className='robo pl-2  '>Rank progress: </p>
                       <p className='robo text-right pr-2 '>50%</p>
@@ -103,19 +90,25 @@ export default function DashBoard() {
                     </div>
                   </div>
                 ) : (
-                  <p className='px-2 robo italic'>Complete your first competition to receive your competitive rank</p>
+                  <p className='px-2 robo italic text-center '>
+                    Complete your first competition to receive your competitive rank
+                  </p>
                 )}
               </div>
-            </HStack>
+            </div>
           </Center>
           <div className='flex justify-center w-full  mt-24 mb-12 ' style={{ height: '600px' }}>
             <div className=' w-3/4 h-full lg:grid grid-cols-3 grid-rows-2 lg:gap-8 gap-4  flex flex-col '>
               <div
+                onClick={() => {
+                  logoutUser();
+                  router.push('/signin');
+                }}
                 className='w-full h-full rounded-lg hover:bg-primc cursor-pointer  border-primc  transition-all border p-6 relative'
-                ref={terminalOpener}
+                // ref={terminalOpener}
               >
-                <h2 className='robo text-3xl mb-1'>Open Terminal</h2>
-                <h3 className='robo text-base mb-4'>Navigate pages with your keyboard</h3>
+                <h2 className='robo text-3xl mb-1 text-red-400'>Sign Out</h2>
+                <h3 className='robo text-base mb-4 text-red-200'>Click here to sign out or switch accounts.</h3>
                 <span className='text-xl absolute bottom-0 mb-4 hidden lg:show '>
                   <span className='bg-backL px-2 py-1 rounded-md shadow-md'>ctrl</span> +{' '}
                   <Kbd className='bg-backL px-2 py-1 rounded-md shadow-md'>space</Kbd>
@@ -123,10 +116,10 @@ export default function DashBoard() {
               </div>
               <Link
                 href={`/viewProfile/${userData.username}`}
-                className=' rounded-lg hover:bg-primc cursor-pointer  border-primc  transition-all border p-6 relative'
+                className=' rounded-lg hover:bg-primc cursor-pointer  border-primc  transition-all border p-6 relative  '
               >
-                <h1 className='robo text-3xl mb-4'>View Profile</h1>
-                <span className='text-base robo'>Click here to view your profile page</span>
+                <h1 className='robo text-3xl mb-1'>View Profile</h1>
+                <p className='text-base robo pb-12'>Click here to view your profile page</p>
                 <button
                   className=' bottom-4 z-10 robo px-4 py-2 bg-neutral-700 hover:bg-neutral-600 rounded-md absolute left-4'
                   onClick={(event) => {
@@ -143,10 +136,30 @@ export default function DashBoard() {
                   Copy link
                 </button>
               </Link>
-              <div className='row-span-2 rounded-lg hover:bg-primc cursor-pointer  border-primc  transition-all border p-6'>
-                <h1 className='robo text-3xl mb-4'>Upcoming Contests</h1>
-                <span className='text-base italic robo text-center w-full'>No Upcoming Contests</span>
-              </div>
+              <Link
+                href='/compete'
+                className='row-span-2 rounded-lg  cursor-pointer  border-primc  transition-all border p-6'
+              >
+                <h1 className='robo text-3xl mb-1'>Upcoming Contests</h1>
+                <h2 className='robo mb-8'>Click here to view compete page</h2>
+                {contests.length == 0 ? (
+                  <span className='text-base italic robo text-center w-full'>No Upcoming Contests</span>
+                ) : (
+                  contests.map((e, index) => (
+                    <div
+                      key={index}
+                      className='robo hover:bg-primc transition-all bg-neutral-700 rounded-md px-4 py-2 mb-4 flex'
+                    >
+                      <span>{e.name}</span>
+                      <span className='flex-1 text-right'>
+                        {new Date(e.startTime).toLocaleDateString()}
+                        {' @ '}
+                        {new Date(e.startTime).toLocaleTimeString()}
+                      </span>
+                    </div>
+                  ))
+                )}
+              </Link>
               <div className='col-span-2 rounded-lg hover:bg-primc cursor-pointer  border-primc  transition-all border p-6'>
                 <h1 className='robo text-3xl mb-4'>Recent Contests</h1>
                 <span className='text-base italic robo text-center w-full'>No Recent Contests</span>
@@ -158,4 +171,16 @@ export default function DashBoard() {
       )}
     </NicePage>
   );
+}
+
+export async function getStaticProps() {
+  const data = await getAllContests();
+  data.sort((a, b) => {
+    return a.startTime > b.startTime ? 1 : -1;
+  });
+  return {
+    props: {
+      contests: data,
+    },
+  };
 }

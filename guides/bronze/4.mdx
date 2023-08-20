@@ -1,17 +1,39 @@
 ---
-title: 'Memory Management'
-description: 'Learn how basic memory management works in C++'
+title: 'Time Complexity & Big O Notation'
+description: 'More uses of nested for loops & estimating code efficiency'
 date: '2022-01-01'
-credits: Ahmad Bilal
+credits: Ahmad Bilal, Saleh Syed
 number: 4
 ---
+# The Consecutive-Number Pair Finding Problem
+Imagine you have an array of numbers, and you need to find all consecutive pairs (pairs of numbers back-to-back in the array) such that the first number is strictly one less than the second. For instance, in the array `[1, 2, 3, 4, 5]`, the pairs would be `(1, 2)`, `(2, 3)`, `(3, 4)`, and `(4, 5)`. In the array [4,2,1,3,4], the only such pairs would be `(1,3)`
 
-# Motivation
+# Naive Approach with Nested Loops
+Generally speaking, whenever a question asks to find some pair within an array, a **brute-force** solution is to search through every possible pair in the array with a nested for loop. 
 
-There is no Motivation
+Note: In the context of competitive programming, **brute-force** refers to any solution which tries every possible solution to find an answer
 
-# Code
+We can solve the above problem through this brute-force method as well. We can iterate through the array with a loop and, for each element in that first loop, iterate through the array again with a second loop to check for consecutive pairs.
 
+```int n = arr.size();
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+        if (arr[j] - arr[i] == 1 && j = i+1) {  //check if the first number is one less AND both indicies are back-to-back
+            std::cout << "Consecutive pair: (" << arr[i] << ", " << arr[j] << ")\n";
+        }
+    }
+}
 ```
-int arr[10] = [0,1,0,4]
-```
+In this approach, for each element arr[i], we compare it with every subsequent element arr[j] to check if they form a consecutive pair.
+
+# Inefficiency of Nested Loops
+While the nested loop approach works, it becomes inefficient as the size of the array increases. As the array grows larger, the number of comparisons increases exponentially, leading to longer execution times. For instance, if the array contains `n` elements, the outer loop loop runs `n` times. Within each iteration of the outer loop is another loop that runs `n` times. Thus, the if statement at the end is executed <Math inline>{'\\(n^2\\)'}</Math> times
+
+# TO DO - COMPLETE THIS
+
+{/* Big O notation is a way to describe the upper bound on the growth rate of an algorithm's runtime in terms of its input size. It helps us analyze and compare algorithms' efficiencies without getting bogged down in implementation details.
+
+In our case, the nested loop solution's time complexity is O(n^2), which means that the runtime grows quadratically as the input size increases. This is not optimal for larger arrays. */}
+
+
+{/* <Math>{'\\(\\frac{10}{4x} \\approx 2^{12}\\)'}</Math> */}

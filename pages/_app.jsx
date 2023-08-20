@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material';
 import { generatePalette } from 'palette-by-numbers';
 import { extendTheme } from '@chakra-ui/react';
 import { createTheme } from '@mui/material/styles';
+import { MathJaxContext } from 'better-react-mathjax';
 
 const muiTheme = createTheme({
   palette: {
@@ -61,7 +62,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider cssVarsRoot=':root' theme={theme}>
       <ThemeProvider theme={muiTheme}>
-        <Component {...pageProps} />
+        <MathJaxContext>
+          <Component {...pageProps} />
+        </MathJaxContext>
       </ThemeProvider>
     </ChakraProvider>
   );

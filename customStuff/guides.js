@@ -97,3 +97,16 @@ export async function getGuideData(rank, chap) {
     
       return result
   }
+
+
+
+  export async function getSpecialGuideData() {
+
+    const fullPath = path.join(path.join(process.cwd(), 'special_guides'), `IntroToCompetitiveProgramming.mdx`)
+    const fileContents = fs.readFileSync(fullPath, 'utf8')
+  
+    // Use gray-matter to parse the post metadata section
+    const matterResult = await matter(fileContents)
+    return  {matterResult}
+
+  }

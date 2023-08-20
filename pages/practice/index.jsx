@@ -82,7 +82,7 @@ export default function practice({ chaps }) {
   const [searchPressed, setSearchPressed] = useState(false);
 
   return (
-    <NicePage selected='practice'>
+    <NicePage selected='practice' title='Practice'>
       <div className=' min-h-screen h-full mt-32'>
         <div className='w-full flex flex-col justify-start items-center rounded-lg '>
           <div className='rounded-lg w-3/4 robo py-8'>

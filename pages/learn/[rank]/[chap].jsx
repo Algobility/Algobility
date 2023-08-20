@@ -26,7 +26,7 @@ export default function Learn({ content, frontMatter, chaps }) {
   const [rank, setRank] = useState(frontMatter.rank);
 
   return (
-    <NicePage selected='learn'>
+    <NicePage selected='learn' title='Guides'>
       <div className='md:hidden w-screen h-screen flex justify-center items-center '>
         <div className='w-4/5 rounded-md bg-backL p-8'>
           <h1 className='robo text-center text-2xl mb-8 text-primc'>
@@ -72,9 +72,43 @@ export default function Learn({ content, frontMatter, chaps }) {
       /* -------------------------------------------------------------------------- */}
       <div className='z-100 flex-col w-1/5  justify-center items-end top-0 left-0 h-screen fixed hidden md:flex '>
         <div className='rounded-none bg-backL  w-full h-full flex flex-col justify-start'>
+          <h2 className='mt-12 robo mb-2 pl-8 text-3xl border-b pb-4'>Chapters</h2>
+          <div className=' flex-1 py-6 px-8  overflow-auto customScroll overflow-x-hidden w-full '>
+            {/* Chapters Begin */}
+            {chaps[unpretty(frontMatter.rank)].map((loopedChapter, index) => (
+              <div className='flex justify-start gap-2 items-stretch'>
+                <div className='flex justify-center items-center flex-col pt-2'>
+                  {loopedChapter.title == frontMatter.title ? (
+                    <div className='bg-primc w-4 h-4 rounded-full'></div>
+                  ) : (
+                    <div className='bg-neutral-600 w-4 h-4 rounded-full'></div>
+                  )}
+                  <div
+                    className={`${
+                      index != chaps[unpretty(frontMatter.rank)].length - 1
+                        ? 'border-neutral-500'
+                        : 'border-transparent'
+                    } border flex-1 `}
+                  ></div>
+                </div>
+                <Link href={`/learn/${frontMatter.rank}/${loopedChapter.id}`} className='flex-1'>
+                  <div
+                    key={index}
+                    className={` pl-2 pr-4 py-1  w-full relative rounded-md  hover:bg-neutral-700 transition-all text-base`}
+                  >
+                    <p className={`robo text-lg ${loopedChapter.title == frontMatter.title ? 'text-primc ' : ''}`}>
+                      {loopedChapter.title}
+                    </p>
+                    <p className={`robo text-neutral-400 mb-6`}>{loopedChapter.description}</p>
+                  </div>
+                </Link>
+              </div>
+            ))}
+            {/* Chapters End */}
+          </div>
           <Link
-            href='/learn'
-            className='hover:bg-neutral-700 cursor-pointer mt-12 px-6 robo text-lg flex justify-start gap-3 mb-12 border-t border-b py-4 border-neutral-500 items-center'
+            href={`/learn`}
+            className='hover:bg-neutral-700 cursor-pointer mt-12 px-6 robo text-lg flex justify-start gap-3 mb-8 border-t border-b py-4 border-neutral-500 items-center'
           >
             <svg
               stroke='currentColor'
@@ -87,27 +121,8 @@ export default function Learn({ content, frontMatter, chaps }) {
             >
               <path d='M21 11L6.414 11 11.707 5.707 10.293 4.293 2.586 12 10.293 19.707 11.707 18.293 6.414 13 21 13z'></path>
             </svg>
-            Go Back
+            Back to all guides
           </Link>
-          <div className=' flex-1 py-6 pl-6  overflow-auto overflow-x-hidden w-full '>
-            {/* Chapters Begin */}
-
-            {chaps[unpretty(frontMatter.rank)].map((loopedChapter, index) => (
-              <Link href={`/learn/${frontMatter.rank}/${loopedChapter.id}`}>
-                <div
-                  key={index}
-                  className={`${
-                    loopedChapter.title == frontMatter.title ? 'bg-primc border-primc !w-11/12' : ''
-                  } border border-neutral-500 px-4 mb-4 py-2 rounded-md w-10/12 relative flex justify-start items-center hover:w-11/12 hover:bg-neutral-700 transition-all`}
-                >
-                  <span className='robo'>{loopedChapter.title}</span>
-                  <span className='flex-1 text-right robo text-2xl pb-1'>{'>'}</span>
-                </div>
-              </Link>
-            ))}
-
-            {/* Chapters End */}
-          </div>
         </div>
       </div>
     </NicePage>

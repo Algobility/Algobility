@@ -45,7 +45,7 @@ export default function Hack(props) {
   };
 
   return (
-    <h1 ref={myRef} onMouseEnter={hackify} className={props.classy}>
+    <h1 ref={myRef} className={props.classy}>
       {props.text}
     </h1>
   );

@@ -27,7 +27,7 @@ import NicePage from '../components/nicepage';
 
 export default function Home() {
   return (
-    <NicePage>
+    <NicePage title='Sign In'>
       <Center className='h-screen'>
         <SignUpCard></SignUpCard>
       </Center>

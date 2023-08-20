@@ -1,17 +1,149 @@
 ---
-title: 'Brute Force Search'
-description: 'Solve problems by searching entire solution spaces'
+title: 'Maps and Sets'
+description: 'Advanced data structures'
 date: '2022-01-01'
 credits: Ahmad Bilal
 number: 4
 ---
 
-# Motivation
+# Unordered Maps
 
-There is no Motivation
+Unordered Maps are data strucutres which can store data in key-value pairs. Instead of storing values in a 1D sequence, unordered maps store entries in a 2 column table-like structure. Each entry consists of a unique key (of any data type) and a corresponding value (of any data type). The value corresponding to a specific key can be looked up in O(1) time. Under the hood, this time complexity is made possible by something known as a hash map. However, the inner workings of hash maps is beyond the scope of this guide.
 
-# Code
+# Creating an Unordered Map
+
+To declare an unordered map, use the following syntax:
 
 ```
-int arr[10] = [0,1,0,4]
+unordered_map<KeyType, ValueType> mapName;
 ```
+
+Here, KeyType is the type of the keys, and ValueType is the type of the associated values.
+
+Example:
+
+```
+unordered_map<string, int> studentMarks;        //this unorderd map stores the marks of each student on a test
+```
+
+# Inserting and Accessing Elements
+
+You can access and insert elements in a map using their keys with square-bracket notation:
+
+```
+studentMarks["Bill"] = 98;  //inserting into the unordered map
+int marks = studentMarks["Bill"]; // retrieving the marks of bill
+```
+
+# Removing Elements
+
+To remove elements from a map, use the erase method with the key:
+
+```
+studentMarks.erase("Bill"); // Removes entry with key "Bill"
+```
+
+# Iterating Over a Map
+
+You can iterate over a map using iterators which point to a `pair` for each entry. The first value in the pair is the entry key while the second value is the entry value:
+
+```
+for (unorderd_map<string, int>::iterator iter = studentMarks.begin(); iter != studentMarks.end(); ++iter) {
+cout << "Student Name: " << iter->first << ", Marks: " << iter->second << endl;
+}
+```
+
+Alteratively use the shorthand
+
+```
+for(auto &x:studentMarks){
+    //Do something with x.first or x.second
+}
+```
+
+# Map Size and Clearing
+
+To get the size of a map, use the size method:
+
+```
+int size = myMap.size();
+```
+
+To empty out a map, use the clear method:
+
+```
+myMap.clear();
+```
+
+# Time Complexity Summary
+
+Here is a summary of the time complexity of all the above operations
+
+- Insertion: O(1) on average
+- Access/Update: O(1) on average
+- Deletion: O(1) on average
+
+# Unorderd map efficiency
+
+The O(1) access time complexity of hash maps makes them quite efficient for many use cases. For example, a hash map is almost always better than using an array of pairs if you have to search for corresponding numbers. This is because, with an array of pairs you would have to search the entire array for the correct pair whilst a hash map allows you to look up, the corresponding value of a certain key in O(1) time.
+
+# Ordered Maps
+
+Ordered maps, like `unordered_map`s are used to store data in key-value pairs. However key-value pairs are automatically sorted in ordered maps (by default, in ascending order of keys). This makes the map slightly slower in terms of inserting and accessing elements (usually O(log n) where n is the size of the map). Under the hood, these use a binary search tree which, again, is beyond the scope of this guide. Ordered Maps have the same functions with the only visible difference being that when iterating over an ordered map, the entries are iterated in order.
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    map<string, int> myMap;
+    myMap["aaa"] = 4;
+    myMap["ccc"] = 8;
+    myMap["bbb"] = 12;
+    for(const auto &x:myMap){
+        cout << x.second;
+    }
+}
+```
+
+The above code spits out the following
+
+```
+4
+12
+8
+```
+
+# Unordered Sets
+
+Unordered sets are data structures that can efficiently store elements and check if an element exists. Unordered sets have 2 unique properties:
+
+- Inserted elements cannot be changed
+- Duplicate elements cannot be inserted. If an element that already exists in a set is inserted, the element will not be inserted again.
+  Unordered sets use hash maps under the hood to gain efficiency. An unordered set supports three operations shown in the below code example
+
+```
+unordered_set<int> s;   //create set to store integers
+s.insert(1);    //insert element into set
+s.insert(4);
+s.insert(2);
+s.insert(4);    // does nothing because 4 is already in the set
+cout << s.count(4) << endl;  // Outputs 1 since 4 is in the set
+cout << s.count(5) << endl;  // Outputs 0 since 5 is not in the set
+s.erase(1); //deletes element from set
+```
+
+# Ordered Sets
+
+These support the same operations as unordered sets but are slower and store elements in order. Inserting/Accessing usually takes O(log N) time. They can be created with the following syntax
+
+```
+set<string> s; //creates a set of strings named s
+```
+
+# Use Cases of Sets
+
+Sets are primarily used in two cases:
+
+- When elements need to efficiently be checked for existence
+- When duplicates need to be removed from an array or other data structure

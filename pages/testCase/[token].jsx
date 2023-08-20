@@ -20,7 +20,7 @@ export default function testCase({ ans }) {
   console.log(ans);
   const obj = ans.submissions[0];
   return (
-    <NicePage>
+    <NicePage title='Test Case Details'>
       <div className='mt-32 h-full'>
         <div
           className={`text-center robo text-4xl ${

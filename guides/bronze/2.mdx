@@ -1,22 +1,22 @@
 ---
-title: 'Linear Search & Big O Notation'
+title: 'Linear Search & Efficiency'
 description: 'Search through an array efficiently'
 date: '2022-01-01'
-credits: Ahmad Bilal
+credits: Ahmad Bilal, Saleh Syed
 number: 2
 ---
 
 # Looping Through Arrays
 
-Often times when working with arrays, you will come across situations where you need to look at every element in an array. For loops are great for this purpose. Here is an example in which we look at every element in an array and simply output its value.
+Often times when working with arrays, you will come across situations where you need to look at every element in an array. This is known as **traversing the array**. For loops are great for this purpose. Here is an example in which we look at every element in an array and simply output its value.
 
 ```
-for (int i = 0; i < 4; ++i) {   //loop 4 times (since the array has a size of 4)
+for (int i = 0; i < 4; i++) {   //loop 4 times (since the array has a size of 4)
     cout << myFavouriteNumber[i] << " "; // Print each element
 }
 ```
 
-Here, we create a for loop that executes `cout << myFavouriteNumber[i]` 4 times. On the first iteration, i is 0 and so the first element is outputted. On the second iteration, i is 1 and so the second element is outputted. This process continues until all 4 elements are outputted.
+Here, we create a for loop that executes `cout << myFavouriteNumber[i]` 4 times. On the first iteration, i is 0 and so the first element is outputted. On the second iteration, i is 1 and so the second element is outputted. This process continues until all 4 elements are outputted. Notice how the termination condition is `i < 4`. This is so that `i` never exceeds the length of the array, 3 (since the termination condition is checked **before** every iteration and not after). Alternatively, the condition `i <= 3` also works.
 
 # Searching for an element
 
@@ -57,48 +57,38 @@ for (int i = 0; i < 7 && !found; ++i) {
 }
 ```
 
-# Efficiency
+Now the for loop will terminate when either it has iterated through all elements of the array, or it has found the target element. This means that once the target element is found, unnecessary time is not wasted in searching the remaining elements. In hard questions, optimizations like this are generally the difference between getting all test cases correct and getting a handful of TLE (Time Limit Exceeded) verdicts.
 
-Let's say the following problem comes in a contest:
+# Variations of `for` Loops Through an Array
 
-\_\_
-Given a sequence of `n` numbers, return the index of the first number that is divisible by 3.
+Some problems require iterating through array elements in alternative ways. It is important to get familliar with iterating through an array in the following ways as well:
 
-## Input Format
+- Reversed iteration
+- Skipping every second element
+- Starting from a different index.
 
-The first line will contain the number `n`
-The second line will contain all `n` numbers, seperated by spaces
+## Reverse itereration
 
-## Example Test case 1
-
-6
-1 4 3 2 5 9
-\_\_
-
-Let's decipher this problem statement. We are givendddddddddddddddd
-
-A simple response to this problem would be:
+Reversing the for loop can be done by setting the starting index to the final index of the array, terminating the loop at ‘i = 0’, and incrementally reducing ‘i’. See below for the format.
 
 ```
-#include <bits/stdc++.h>
-using namespace std;
-
-int main(){
-    int numbers[10];        //create an array of 10 numbers
-    for(int i = 0; i < 10; i++){
-        cin >> numbers[i];      //one by one, put all numbers into the correct element of numbers
-    }
-
-    bool found = false;  //this keeps track of wheather we have found the number or not (since we only want to output the first occurance)
-    for(int i = 0; i<10; i++){
-        if(numbers[i]%3 && !found){ //if the number is divisible by 3 AND we haven't found the first occurance yet
-            cout << i;  //output index
-            found = true;
-        }
-    }
+for (int i = arrayLength - 1; i >= 0; --i) {
+    // Access array elements in reverse order with array[i]
 }
 ```
 
-This program would loop over all the numbers and only output a number if it is divisible by 3 and if a previous number was not already outputted (since the problem statement specified that only the first occurance of such a number should be outputted)
+## Skipping elements when iterating
 
-This program works fine, but it may encounter something known as a TLE (Time Limit Exceeded) verdict on some of the test cases. This is because,
+Skipping every second element can be achieved simply by incrementing the index by 2 instead of 1. Similarly, if you wish to skip 2 out of every 3 elements, or 3 out of every 4, you can increment the index by 3 or 4, and so on. Here is an example of a loop that skips every second element:
+
+for (int i = 0; i < arrayLength; i += 2) {
+// Access every second element with array[i]
+}
+
+## Starting iteration from a specific index
+
+Iterating an array starting from a different index is as simple as initializing the loop index to a different starting point, for example:
+
+for (int i = 3; i < arrayLength; ++i) {
+// Access elements starting from the fourth element (element with index 3) with array[i]
+}

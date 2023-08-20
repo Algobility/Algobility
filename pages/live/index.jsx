@@ -67,7 +67,7 @@ export default function LiveProblem({ contestInfo, probNames }) {
   }
 
   return (
-    <NicePage selected='compete'>
+    <NicePage selected='compete' title='Live Contest'>
       <div className='flex flex-col justify-center  h-screen '>
         {/* <div className='h-32 flex justify-end w-1/2 mx-auto items-center flex-col border-b pb-8  text-center'>
           <h1 className='robo text-4xl'>{contestInfo.name}</h1>

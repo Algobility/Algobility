@@ -1,13 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-import { Center } from '@chakra-ui/react';
 import { Terminal } from './Terminal.jsx';
 import Blob from '../components/blob.jsx';
 import Nav from './navstuff/nav.jsx';
 import MobileNav from './navstuff/MobileNav.jsx';
-import Tooly from './Tooly.jsx';
 import Hotkeys from 'react-hot-keys';
+import Head from 'next/head';
 
-export default function NicePage({ children, isTerminalOpen, terminalOpener, selected }) {
+export default function NicePage({ children, isTerminalOpen, terminalOpener, selected, title }) {
   const closeTerminal = useRef();
   const [terminalOpen, setTerminalOpen] = useState(false);
   isTerminalOpen = terminalOpen;
@@ -34,6 +33,9 @@ export default function NicePage({ children, isTerminalOpen, terminalOpener, sel
 
   return (
     <div className='page overflow-x-hidden' onScroll={() => console.log('nicee')}>
+      <Head>
+        <title>DotSlash {title ? '| ' + title : ''}</title>
+      </Head>
       <Blob />
       <Hotkeys keyName='ctrl+space' onKeyDown={() => setTerminalOpen(!terminalOpen)}>
         <div className={`z-50 relative h-full w-screen overflow-x-hidden  ${terminalOpen ? 'opacity-20' : ''}`}>

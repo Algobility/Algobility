@@ -1,0 +1,180 @@
+---
+title: '2D Arrays & Nested For Loops'
+description: '2D Arrays and how to iterate over them'
+date: '2022-01-01'
+credits: Ahmad Bilal, Saleh Syed
+number: 4
+---
+
+# Motivation
+
+A common, more complex form of an array, is the two-dimensional (2D) array. The simplest way to visualize a 2D array is as a grid with rows and columns of cells, each containing an element. A 2D array is used because it can store some data in a much more organized and accessible way than regular arrays. 2D arrays can represent matrices, two-dimensional spaces (like a map, or an image where each pixel is an element), or be used as an array of arrays.
+
+# Declaring and Initializing a 2D Array
+
+To declare a 2D array in C++, you specify the number of rows and columns it should have. Here's the basic syntax:
+
+```
+data_type array_name[row_size][column_size];
+```
+
+Let's create a 2D array to represent a simple 3x3 grid of integers:
+
+```
+int grid[3][3];
+```
+
+You can initialize a 2D array during declaration like so:
+
+```
+int matrix[2][2] = {
+    {1, 2},
+    {3, 4}
+};
+```
+
+# Accessing Elements of a 2D Array
+
+Accessing elements in a 2D array involves using two indices — one for the row and one for the column. Similarly to one-dimensional arrays, the first row and first column of the 2D array have the index 0. Here is the general syntax to access an element.
+
+```
+int element = matrix[row_index][column_index];
+```
+
+Here is an example of accessing a specific element.
+
+```
+int grid[3][3] = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+int x = grid[2][1] // Sets ‘x’ to 8.
+```
+
+# Nested Loops:
+
+Nested loops are loops that are contained within another loop's body. They are used when you need to repeat a set of operations multiple times within the context of an outer loop. Think of it like a loop within a loop – the inner loop executes its entire iteration cycle for each iteration of the outer loop.
+
+Here’s the basic syntax of a single loop embedded in another loop.
+
+```
+for (outer initialization; outer condition; outer increment) {
+    // Outer loop code
+
+    for (inner initialization; inner condition; inner increment) {
+        // Inner loop code
+    }
+}
+```
+
+To display how nested loops function, let’s try and make a pattern. We will print a rectangle of stars with 5 rows and 10 columns.
+
+```
+for (int i = 0; i < 5; ++i) {
+    for (int j = 0; j < 10; ++j) {
+        cout << "\* ";
+    }
+    cout << endl;
+}
+```
+
+Result:
+
+<Code>
+```*****
+*****
+*****
+*****
+*****
+```
+
+</Code>
+
+The inner loop, which repeats 10 times, simply prints a star, causing a row of 10 stars to be printed. The outer loop repeats 5 times; after running the inner loop and printing a row of stars, its only code is to end the line, starting a new row before the loop repeats and the next row of stars is filled.
+
+Here’s another simple example. It is intended to print a series of equations equivalent to a multiplication table with all integers from 1-10. Try and trace the code to figure out how it works on your own.
+
+```
+
+for (int i = 1; i <= 10; ++i) {
+for (int j = 1; j <= 10; ++j) {
+cout << i << " _ " << j << " = " << i _ j << endl;
+}
+cout << endl;
+}
+
+```
+
+<Exercise number='1'>
+<ExerciseQuestion>
+Write some code that outputs the following with a nested for loop:
+```10 20 30 40 50
+14 24 34 44 54
+18 28 38 48 58
+```
+</ExerciseQuestion>
+<ExerciseAnswer>
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+    for(int i = 0; i < 9; i+=4){
+        for(int j = 1; j < 6; j++){
+            cout << j << i << ' ';
+        }
+        cout << endl;
+    }
+
+}
+
+```
+
+This code runs a nested for loop. The outer loop increments a variable called `i` such that on the,
+- first iteration `i` is 0
+- second iteration `i` is 4
+- third iteration `i` is 8
+
+Within the outer loop, an inner loop outputs a variable `j` and then the current value of `i`, where `j` is a variable that increments from 1 to 5.
+
+Now the first iteration of the outer loop looks something like this
+```10 20 30 40 50``` 
+(since `j` is incrementing from 1 to 5 but `i` is locked at 0)
+
+The second and third iteration of the outer loop continues the pattern with each number ending with 4 and 8 respectively
+
+</ExerciseAnswer>
+</Exercise>
+
+
+
+Embedded loops can be used in any other scenario in which a repeated action itself has to be repeated, with some modification between its repetitions. In a similar way to the printing of rows and columns of stars, nested loops can be used to access the rows and columns of matrices, or 2D arrays. This is covered in the 2D-arrays topic.
+
+# Looping Through a 2D Array
+
+Looping through a 2D array requires two nested loops — one outer loop to iterate the rows and another inner loop for the columns. This allows you to traverse each element by traversing every row and then traversing every element within the row.
+
+```
+
+for (int row = 0; row < row_size; ++row) {
+    for (int col = 0; col < col_size; ++col) {
+        // Access and process array[row][col]
+        // Reads through 2D array one row at a time
+    }
+}
+
+```
+
+On the first iteration of the outer loop, `row` is set to 0 and the entire inner for loop is executed. The inner for loop iterates through every element in row 0. Then, the outer loop increments `row` by 1 and the entire inner for loop now executes, iterating through every element in row 1. This process continues until the entire 2D array has been iterated through.
+
+Lastly, when passing 2D arrays to a function, you must specify the number of columns. See below for an example.
+
+```
+
+void processArray(int arr[][3]) {
+// Note that the “rows” size can be left empty but the number of columns must be specified. This is simply due to the way C++ was designed.
+}
+
+```

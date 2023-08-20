@@ -1,8 +1,8 @@
 ---
-title: 'Arrays'
+title: 'Introduction to Competitive Programming'
 description: 'Store a list of variables'
 date: '2022-01-01'
-credits: Ahmad Bilal, Saleh Syed
+credits: Ahmad Bilal
 number: 1
 ---
 
@@ -25,18 +25,18 @@ int main(){
 
 This code works, but if we wanted to do the same with more numbers, this approach would soon become impractical since we have to create a seperate variable for each number.
 
-Arrays help solve this by offering us a way to store a fixed-size list of variables. The variables within these lists are known as elements. Array elements must all be of the same type. They are identified by their position in the array rather than by variable names.
+Arrays help solve this by offering us a way to store a fixed-size list of variables. These variables are known as elements. Elements must be of the same type. They are identified by their position in the array rather than by variable names.
 
 To declare an array, define the variable type, specify the name of the array followed by square brackets and specify the number of elements it should store:
 
 ```
-int myFavouriteNumber[4];
+string myFavouriteNumber[4];
 ```
 
-Similar to normal variables, arrays can **optionally** be initialized with some values using the following syntax.
+Similar to normal variables, arrays can be initialized with some values
 
 ```
-int myFavouriteNumber[4] = {1,4,5,9};
+string myFavouriteNumber[4] = {1,4,5,9};
 ```
 
 # Accessing Array Elements
@@ -47,18 +47,11 @@ Array elements are referred to by their index or position in the array. The firs
 myFavouriteNumber[2]
 ```
 
-Array elements can be treated just like variables. We can assign and retreive their values juts like ordinary variables.
+Array elements can be treated just like variables. We can assign and retreive their values like ordinary variables.
 
 ```
 myFavouriteNumber[0] = 1;       //changes first element to 1
 myFavouriteNumber[1] = 3;       //changes second element to 3
 myFavouriteNumber[2] = 5;       //changes third element to 5
 cout << myFavouriteNumber[2];   //should output 5
-```
-
-These examples use the int data type, but other data types can be used. Let’s try an example with strings:
-
-```
-string names[4] = {"Alice", "Bob", "Charlie", "David"}; // Array of 4 strings
-
 ```

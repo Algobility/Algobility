@@ -238,7 +238,7 @@ export default function LiveProblem({ probData }) {
   }
 
   return (
-    <NicePage selected='compete'>
+    <NicePage selected='compete' title='Live Contest'>
       <div className=' h-full mt-36  px-24'>
         <div className='grid grid-cols-3 grid-fl grid-rows-1 gap-24  '>
           <div className='col-span-2 '>

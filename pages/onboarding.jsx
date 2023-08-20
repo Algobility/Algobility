@@ -33,28 +33,6 @@ export default function onboarding() {
   const toast = useToast();
 
   /* -------------------------------------------------------------------------- */
-  /*                                 TypeWriter                                 */
-  /* -------------------------------------------------------------------------- */
-
-  const [text, helper] = useTypewriter({
-    words: ['Looks like you are new here ...', 'Welcome to Project A ...', 'Lets get started'],
-    // words: ['L'],
-    loop: 1,
-    typeSpeed: 10,
-    deleteSpeed: 5,
-    delaySpeed: 1000,
-  });
-  const { isDone } = helper;
-  const [displayCard, setDisplayCard] = useState(false);
-  useEffect(() => {
-    if (isDone) {
-      setTimeout(() => {
-        setDisplayCard('Step 1');
-      }, 500);
-    }
-  }, [isDone]);
-
-  /* -------------------------------------------------------------------------- */
   /*                                   Step 1                                   */
   /* -------------------------------------------------------------------------- */
 
@@ -72,13 +50,66 @@ export default function onboarding() {
         : 'Username can only contain alphanumeric characters, hyphens, and underscores.'
     );
   };
-  const handleContinue = async () => {
+
+  /* -------------------------------------------------------------------------- */
+  /*                                   Step 2                                   */
+  /* -------------------------------------------------------------------------- */
+
+  const [selectedRank, setSelectedRank] = useState(1);
+
+  const router = useRouter();
+  const auth = getAuth();
+  const [user] = useAuthState(auth);
+  const db = getFirestore(firebase);
+  const ranks = [
+    {
+      id: 1,
+      name: 'Iron',
+      lowerName: 'iron',
+      imageSrc: '/rank-icons/iron2.png',
+      description: 'I am completely new to programming and have never done it before.',
+    },
+    {
+      id: 2,
+      name: 'Bronze',
+      lowerName: 'bronze',
+      imageSrc: '/rank-icons/bronze2.png',
+      description: `I understand basic programming concepts in my preferred language such as variables, conditions, arrays, functions.`,
+    },
+    {
+      id: 3,
+      name: 'Silver',
+      lowerName: 'silver',
+      imageSrc: '/rank-icons/silver2.png',
+      description:
+        'I understand intermediate programming concepts such as sorting, nested loops, 2D arrays, and memory management. I am a USACO Bronze Competitor.',
+    },
+    {
+      id: 4,
+      name: 'Gold',
+      lowerName: 'gold',
+      imageSrc: '/rank-icons/gold2.png',
+      description:
+        'I understand basic data strucutres such as maps, sets, and vectors. I can tackle many basic competitive programming problems which require brute force searching an answer. I am comfortable with recursion to solve a problem via brute force/simulation.',
+    },
+    // Add more ranks as needed
+  ];
+
+  const onSubmit = async () => {
     // Check if username meets the criteria
     if (!isusernameValid || usernameInputValue.trim().length === 0 || usernameInputValue.length > 80) {
       setIsusernameValid(false);
       setErrorMessage(
         'Username must be up to 80 characters and can only contain alphanumeric characters, hyphens, and underscores.'
       );
+      toast({
+        title: 'Invalid Username.',
+        description: 'Please try another username',
+        status: 'error',
+        duration: 6000,
+        isClosable: true,
+      });
+      window.scrollTo({ top: 0, left: 0 });
       return;
     }
 
@@ -89,56 +120,17 @@ export default function onboarding() {
       setIsusernameValid(false);
       setErrorMessage('This username is taken. Please choose another one');
       setIsContinueBtnLoading(false);
+      toast({
+        title: 'Username Taken.',
+        description: 'Please try another username',
+        status: 'error',
+        duration: 6000,
+        isClosable: true,
+      });
+      window.scrollTo({ top: 0, left: 0 });
       return;
     }
 
-    setDisplayCard('Step 2');
-    return;
-  };
-
-  /* -------------------------------------------------------------------------- */
-  /*                                   Step 2                                   */
-  /* -------------------------------------------------------------------------- */
-
-  const router = useRouter();
-  const auth = getAuth();
-  const [user] = useAuthState(auth);
-  const db = getFirestore(firebase);
-  const ranks = [
-    {
-      id: 1,
-      name: 'Iron',
-      imageSrc: '/rank-icons/iron2.png',
-      description: 'I am completely new to programming and have never done it before.',
-    },
-    {
-      id: 2,
-      name: 'Bronze',
-      imageSrc: '/rank-icons/bronze2.png',
-      description: `I understand basic programming concepts in my preferred language such as variables, conditions, arrays, functions. I have no competitive programming specific knowledge.`,
-    },
-    {
-      id: 3,
-      name: 'Silver',
-      imageSrc: '/rank-icons/silver2.png',
-      description: 'I am a pro',
-    },
-    {
-      id: 4,
-      name: 'Gold',
-      imageSrc: '/rank-icons/gold2.png',
-      description: 'I am a pro',
-    },
-    // Add more ranks as needed
-  ];
-
-  const [slideIndex, setSlideIndex] = useState('iron');
-  const handleChangeSlide = (index) => {
-    setSlideIndex(ranks[index].name.toLowerCase());
-  };
-
-  const handleFinish = async () => {
-    //Check User signed in
     if (!user) {
       toast({
         title: 'Account Onboarding failed.',
@@ -150,11 +142,11 @@ export default function onboarding() {
       return;
     }
 
-    console.log('slide index is', slideIndex);
+    console.log('slide index is', ranks[selectedRank - 1].lowerName);
     localStorage.removeItem('ud');
     await setStorage('Users', user.uid, {
       username: usernameInputValue,
-      pRank: slideIndex,
+      pRank: ranks[selectedRank - 1].lowerName,
     })
       .then(() => {
         toast({
@@ -175,105 +167,90 @@ export default function onboarding() {
           isClosable: true,
         });
       });
+
+    return;
   };
 
   return (
-    <NicePage className='h-full'>
-      <Center className='min-h-screen--32 h-full flex flex-col mt-24 '>
-        <h1 className='mono text-4xl mb-12'>{text}|</h1>
-        {displayCard == 'Step 1' && (
-          <SlideFade in={displayCard} className='w-full flex justify-center '>
-            <Card className=' robo mt-8 mx-2 w-full md:w-1/2 rounded-lg p-8' bg='backL'>
-              <CardHeader className='text-3xl font-bold w-full'>
-                <div className='flex items-center'>
-                  <Icon as={TbHexagonNumber1} color='primc' className='mr-4 scale-150'></Icon>
-                  <h1>Choose a username</h1>
-                </div>
-                <h2 className='text-base font-normal mt-4 '>Don't worry, you can always change it later</h2>
-              </CardHeader>
-              <CardBody>
-                <div className='w-full flex justify-start items-center mt-6'>
-                  <span className='mr-2'>@</span>
-                  <Input
-                    className='py-1 px-3'
-                    value={usernameInputValue}
-                    onChange={handleInputChange}
-                    placeholder='Enter your username'
-                    variant='flushed'
-                  />
-                  <Icon
-                    as={isusernameValid ? IoIosCheckmarkCircle : IoIosCloseCircle}
-                    color={isusernameValid ? 'green.500' : 'red.500'}
-                    className='text-3xl ml-6'
-                  />
-                </div>
-                {!isusernameValid && (
-                  <Text color='red.500' fontSize='sm' mt='2'>
-                    {errorMessage}
-                  </Text>
-                )}
-                <Button
-                  className='mt-8 bg-neutral-700 hover:bg-neutral-600 px-4 py-2 rounded-md'
-                  onClick={handleContinue}
-                  isLoading={isContinueBtnLoading}
-                  isDisabled={!isusernameValid}
+    <NicePage className='pt-32 ' title='Onboarding'>
+      <div className='flex justify-center mt-32 lg:mx-auto lg:w-2/3 w-full px-8 flex-col gap-4'>
+        <h1 className=' text-6xl mont text-center '>Onboarding</h1>
+        <h1 className=' mb-12 mont text-center text-neutral-300 text-lg'>
+          Welcome to Project A. Get started by entering some account details
+        </h1>
+        <Card className=' robo mt-8 mx-2 w-full rounded-lg p-8' bg='backL'>
+          <CardHeader className='text-3xl font-bold w-full'>
+            <div className='flex items-center'>
+              <Icon as={TbHexagonNumber1} color='primc' className='mr-4 scale-150'></Icon>
+              <h1 className='mont'>Choose a username</h1>
+            </div>
+            <h2 className='text-base font-normal mt-4 '>You can always change this later</h2>
+          </CardHeader>
+          <CardBody>
+            <div className='w-full flex justify-start items-center mt-6'>
+              <span className='mr-2 pb-1'>@</span>
+              <Input
+                className='py-1 px-3 rounded-md'
+                value={usernameInputValue}
+                onChange={handleInputChange}
+                placeholder='Enter your username'
+                variant='flushed'
+              />
+              <Icon
+                as={isusernameValid ? IoIosCheckmarkCircle : IoIosCloseCircle}
+                color={isusernameValid ? 'green.500' : 'red.500'}
+                className='text-3xl ml-6'
+              />
+            </div>
+            {!isusernameValid && (
+              <Text color='red.500' fontSize='sm' mt='2'>
+                {errorMessage}
+              </Text>
+            )}
+          </CardBody>
+        </Card>
+        <Card className=' robo mt-8 p-8 mx-2 w-full  rounded-lg h-full' bg='backL'>
+          <CardHeader className='text-3xl font-bold w-full'>
+            <div className='flex items-center'>
+              <Icon as={TbHexagonNumber2} color='primc' className='mr-4 scale-150'></Icon>
+              <h1 className='mont'>Choose a placement rank</h1>
+            </div>
+            <h2 className='text-base font-normal mt-4 '>
+              Choose a rank that best describes your proir knowledge. You will compete in this rank for your first
+              contest.
+            </h2>
+          </CardHeader>
+          <CardBody className='mb-12'>
+            <div className='flex flex-col lg:grid lg:grid-cols-3 lg:grid-rows-2 gap-8 mt-12'>
+              {ranks.map((rank) => (
+                <div
+                  key={rank.id}
+                  onClick={() => setSelectedRank(rank.id)}
+                  className={`  ${
+                    rank.id == selectedRank ? 'bg-primc' : 'bg-neutral-700 hover:bg-neutral-600 '
+                  } border border-neutral-600 rounded-lg hover:cursor-pointer`}
                 >
-                  Continue
-                </Button>
-              </CardBody>
-            </Card>
-          </SlideFade>
-        )}
-        {displayCard == 'Step 2' && (
-          <SlideFade in={displayCard} className='w-full flex justify-center '>
-            <Card className=' robo mt-8 p-8 mx-2 w-full md:w-1/2 rounded-lg h-full' bg='backL'>
-              <CardHeader className='text-3xl font-bold w-full'>
-                <div className='flex items-center'>
-                  <Icon as={TbHexagonNumber2} color='primc' className='mr-4 scale-150'></Icon>
-                  <h1>Choose a perceived rank</h1>
+                  <Box p={4}>
+                    <Text mt={2} fontWeight='bold' fontSize='2xl' textAlign='center'>
+                      {rank.name}
+                    </Text>
+                    <Text mt={2} pb={4} textAlign='center'>
+                      {rank.description}
+                    </Text>
+                  </Box>
                 </div>
-                <h2 className='text-base font-normal mt-4 '>
-                  Choose a rank that best describes your proir knowledge. You can always change this later
-                </h2>
-              </CardHeader>
-              <CardBody>
-                {/* CAROSELLLLLL */}
-                <div className='w-full rounded-lg '>
-                  <Carousel
-                    showThumbs={false}
-                    showStatus={false}
-                    showArrows={true}
-                    infiniteLoop={true}
-                    emulateTouch={true}
-                    onChange={handleChangeSlide}
-                  >
-                    {ranks.map((rank) => (
-                      <div key={rank.id} className=' bg-neutral-700 m-12 rounded-lg'>
-                        <Box p={4}>
-                          <Image src={rank.imageSrc} alt={rank.name} boxSize='200px' objectFit='contain' />
-                          <Text mt={2} fontWeight='bold' fontSize='lg' textAlign='center'>
-                            {rank.name}
-                          </Text>
-                          <Text mt={2} pb={12} textAlign='center'>
-                            {rank.description}
-                          </Text>
-                        </Box>
-                      </div>
-                    ))}
-                  </Carousel>
-                </div>
-
-                <Button
-                  className='mt-8 px-4 py-2 mb-0 bg-neutral-700 hover:bg-neutral-600 rounded-md'
-                  onClick={handleFinish}
-                >
-                  Finish
-                </Button>
-              </CardBody>
-            </Card>
-          </SlideFade>
-        )}
-      </Center>
+              ))}
+            </div>
+          </CardBody>
+        </Card>
+        <Button
+          isLoading={isContinueBtnLoading}
+          className='w-full bg-neutral-700 transition-all mt-12 mb-24 text-center robo py-4 hover:bg-neutral-600 rounded-md'
+          onClick={onSubmit}
+        >
+          Submit
+        </Button>
+      </div>
     </NicePage>
   );
 }

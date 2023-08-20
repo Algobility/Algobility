@@ -3,20 +3,8 @@ import { useState, useRef, useEffect } from 'react';
 import html from 'remark-html';
 import { remark } from 'remark';
 
-export default function Exercise({ question, answer, number }) {
+export default function Exercise({ number, children }) {
   const [viewAns, setViewAns] = useState(false);
-  const [qText, setqText] = useState(question);
-  const [aText, setaText] = useState(answer);
-
-  useEffect(() => {
-    const go = async () => {
-      const processedContent = await remark().use(html).process(question);
-      setqText(processedContent.toString());
-      const processedAns = await remark().use(html).process(answer);
-      setaText(processedAns.toString());
-    };
-    go();
-  }, []);
 
   return (
     <div className='mt-24 mb-32 w-full'>
@@ -29,11 +17,15 @@ export default function Exercise({ question, answer, number }) {
           <span className='italic '> Try solving this problem before continuing further </span>{' '}
         </div>
         <div className={`w-full relative   `}>
-          <div className='p-8' id='ExerciseMdWrapper' dangerouslySetInnerHTML={{ __html: qText }}></div>
+          <div className='p-8' id='ExerciseMdWrapper'>
+            {children[0]}
+          </div>
           {viewAns ? (
             <>
               <div className='p-8 bg-neutral-600 rounded-md'>
-                <div className='w-full' id='ExerciseMdWrapper' dangerouslySetInnerHTML={{ __html: aText }}></div>
+                <div className='w-full' id='ExerciseMdWrapper'>
+                  {children[1]}
+                </div>
               </div>
             </>
           ) : (
