@@ -1,6 +1,6 @@
 import NicePage from '../../components/nicepage';
 import { useState, useRef, useEffect } from 'react';
-import { getPostData } from '../../customStuff/problems';
+import { getContestProbData } from '../../customStuff/contest';
 import { red } from 'console-log-colors';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { useToast } from '@chakra-ui/react';
@@ -377,26 +377,6 @@ export default function LiveProblem({ probData }) {
             </div>
           </div>
         </div>
-        {/* 
-        <div className='flex flex-col justify-center gap-4 items-center mt-32 h-96 m-8'>
-          <Textarea
-            value={inp2Val}
-            className='w-full h-full mono p-4 rounded-md'
-            onInput={(e) => {
-              setInp2Val(e.target.value);
-            }}
-            defaultValue={`#include <bits/stdc++.h>\nusing namespace std;\nint main() {\n  std::cout << "Hello World!";\n  return 0;\n}`}
-          ></Textarea>
-          <Button
-            className='bg-neutral-600 px-4 py-2 robo rounded-md'
-            onClick={() => {
-              onSubmittion();
-            }}
-          >
-            {' '}
-            SUBMIT
-          </Button>
-        </div> */}
       </div>
     </NicePage>
   );
@@ -410,7 +390,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const probData = await getPostData(params.prob, true);
+  const probData = await getContestProbData('iron', params.prob);
   return {
     props: {
       probData,

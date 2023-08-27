@@ -2,7 +2,7 @@ import NicePage from '../../components/nicepage';
 import Link from 'next/link';
 import { getContestInfo } from '../../customStuff/contest';
 import { useUser } from '../../customStuff/useDB';
-import { getPostData } from '../../customStuff/problems';
+import { getContestProbData } from '../../customStuff/contest';
 import { useState, useEffect } from 'react';
 
 export default function LiveProblem({ contestInfo, probNames }) {
@@ -15,6 +15,8 @@ export default function LiveProblem({ contestInfo, probNames }) {
     const currentTime = new Date();
     const startTime = new Date(contestInfo.startTime);
     const endTime = new Date(contestInfo.endTime);
+    console.log(startTime);
+    console.log(endTime);
     return currentTime >= startTime && currentTime <= endTime;
   }
 
@@ -132,7 +134,7 @@ export async function getStaticProps() {
   const contestInfo = await getContestInfo();
   const probNames = [];
   for (let prob of JSON.parse(contestInfo).problems) {
-    const probData = await getPostData(prob, true);
+    const probData = await getContestProbData('iron', prob);
     probNames.push(probData.title);
   }
   return {

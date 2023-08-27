@@ -35,7 +35,7 @@ export default function Landing() {
               {/* <h2 className='text-xl md:text-xl mt-4 mont text-center'>
                 A begginer-friendly competitive programming platform{' '}
               </h2> */}
-              <h1 className='mont text-left  text-3xl lg:text-6xl lg:text-center lg:leading-normal'>
+              <h1 className='mont text-left  text-3xl lg:text-6xl lg:text-center lg:leading-tight'>
                 An <span className='text-primc italic font-bold underline'>OOGA BOOGA</span> to take your <br /> Dooga
                 Booda to the next level and beyond
               </h1>

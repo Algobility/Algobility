@@ -1,120 +1,109 @@
-import fs, { existsSync } from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-import { remark } from 'remark'
-import spoilers from 'remark-spoilers'
-import html from 'remark-html'
-import { ranks } from './nameMapping'
+import fs, { existsSync } from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { remark } from 'remark';
+import spoilers from 'remark-spoilers';
+import html from 'remark-html';
+import { ranks } from './nameMapping';
 
-const postsDirectory = path.join(process.cwd(), 'problems')
+const postsDirectory = path.join(process.cwd(), 'problems');
 
 export function getSortedPostsData() {
   // Get file names under /posts
-  const fileNames = fs.readdirSync(postsDirectory)
-  const allPostsData = fileNames.map(fileName => {
+  const fileNames = fs.readdirSync(postsDirectory);
+  const allPostsData = fileNames.map((fileName) => {
     // Remove ".md" from file name to get id
-    const id = fileName.replace(/\.md$/, '')
+    const id = fileName.replace(/\.md$/, '');
 
     // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
+    const fullPath = path.join(postsDirectory, fileName);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents)
+    const matterResult = matter(fileContents);
 
     // Combine the data with the id
     return {
       id,
-      ...matterResult.data
-    }
-  })
+      ...matterResult.data,
+    };
+  });
   // Sort posts by date
   return allPostsData.sort((a, b) => {
     if (a.date < b.date) {
-      return 1
+      return 1;
     } else {
-      return -1
+      return -1;
     }
-  })
+  });
 }
-
-
 
 /**
  * Get array of object representing each problem that satisfies an inputted query
  */
 export function getFilteredPostData(rank, rawTopic) {
-
-
   //Create var topics which stores an array of all topics to search (may have one or all topics of a rank)
-  let topics =[];
-  if(rawTopic == 'anytopic'){  
-    const fullPath = path.join(postsDirectory, `${rank}`)
-    if(!fs.existsSync(fullPath)){
-      return []
+  let topics = [];
+  if (rawTopic == 'anytopic') {
+    const fullPath = path.join(postsDirectory, `${rank}`);
+    if (!fs.existsSync(fullPath)) {
+      return [];
     }
-    const topicNames = fs.readdirSync(fullPath)
-    topics = topicNames
+    const topicNames = fs.readdirSync(fullPath);
+    topics = topicNames;
+  } else {
+    topics = [rawTopic];
   }
-  else{
-    topics = [rawTopic]
-  }
 
+  let result = []; //result to be returned
 
-  let result = []   //result to be returned
+  for (let topic of topics) {
+    const fullPath = path.join(postsDirectory, `${rank}/${topic}`);
 
-  for(let topic of topics){
-      const fullPath = path.join(postsDirectory, `${rank}/${topic}`)
-      
-      if(!fs.existsSync(fullPath)){  
-        continue;
+    if (!fs.existsSync(fullPath)) {
+      continue;
+    }
+
+    const fileNames = fs.readdirSync(fullPath);
+
+    const filteredPostsData = fileNames.reduce((filteredData, fileName) => {
+      const id = fileName.replace(/\.mdx$/, '');
+      const fullPath = path.join(postsDirectory, `${rank}/${topic}/${id}.mdx`);
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const matterResult = matter(fileContents);
+      const postData = {
+        id,
+        rank,
+        topic,
+        ...matterResult.data,
+      };
+
+      // Check if the problem matches the given rank and credit
+      if (!postData.invisible) {
+        filteredData.push(postData);
       }
 
-        const fileNames = fs.readdirSync(fullPath)
-        
-        
-      const filteredPostsData = fileNames.reduce((filteredData, fileName) => {
+      return filteredData;
+    }, []);
 
-        const id = fileName.replace(/\.mdx$/, '')
-        const fullPath = path.join(postsDirectory, `${rank}/${topic}/${id}.mdx`)
-        const fileContents = fs.readFileSync(fullPath, 'utf8')
-        const matterResult = matter(fileContents)
-        const postData = {
-          id,
-          rank,
-          topic,
-          ...matterResult.data
-        }
-
-        // Check if the problem matches the given rank and credit
-        if (!postData.invisible) {
-          filteredData.push(postData)
-        }
-
-        return filteredData
-      }, [])
-      
-      result = [...result, ...filteredPostsData]
-
+    result = [...result, ...filteredPostsData];
   }
 
-  return result
+  return result;
 }
-
-
 
 function getAllFilesRecursive(directoryPath, filesArray) {
   const files = fs.readdirSync(directoryPath);
 
-  files.forEach(file => {
-      const filePath = path.join(directoryPath, file);
-      const stats = fs.statSync(filePath);
+  files.forEach((file) => {
+    const filePath = path.join(directoryPath, file);
+    const stats = fs.statSync(filePath);
 
-      if (stats.isDirectory()) {
-          getAllFilesRecursive(filePath, filesArray);
-      } else if (stats.isFile()) {
-          filesArray.push(filePath);
-      }
+    if (stats.isDirectory()) {
+      getAllFilesRecursive(filePath, filesArray);
+    } else if (stats.isFile()) {
+      filesArray.push(filePath);
+    }
   });
 
   return filesArray;
@@ -125,7 +114,7 @@ function getExtendedPath(fullPath, subPath) {
   const normalizedSubPath = path.normalize(subPath);
 
   if (!normalizedFullPath.startsWith(normalizedSubPath)) {
-      throw new Error("The full path doesn't extend from the subpath.");
+    throw new Error("The full path doesn't extend from the subpath.");
   }
 
   const extendedPath = normalizedFullPath.slice(normalizedSubPath.length).replace(/^[/\\]/, '');
@@ -135,14 +124,16 @@ function getExtendedPath(fullPath, subPath) {
 
 export function getAllPostIds() {
   const allFiles = getAllFilesRecursive(postsDirectory, []);
-  const result = []
-  for(let file of allFiles){
-    const id = getExtendedPath(file, postsDirectory).replace(/\.mdx$/, '').split('\\')
+  const result = [];
+  for (let file of allFiles) {
+    const id = getExtendedPath(file, postsDirectory)
+      .replace(/\.mdx$/, '')
+      .split('\\');
     result.push({
-      params:{
-        slug: id
-      }
-    })
+      params: {
+        slug: id,
+      },
+    });
   }
   return allFiles;
 }
@@ -153,7 +144,6 @@ export function getAllPostIds() {
 
 //   // Use gray-matter to parse the post metadata section
 //   const matterResult = matter(fileContents)
-
 
 //   //If a question is hidden and the caller does not have xray powers, don't return the question content
 //   if(matterResult.data.invisible && !xray){
@@ -167,8 +157,6 @@ export function getAllPostIds() {
 
 //   const contentHtml = processedContent.toString()
 
-
-  
 //   // Combine the data with the id and contentHtml and return
 //   return {
 //     id,
@@ -177,15 +165,11 @@ export function getAllPostIds() {
 //   }
 // }
 
-
-
 export async function getPostData(rank, topic, id) {
+  const fullPath = path.join(postsDirectory, `${rank}/${topic}/${id}.mdx`);
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
 
-    const fullPath = path.join(postsDirectory, `${rank}/${topic}/${id}.mdx`)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-  
-    // Use gray-matter to parse the post metadata section
-    const matterResult = await matter(fileContents)
-    return  {id, rank, topic, contentHtml: matterResult.content, ...matterResult.data}
-
-  }
+  // Use gray-matter to parse the post metadata section
+  const matterResult = await matter(fileContents);
+  return { id, rank, topic, contentHtml: matterResult.content, ...matterResult.data };
+}

@@ -141,7 +141,7 @@ export default function Search({ probs, rank, topic, chaps }) {
           </div>
 
           {/* Change to grid-cols 2 for double column appearance */}
-          <div className='grid grid-cols-1 gap-4 w-3/4 mt-12 '>
+          <div className='grid grid-cols-1 gap-4 w-3/4 mt-12 mb-24 '>
             {probs.map((element, index) => (
               <Link
                 href={`/problem/${element.rank}/${element.topic}/${element.id}`}
