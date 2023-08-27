@@ -27,13 +27,43 @@ for (int i = 0; i < n; i++) {
 In this approach, for each element arr[i], we compare it with every subsequent element arr[j] to check if they form a consecutive pair.
 
 # Inefficiency of Nested Loops
-While the nested loop approach works, it becomes inefficient as the size of the array increases. As the array grows larger, the number of comparisons increases exponentially, leading to longer execution times. For instance, if the array contains `n` elements, the outer loop loop runs `n` times. Within each iteration of the outer loop is another loop that runs `n` times. Thus, the if statement at the end is executed <Math inline>{'\\(n^2\\)'}</Math> times
+While the nested loop approach works, it becomes inefficient as the size of the array increases. As the array grows larger, the number of comparisons increases exponentially, leading to longer execution times. But exactly how slow is this algortihm? Big O Notation allows us to represent the efficiency of an alogirithm numerically
 
-# TO DO - COMPLETE THIS
+# Big O Notation
+Big O notation is a notation which is used to describe the number of steps an algorithm needs to perform in the worst possible case. More specifically, it describes how the time taken by an algorithm grows as the input size grows.
 
-{/* Big O notation is a way to describe the upper bound on the growth rate of an algorithm's runtime in terms of its input size. It helps us analyze and compare algorithms' efficiencies without getting bogged down in implementation details.
+A step is any operation which can be done in C++ that is not a function or a loop. For example, declaring/setting a variable is one step. An if statement is one step. A `cout` statement is also one step. 
 
-In our case, the nested loop solution's time complexity is O(n^2), which means that the runtime grows quadratically as the input size increases. This is not optimal for larger arrays. */}
+A **constant time** operation is anything that can be done in a fixed number of steps (independant of the input size). For example, the following code runs in constant time:
+
+```
+int a = 5;
+int b = 7;
+int c = 4;
+int d = a + b + c + 153;
+for(int i = 0; i<5;i++){
+    cout << i << endl;
+}
+```
+
+To denote an algorithm that takes constant time in big O notation, we write O(1)
+
+A **linear** time complexity algorithm is one that runs some constant time code <Math inline>n</Math> times (in the worst case) where <Math inline>n</Math> is the input size. Searching for a number in an array is a linear time algorithm because in the worst case in has to search through every element in the array (and the size of the array is the input size)
+
+To denote a linear time algorithm, we write O(n)
+
+A **quadratic** time complexity algorithim is one that runs some constant time code <Math inline>n^2</Math> times (in the worst case) where <Math inline>n</Math> is the input size. The above nested loop is the most common example of an algorithm that takes <Math inline>n^2</Math> time. 
+```
+for (int i = 1; i <= n; i++) {
+	for (int j = i; j <= n; j++) {
+		// constant time code here
+	}
+}
+```
+
+To denote a quadratic time algorithm, we write O(n^2)
 
 
-{/* <Math>{'\\(\\frac{10}{4x} \\approx 2^{12}\\)'}</Math> */}
+In Big O notation, all **constant factors** are ignored. Algorithms that take O(2n) steps, O(n/2) steps or O(n+4) steps are all considered O(n). Algorithms that take O(3n^2), O(n^2 + 5) or O(n^2) are all considered O(n^2). It is effectively only the exponent that matters. An O(n^3) algorithim cannot be described as O(n^2) in big O notation. 
+
+This simplification is done because big O notation aims to describe how an algorithm slows down as the input size gets extremely large - and when we are talking about numbers so large, the difference between 1x and 5x is insignificant. For instance, the difference between an algorithim that takes 100,000 and an algorithim which takes 500,000 steps is unnoticable compared to the difference between an algorithim which takes 100,000 steps and an algorithm which takes 10,000,000,000 steps (<Math inline>100,000^2</Math>)

@@ -29,9 +29,11 @@ Note: In competitive programming solves, prompts are not used as the solves are 
 
 # `std` namespace and the `>>` operator
 
-Until now I have been referring to `std::cout <<` as one keyword. However, this is a partial lie as there are many parts to this phrase. First there is `std::`. C++ allows you to group code keywords under a label known as a namespace. This helps avoid naming clashes. For example, if two variables have the same name but are declared in different namespaces, the compiler will not complain. If you recall, the `cout` keyword was defined in some pre-written code inside of the header file we always include at the top of our code. That header file defines the `cout` keyword in the `std` namespace so that if you ever create a variable or other keyword called `cout`, it will not cause conflict with the `cout` used to output text . In other words, we have to specify to the compiler that we are talking about the `cout` in the `std` namespace whenever we output text as it was defined in the `std` namespace.
+Until now I have been referring to `std::cout <<` as one keyword. However, this is a partial lie as there are many parts to this phrase. First there is `std::`. C++ allows you to group code keywords under a label known as a namespace. This helps avoid naming clashes. If two variables have the same name but are declared in different namespaces, the compiler will not produce an error. 
 
-However, practically, competitive programmers know to not name their variables something like `cout`. It also becomes quite tedious to write `std::` before each occurance of `cout` or `cin`. Therefore, most competitive programmers simply add the following line at the top of their code
+If you recall, the `cout` keyword was defined in some pre-written code inside of the header file we always include at the top of our code. That header file defines the `cout` keyword in the `std` namespace so that if you ever create a variable or other keyword called `cout`, it will not cause conflict with the `cout` used to output text. In other words, we have to specify to the compiler that we are talking about the `cout` in the `std` namespace whenever we output text as it was defined in the `std` namespace.
+
+However, practically, competitive programmers know better than to name their variables something like `cout`. It also becomes quite tedious to write `std::` before each occurance of `cout` or `cin`. Therefore, most competitive programmers simply add the following line at the top of their code
 
 ```
 using namespace std;
@@ -52,7 +54,7 @@ int main() {
 
 **Note**: `using namespace std;` is only recommended for small programs such as those you write for competitive programming solves.
 
-Now `cout` and `cin` are special keyword in the fact that they are not exactly variables or functions. They can be read from and written to using the `>>` and `<<` operators for reading and writing respectively. These operators are also quite special in the fact that they do not work like the operators you saw in last chapter (e.g. +, -, \*, /). They are meant specifically to be used with `cin` and `cout`.
+Now `cout` and `cin` are special keyword in the fact that they are not exactly variables or functions. They can be read from and written to using the `>>` and `<<` operators respectively. These operators are also quite special in the fact that they are meant only to be used with `cin` and `cout`.
 
 # Multiple Inputs/Outputs
 
@@ -66,7 +68,7 @@ int main() {
   char inputtedCharacter;
   cout << "Please enter a character: ";
   cin >> inputtedCharacter;
-  cout << "\\nThe character that you inputted was: ";
+  cout << "\nThe character that you inputted was: ";
   cout << inputtedCharacter;
 }
 ```
@@ -81,16 +83,60 @@ int main() {
   char inputtedCharacter;
   cout << "Please enter a character: ";
   cin >> inputtedCharacter;
-  cout << "\\nThe character that you inputted was:" << inputtedCharacter;
+  cout << "\nThe character that you inputted was:" << inputtedCharacter;
 }
 ```
 
-<Exercise
-  number='1'
-  question='Using Repl.it to test your code, write some code that takes two numbers as inputs and outputs the sum.'
-  answer={`We can write some code to do that by creating two variables. I'll call them \`inputA\` and \`inputB\`. Then we can use \`cin\` to feed the user's input into those two variables. After that, we can add the two variables and store their result in a variable called \`result\`. Then we can simply output the value of \`result\`.
+You can do something similar with `cin`. An input containing two numbers seperated by a space or newline can be written into two variables like so:
 
-\`\`\`
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+  int firstNumber;
+  int secondNumber;
+  cout << firstNumber << secondNumber;
+  //If the input is 
+  //1 2
+  //firstNumber will become 1 and secondNumber will become 2
+}
+```
+
+# Endl
+
+Some programs will use the `endl` keyword instead of `\n`. This has the same effect and outputs a newline. 
+
+Both of the programs below will have the same output
+
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+  cout << "I am on the first line" << endl << "I am on the second line";
+}
+```
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+  cout << "I am on the first line" << "\n" << "I am on the second line";
+}
+```
+
+<Exercise number='1'>
+
+<ExerciseQuestion>
+Using Repl.it to test your code, write some code that takes two numbers as inputs and outputs the sum.
+</ExerciseQuestion>
+<ExerciseAnswer>
+
+  We can write some code to do that by creating two variables. I'll call them `inputA` and `inputB`. Then we can use `cin` to feed the user's input into those two variables. After that, we can add the two variables and store their result in a variable called `result`. Then we can simply output the value of `result`.
+
+```
 #include <iostream>
 using namespace std;
 
@@ -101,16 +147,15 @@ int main() {
 
     cout << "Please enter first number: ";
     cin >> inputA;
-    cout << "\\nPlease enter second number: ";
+    cout << "\nPlease enter second number: ";
     cin >> inputB;
 
     int result = inputA + inputB;
-    cout << "\\nThe sum of these numbers is: ";
-    cout << result << "\\n";
+    cout << "\nThe sum of these numbers is: ";
+    cout << result << "\n";
 
 }
+```
+</ExerciseAnswer>
 
-\`\`\`
-`}
-
-> </Exercise>
+ </Exercise>

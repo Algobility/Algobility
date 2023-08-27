@@ -1,4 +1,4 @@
-import { getAllPostIds, getPostData } from '../../customStuff/problems.js'
+import {  getPostData } from '../../customStuff/problems.js'
 import Head from 'next/head'
 
 
@@ -15,14 +15,18 @@ import {
   Tabs,
 } from '@chakra-ui/react';
 import Image from 'next/image';
-import NicePage from '../../components/nicepage';
-import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
+import NicePage from '../../components/nicepage.jsx';
+import MdxRenderer from '../../components/MdxRenderer';
+import Link from 'next/link'
+
+import { ArrowLeftIcon, ArrowRightIcon, ArrowBackIcon } from '@chakra-ui/icons';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import Pagination from '@mui/material/Pagination';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useUser } from '../../customStuff/useDB';
+import { useUser } from '../../customStuff/useDB.js';
+import { serialize } from 'next-mdx-remote/serialize';
 
 export default function viewQ({postData}) {
   const router = useRouter();
@@ -56,19 +60,17 @@ export default function viewQ({postData}) {
   return (
     <NicePage selected='practice' title='Practice'>
       <div className='flex justify-start  w-3/4'>
-        <div className='h-full min-h-screen mt-24  pr-24 pl-14 py-10 w-full relative '>
-          {/* <div className='relative flex justify-start items-center h-64  border-neutral-300 rounded-md p-4 w-auto '> */}
-            {/* <img src={`/rank-icons/${postData.rank}.png`} alt='rank' className='w-auto h-full mr-8 '></img> */}
-            <div className='border rounded-lg border-neutral-300 p-8 '>
-              <h1 className='mont text-6xl mb-4 text-primc flex justify-start items-center'> {postData.title}</h1>
-              <h2 className='mont '> Rank: <strong> {postData.rank.charAt(0).toUpperCase()}{postData.rank.slice(1)} </strong></h2>
-              <h2 className='mont '> Time Constraint: <strong> {postData.time} second(s)</strong></h2>
-              <h2 className='mont '>Memory Constraint: <strong> {postData.mem} mb</strong></h2>
-              <h2 className='mont '>Credits:<strong> {postData.credits}</strong></h2>
-            </div>
-          {/* </div> */}
-          <div className='robo  h-full mt-16 mr-24' id='ProblemMdWrapper' dangerouslySetInnerHTML={{ __html: postData.contentHtml }} >
+        <div className='h-full min-h-screen mt-24  pr-24 pl-14 py-10 mb-24 w-full relative '>
+          <Link href={`/practice/${postData.rank}/${postData.topic}`} className='w-full mt-4 text-lg robo hover:underline cursor-pointer '>
+            <ArrowBackIcon /> Back to all questions
+          </Link>
+          <div className=' border-neutral-300  border-b pb-6 mb-32 mt-12'>
+            <h1 className='mont text-6xl mb-4 text-primc flex justify-start items-center'> {postData.title}</h1>
+            <h2 className='mont '> Time Constraint: <strong> {postData.time} second(s)</strong></h2>
+            <h2 className='mont '>Memory Constraint: <strong> {postData.mem} mb</strong></h2>
+            <h2 className='mont '>Credits:<strong> {postData.credits}</strong></h2>
           </div>
+          <MdxRenderer mdxSource={postData.contentHtml} problem />
 
           {/* -------------------------------------------------------------------------- */
           /*                           MARK AS COMPLETE BUTTON                          */
@@ -155,16 +157,19 @@ export default function viewQ({postData}) {
 
 
 
-  export async function getStaticPaths() {
-    const paths = getAllPostIds()
-    return {
-      paths,
-      fallback: false
-    }
-  }
+export async function getStaticPaths() {
+  return {
+    // paths: getAllPostIds(),
+    paths: [],
+    fallback: 'blocking',
+  };
+}
+
   
   export async function getStaticProps({ params }) {
-    const postData = await getPostData(params.id)
+    const postData = await getPostData(params.slug[0], params.slug[1], params.slug[2])
+    const serializedContent = await serialize(postData.contentHtml);
+    postData.contentHtml = serializedContent
     return {
       props: {
         postData

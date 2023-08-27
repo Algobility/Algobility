@@ -30,7 +30,7 @@ export default function LearnIndex({ chaps }) {
     <>
       <NicePage selected='learn' title='Guides'>
         <div className=' min-h-screen relative'>
-          <div className='flex flex-col lg:flex-row  justify-between items-center pt-44 pb-12 px-4 mb-12 mx-auto w-3/4 border-b'>
+          <div className='flex flex-col lg:flex-row  justify-between items-center pt-44 pb-12 px-4 mb-12 mx-auto w-3/4 border-b gap-24'>
             <div className='lg:w-1/2 mb-12 lg:mb-0  '>
               <h1 className='mont text-6xl text-primc mb-2'>{rank}</h1>
               <p className='mont text-neutral-300'>{rankDescription[unpretty(rank)]}</p>
@@ -81,18 +81,33 @@ export default function LearnIndex({ chaps }) {
                 </div>
               )}
             </div>
-            <div className='w-auto flex justify-center items-center flex-col bg-neutral-700 p-6 border border-neutral-500 rounded-md'>
-              <h2 className='text-center robo mb-4'>
-                New to competitive programming? Learn more about it from this post
-              </h2>
-              <Link
-                href={`/IntroToCompetitiveProgramming`}
-                className='robo  px-4 py-2 w-full bg-primc hover:bg-cyan-800 transition-all rounded-md flex justify-between items-center'
-              >
-                Go to Guide
-                <BiLinkExternal />
-              </Link>
-            </div>
+            {rank != 'Iron' ? (
+              <div className='flex-1 flex justify-center items-center flex-col bg-neutral-700 p-6 border border-neutral-500 rounded-md'>
+                <h2 className='text-left w-full robo mb-4'>
+                  New to competitive programming? Learn more about it from this post
+                </h2>
+                <Link
+                  href={`/IntroToCompetitiveProgramming`}
+                  className='robo  px-4 py-2 w-full bg-primc hover:bg-cyan-800 transition-all rounded-md flex justify-between items-center'
+                >
+                  Go to Guide
+                  <BiLinkExternal />
+                </Link>
+              </div>
+            ) : (
+              <div className='flex-1 flex justify-center items-center flex-col bg-neutral-700 p-6 border border-neutral-500 rounded-md'>
+                <h2 className='text-left w-full robo mb-4'>
+                  Done with the guides? Practice the topics on the Practice Page
+                </h2>
+                <Link
+                  href={`/practice`}
+                  className='robo  px-4 py-2 w-full bg-primc hover:bg-cyan-800 transition-all rounded-md flex justify-between items-center'
+                >
+                  Go to Practice
+                  <BiLinkExternal />
+                </Link>
+              </div>
+            )}
           </div>
           <div className='flex justify-center items-start w-full pb-24'>
             <div className='grid grid-cols-1 gap-4 w-3/4 mt-12 '>

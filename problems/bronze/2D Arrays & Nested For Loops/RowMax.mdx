@@ -1,0 +1,64 @@
+---
+title: Row Maximums
+date: '2023-08-25'
+credits: 'Ahmad Bilal'
+time: 2
+mem: 256
+tcIn: ["helloWow"]
+tcOut: [`hello Wow`]
+---
+
+You are given a square 2D array of integers. Your task is to find the maximum element in each row of the array.
+
+# Input Format
+The first line of input consists of a single integer, N, representing the size of the square 2D array. 
+This is followed by N lines, each containing N integers representing the elements of the array.
+
+# Output Format
+Output N integers, each representing the maximum element in the corresponding row of the array. They should be space-separated.
+
+
+# Sample Test Case - Input
+```
+3
+3 5 9
+2 8 7
+1 6 4
+```
+
+# Sample Test Case - Output
+```
+9 8 6
+```
+
+# Solution
+<Solution>
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+
+    int arr[N][N];
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            cin >> arr[i][j];
+        }
+    }
+
+    for (int i = 0; i < N; ++i) {
+        int maxElement = -1;
+        for (int j = 0; j < N; ++j) {
+            maxElement = max(maxElement, arr[i][j]);
+        }
+        cout << maxElement << " ";
+    }
+
+    return 0;
+}
+```
+</Solution>
+
+

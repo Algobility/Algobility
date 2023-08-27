@@ -1,0 +1,329 @@
+---
+title: 'Functions'
+credits: Ahmad Bilal, Saleh Syed
+description: Write reusable code 
+---
+
+A function represents a self-contained block of code that is executed only when it is explicitly invoked or called. This mechanism allows for modularization and organization of code logic as well as writing code once that needs to be executed multiple times. 
+
+The general syntax for defining a function is as follows (i.e. writing a code block that can be executed later):
+
+```
+void myFunctionName() { //declare function called myFunctionName
+  // code to be executed
+}
+```
+
+To be specific, the above code consists of two parts, the function declaration and the function definition. The declaration is the part that says `void myFunction` and the definition is the code within. 
+
+```
+void myFunction() { // declaration
+  // the body of the function (definition)
+}
+```
+
+
+Note: Some programmers refer to both parts as just the function definition. While this is technically incorrect, it is not uncommon to hear.
+
+
+The code within this function will only be executed when this function is called. Calling a function can be done by writing its name followed by parenthesis
+
+```
+myFunctionName();   //this statement runs all the code inside the function
+```
+
+Here is a working example of a function being used in some code.
+
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+void randomFunction(){
+    cout << "Inside function";
+}
+
+int main(){
+    cout << "Hello\n";
+    randomFunction();
+    cout << "Goodbye\n";
+}
+```
+
+The result of the above code looks like this
+
+```
+Hello 
+Inside Function
+Goodbye
+```
+
+Functions can be called as many times as the programmer wants.
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+void randomFunction(){
+    cout << "Inside function";
+}
+
+int main(){
+    cout << "Hello\n";
+    randomFunction();
+    randomFunction();
+    cout << "Goodbye\n";
+    randomFunction();
+}
+```
+
+The above code outputs:
+```
+Hello 
+Inside Function
+Inside Function
+Goodbye
+Inside Function
+```
+
+# Defining functions after Calling
+
+A function cannot be called before it is declared. The following code will produce an error:
+
+```
+int main() {
+  myFunction();
+}
+
+void myFunction() {
+  cout << "I just got executed!";
+}
+```
+
+To avoid this, we can declare and define the function before calling it like so:
+
+```
+void myFunction() {
+  cout << "I'm getting executed!";
+}
+
+int main() {
+  myFunction();
+}
+```
+
+Alterantively, we can declare the function first and then define it somewhere below (by splitting the function declaration and definition).
+
+```
+// Function declaration
+void myFunction();
+
+// The main method
+int main() {
+  myFunction();  // call the function
+  return 0;
+}
+
+// Function definition
+void myFunction() {
+  cout << "I just got executed!";
+}
+```
+
+The `void myFunction()` is really just telling the compiler that there is a function that exists called myFunction, although we define it later.
+
+
+# Return values
+
+You can also write a function that returns a value (i.e. evaluates to a value). When such a function is called, the function call can be treated as a value. Let's say there is a function called `returningFunction` that returns the number 10. The function call can be treated as the value 10 like so:
+
+```
+int someNumber = 0;
+someNumber = returningFunction();       //returningFunction is executed and someNumber is set to the return value of returningFunction (i.e. 10)
+```
+
+So far all our function declarations have used the `void` keyword. This keyword tells the compiler that this function does not return anything. However, if we want our function to return a value, we must replace `void` with the data type of the return value like so:
+
+```
+int myFunctionName()
+```
+
+Now in our function definition, we can use the `return` keyword to return some value
+
+```
+int myFunctionName(){
+    cout << "I am being executed!" << endl;     //normal function definition
+    return 10;  //returning a value at the end
+}
+```
+
+We can call this function somewhere else and it will execute the `cout` statement as well as return the value 10.
+
+```
+int myFunction() {
+  cout << "I am being executed!" << endl;     //normal function definition
+  return 10;  //returning a value at the end
+}
+
+int main() {
+  int number = 0;
+  number = myFunction();   //myFunction is executed and number is set to the return value of myFunction
+  cout << number;
+}
+```
+
+The above code should output the following:
+
+```
+I am being executed!
+10
+```
+
+# Function Paramaters
+A function can be called with some additional information known as paramaters that alters the behavior of the function. When declaring a function, we can specify the different paramaters (addition information) that is needed for the function to execute. Within the function definition, these paramaters can be used as regular variables.
+
+Here is the syntax for declaring and defining a function with some paramaters
+
+```
+void functionName(parameter1, parameter2, parameter3) {
+  // code to be executed
+}
+```
+
+and this is the syntax to call a function that has some paramaters
+
+```
+functionName(10,30,50);
+```
+
+Note: A variable can also be passed into a function as a paramater like so:
+
+```
+int myVariable = 50;
+functionName(10,30,myVariable);
+```
+
+
+Let's create a function that takes a number and returns the square of that number. This function would take the number to be squared as a paramater and return the squared value. 
+
+```
+int squareMe(int toSquare) {    
+  cout << "I am being executed!" << endl; 
+  return toSquare*toSquare;  //returning toSquare multiplied by itself
+}
+
+int main() {
+    cout << squareMe(4);    //Execute squareMe (passing in 4 as a paramater) and output the return value
+}
+```
+
+
+# Ending code execution with return statements
+
+An important fact about functions is that any code within the function definition after a return statement is not executed. In other words, the return statement terminates the function. Here is an example:
+
+```
+bool isEven(int number){
+    cout << "I am being executed\n";
+    if(number%2 == 0){
+        return true;
+        cout << "This will not be executed"; //This code will not be executed 
+    }
+    return false;   //This code will not be executed if the above if statment was executed (since then, the previous return statement would have been executed)
+    cout << "This will not be executed\n"   //This code will not execute when the function is called
+}
+```
+
+# Passing by value & passing by reference
+
+By default, when you pass a variable into a function, a copy of the original variable is sent to the function. Therefore, if you attempt to change the value of a paramater in the definition of a function, the change will only be visible in the function definition. 
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+void myFunction(int someParamater){
+    cout << "someParamater is: " << someParamater << endl;
+    someParamater = 10;
+    cout << "Now someParamater is: " << someParamater << endl;
+}
+
+int main(){
+    int myFavoriteNumber = 5;
+    myFunction(myFavoriteNumber);
+    cout << "Now myFavoriteNumber is: " << myFavoriteNumber;
+}
+```
+
+The above code outputs:
+
+```
+someParamater is: 5
+Now someParamater is: 10
+Now myFavoriteNumber is: 5
+```
+
+This is because when the function changed `someParamater`, only the copy of `myFavoriteNumber` called `someParamater` was changed. The actual variable `myFavoriteNumber` remained the same.
+
+We can change this behaviour and give the function access to the actaul variable by writing an `&` symbol before the paramater name in the function declaration. This is known as passing a variable by reference (to the function).
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+void myFunction(int &someParamater){
+    cout << "someParamater is: " << someParamater << endl;
+    someParamater = 10;
+    cout << "Now someParamater is: " << someParamater << endl;
+}
+
+int main(){
+    int myFavoriteNumber = 5;
+    myFunction(myFavoriteNumber);
+    cout << "Now myFavoriteNumber is: " << myFavoriteNumber;
+}
+```
+
+Now the output looks like this:
+
+```
+someParamater is: 5
+Now someParamater is: 10
+Now myFavoriteNumber is: 10
+```
+
+This time `someParamater` did not act as a copy of `myFavoriteNumber` but rather an alias to be used within the function definition.
+
+
+# Passing arrays through functions
+
+Arrays can also be passed as paramaters to functions. However, the size of the array must be passed as a seperate paramater if the function requires its use as well. Here is an example of a function that, given an array, outputs all of its elements individually
+
+```
+int outputArray(int arr[], int size) {
+  for(int i = 0; i < size; i++){
+    cout << arr[i] << endl;
+  }
+}
+```
+
+Arrays are always passed by reference, even if the programmer does not write `&` before the paramater name in the function declaration. Any modification to any array element within the function declaration affects the actual array.
+
+
+# Built-in functions
+
+Some functions have been defined by C++ beforehand for you to call at your will. One example is the `min()` function that simply returns the smaller value of two values passed into the function.
+
+```
+cout << min(10,20);   //outputs 10
+```
+
+There is also a function for every data type in C++. This function accepts any type of value as a paramater and returns what it thinks should be the translation of that value in the data type. For example, calling `int()` and passing a float (decimal number) will result in  the function returning the decimal number but in integer format with all digits after the decimal point being effectively chopped off.
+
+```
+cout << int(8.4); //returns 8
+```
+
+# The main function
+
+The main function is one you have seen quite a lot before. This is the function that is executed by the compiler to begin the program. Notice how it has a return type of `int`. The main function is special in the fact that when defining it, we do not neccessarily need to return an integer. However, it is good practice to do so. This integer is supposed to represent the success of our program. A return value of 0 signifies that the program executed as intended. Any other value signifies that something went wrong.

@@ -34,7 +34,7 @@ export default function NicePage({ children, isTerminalOpen, terminalOpener, sel
   return (
     <div className='page overflow-x-hidden' onScroll={() => console.log('nicee')}>
       <Head>
-        <title>DotSlash {title ? '| ' + title : ''}</title>
+        <title>Algobility {title ? '| ' + title : ''}</title>
       </Head>
       <Blob />
       <Hotkeys keyName='ctrl+space' onKeyDown={() => setTerminalOpen(!terminalOpen)}>

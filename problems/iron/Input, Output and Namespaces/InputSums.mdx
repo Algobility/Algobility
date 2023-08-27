@@ -1,0 +1,52 @@
+---
+title: 'Input Sums'
+date: '2022-01-01'
+credits: 'Ahmad Bilal'
+time: 1
+mem: 156
+tcIn: [1, 4, 6, 100, 3819203]
+tcOut: [0, 6, 12, 2550, 150654498]
+---
+
+
+Given 4 integers, output the sum of the first and second as well as the sum of the third and fourth.
+
+# Input Format
+The first line of input will contain 4 space-seperated integers.
+# Output Format
+Output two integers (seperated by a space). The first integer should contain the sum of the first and second integer in the input. The second integer should contain the sum of the third and the fourth integer in the input.
+
+
+## Sample Test Case - Input
+
+```
+1 2 3 4
+```
+
+## Sample Test Case - Output
+
+```
+2 7
+```
+
+# Solution
+
+<Solution>
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a, b, c, d;
+    cin >> a >> b >> c >> d;
+    
+    int sumAB = a + b;
+    int sumCD = c + d;
+    
+    cout << sumAB << " " << sumCD << endl;
+    
+}
+
+```
+
+</Solution>

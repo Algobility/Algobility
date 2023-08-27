@@ -27,155 +27,57 @@ int main() {
 
 While this code works, it is not efficient or maintainable. If we wanted to print the numbers from 1 to 1000, it would be impractical to write 1000 lines of code manually.
 
-Now let's say we are creating a program for a simple guessing game where the user tries to guess a secret number by repeatedly inputting random numbers. We could do this by copy and pasting a million `if else` statements like so:
-
-```
-#include <iostream>
-using namespace std;
-
-int main() {
-  int input;
-  cout << "I have thought of a number.\nTry guessing what number it is.\nEnter your guess: ";
-  cin >> input;
-
-  // Check if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Imagine this code has been copy pasted a million times
-}
-```
-
-However, I hope you can see why this is terrible code. The `while` loop allows us to write such repeated blocks of code in a much better way.
-
 # The `while` loop
 
-To solve this problem, we can use a `while` loop. The `while` loop executes a block of code repeatedly as long as a certain condition is true. More precisely, it checks if a condition is true and if so, executes some code. If the condition is false, it will skip the execution of the code block and move on, just like an `if` statement. However, it repeats this process of checking an executing until the condition is false. Here's the general syntax of a `while` loop.
+To solve this problem, we can use a `while` loop. The `while` loop executes a block of code repeatedly as long as a certain condition is true. More precisely, it follows these steps:
+
+1. Check condition
+2. If condition is true, execute code and repeat from step 1
+3. If condition is false, exit loop and continue with the rest of the code
+
+This is the syntax of a while loop
+```
+while(condition){
+    code to be repeated
+}
+```
+
+Here is the above code with a while loop
 
 ```
 #include <iostream>
 using namespace std;
 
 int main() {
-    while(condition){
-        //code to be repeatedly executed as long as condition is true
+    int number = 1; // We start with the number 1
+
+    // The while loop begins here
+    while(number <= 5) { // Keep repeating the code inside the loop until 'number' is less than or equal to 5
+        cout << number << endl; // Print the current value of 'number'
+        number++; // Increase the value of 'number' by 1
     }
+    // The loop ends here when 'number' becomes 6
+
+    // Rest of the code continues after the loop
 }
 ```
 
-Let's tidy up the previous example of a guessing game using the `while` loop.
+Let's go through the above code in more detail.
 
-```
-#include <iostream>
-using namespace std;
+1. We start by declaring a variable called number and set its initial value to 1.
+2. The while loop begins with the condition: number <= 5. This means that as long as the value of number is less than or equal to 5, the code inside the loop will execute.
+3. Inside the loop, we print the value of number using cout. So, in each iteration of the loop, the current value of number (which starts from 1 and increases by 1 in each iteration) is printed.
+4. After printing, we use the number++ statement to increase the value of number by 1. This is important, as it ensures that the value of number changes in each iteration. If we didn't do this, the loop would keep running forever because the condition (number <= 5) would always be true.
+5. The loop continues to execute as long as the condition number <= 5 is true.
+6. Once number becomes 6, the condition becomes false, and the loop stops executing.
+7. The program continues with any code that comes after the loop.
 
-int main() {
-  int input;
-  cout << "I have thought of a number.\\nTry guessing what number it is. \\n"
-          "Enter your guess: ";
-  cin >> input;
-  while (input !=5) // repeat below code as long as inputted number is not equal to 5
-  {
-    cout << "\\nNot quite. Enter another guess: ";
-    cin >> input;
-  }
-  cout << "\\nThat is correct!";
-}
-```
 
-Let's go through what this code does step-by-step. First we prompt the user to enter a random number. If the inputted number was 5, the `while` loop is completely skipped as the condition becomes false. The `cout` statement below is directly executed. However, if the inputted number was not 5, the `while` loop begins (since the condition is true). We re-prompt the user for another number and store it in `input` again. If this time, the inputted number is indeed 5 and the condition becomes false, the code execution exits from the while loop and moves on to the `cout` statement below. If not, the while loop runs again and again until the inputted number is 5 and the condition becomes false.
-
-Note: The while loop only checks the condition before executing the code block.
-
-Here is another example of a `while` loop. This `while` loop repeats a code block exactly 5 times using the help of a counter variable.
-
-```
-#include <iostream>
-using namespace std;
-
-int main() {
-int i = 1; // Initialize a counter variable
-
-    while (i <= 5) {
-        cout << i << endl;
-        i++; // Increment the counter variable
-    }
-}
-```
-
-We first set our counter variable to 1. This variable keeps track of how many times we have gone through our while loop. Then, the while loop begins and starts by checking the condition `(i <= 5)`. Since the condition is true, the code inside the loop (printing the value of `i`) is executed. After that, the counter variable `i` is incremented using `i++` (which is equivalent to `i = i + 1`).
-
-The loop continues executing as long as the condition remains true. In this example, the loop will print the numbers 1 to 5 and then terminate when i becomes 6 (as 6 is no longer less than or equal to 5).
+Note: The while loop only checks the condition just before executing the code block.
 
 # The `for` Loop Shorthand
 
-It turns out, running a while loop for a fixed number of times is such a common occurance in code that C++ has its own shorthand for it (known as the `for` loop). It combines the initialization, condition, and incrementation of the counter variable into a single line.
+It turns out, running a while loop for a fixed number of times is such a common occurance in code that C++ has its own shorthand for it (known as the `for` loop). It combines the initialization of a counter variable, the condition to check if the counter variable has exceeded some fixed number or not, and incrementation of the counter variable into a single line.
 
 The syntax of a `for` loop is as follows:
 
@@ -200,4 +102,17 @@ int main() {
 }
 ```
 
-Note: The `for` loop does not add any functionality and simply makes code look a lot cleaner. Under the hood it is converted to a while loop.
+The `for` loop does not add any functionality and simply makes code look a lot cleaner. Under the hood it is converted to a while loop that looks something like this:
+
+```
+#include <iostream>
+using namespace std;
+
+int main() {
+    int counter = 1;
+    while (counter <= 10) {
+        cout << counter << endl;
+        counter++;
+    }
+}
+```

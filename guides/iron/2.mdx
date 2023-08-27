@@ -4,7 +4,9 @@ credits: Ahmad Bilal
 description: Understand how to output text as well as what header files are
 ---
 
-The program you executed in the last chapter is known as the famous ‘Hello World’ program. This is, by tradition, the first program every beginner writes. Let’s take a look at what each line actually does.
+The program you executed in the last chapter is known as the famous ‘Hello World’ program. This is, by tradition, the first program every beginner writes. While the program seems quite simple, truly understanding it requires knowledge of some concepts that we will only get to see in later chapters. This guide aims to only give you a general clue of what each part is doing.
+
+With that said, let's take a look at what each line here does.
 
 ```jsx
 #include <iostream>
@@ -13,6 +15,7 @@ int main() {
   std::cout << "Hello World!\n";
 }
 ```
+Note: One important thing to understand in programming is that code is executed sequentially. The first line is executed first, and the last line is executed last. 
 
 For the time being, I will ignore the first line. The second line is empty. The compiler ignores empty lines and so you can add as many or as little as you want. However, programmers often leave a line between significant code blocks in order to make the code look more tidy as shown in this example.
 
@@ -26,27 +29,34 @@ int main()
   std::cout << "Hello World!\n";     }
 ```
 
-Going back to the original code example, the fourth line is where the real code begins. In this case, we are simply saying ‘Hello World’ to the CLI by using the `std::cout <<` keyword. In C++ to spit some text to the CLI, you can use the `std::cout <<` keyword followed by whatever you want to have the program output. Notice how in this case, the text to be outputted is enclosed in quotation marks. In C++, whenever a programmer wants to refer to some English text, they are required to enclose the text in quotation marks so that the compiler does not confuse the text with other C++ keywords. This text also ends with a `\n` which represents a new line in the text. It’s common to always put a new line after every such output text so that other output texts are automatically placed on the next line. Lastly, I have ended the line with a semi-colon. In C++, all operations (such as outputting some text) must end with a semi-colon so that the compiler knows where each operation begin and end. They work similar to periods at the end of sentences in English.
+
+Going back to the original code example, the fourth line is where the real code begins. In this case, we are simply saying ‘Hello World’ to the CLI by using the `std::cout <<` keyword. In C++ to spit some text to the CLI, you can use the `std::cout <<` keyword followed by whatever you want to have the program output. Notice how in this case, the text to be outputted is enclosed in quotation marks. In C++, whenever a programmer wants to refer to some English text, they are required to enclose the text in quotation marks so that the compiler does not confuse the text with other C++ keywords. This text also ends with a `\n` which represents a new line in the text. It’s common to always put a new line after every such output text so that preceeding output texts are automatically placed on the next line. Lastly, I have ended the line with a semi-colon. In C++, all statements (such as outputting some text) must end with a semi-colon so that the compiler knows where each statement begins and ends. They work similar to periods at the end of sentences in English. We will get to see more types of such statements in later chapters.
 
 One intresting thing about `std::cout <<` is that it is not actually part of the core C++ language. It is an extra feature which you, the developer, have to manually opt in for. That is where the first line, `#include <iostream>` comes in. This 'include' statement is asking our compiler to first read some code in a file called 'iostream' before executing our code. This 'iostream' file contains the code that defines `std::cout <<` for the compiler. Iostream, along with a few other such files (known as header files) are used so often that they are now downloaded on your computer whenever you download the C++ compiler.
 
-<Exercise number='1' question={`How could you change the following code such that it outputs the text, 'Hello C++!'
-\`\`\`
+<Exercise number='1'>
+
+<ExerciseQuestion>
+How could you change the following code such that it outputs the text, 'Hello C++!'
+```
 #include <iostream>
 int main()
 {
     std::cout << "Hello World!\\n";
 }
-\`\`\`
+```
 
-`} 
-answer={`
-\`\`\`
+</ExerciseQuestion>
+
+<ExerciseAnswer>
+```
 #include <iostream>
 int main()
 {
-std::cout << "Hello C++!\\n";
+  std::cout << "Hello C++!\\n";
 }
-\`\`\`
+```
 
-`}></Exercise>
+</ExerciseAnswer>
+</Exercise>
+

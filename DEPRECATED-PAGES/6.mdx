@@ -1,0 +1,28 @@
+---
+title: 'Pointers & References'
+description: 'Work with text with ease'
+date: '2022-01-01'
+credits: Ahmad Bilal
+number: 4
+---
+
+All variables in C++ are stored at certain places in the memory of a computer. The location of storage can be identified by its address.
+
+We can get the memory address of a variable by writing the `&` symbol before the name of the variable.
+```
+int x = 100;
+cout << &x;
+```
+
+The above code should output an address simillar to the one below:
+```
+0x8783fffe9c
+```
+
+Let's say we have a variable `a`. We can store its memory address in another variable `p` by creating a **pointer variable** (or more simply, **pointer**). Now `p` is said to **point towards** `a` (i.e. `p` stores the memory address of `a`). The syntax  of creating a pointer variable is the same as a regular variable with only one difference. The data type of a pointer variable is the data type of the variable it is pointing to (in this case, `a`) along with a `*` in front.
+
+```
+float a = 2.5;
+float *p = &a;    //create a pointer p that points to an integer a
+```
+# TODO COMPLETE

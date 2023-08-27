@@ -1,0 +1,78 @@
+---
+title: Game Show Spinner 
+date: '2023-08-25'
+credits: 'Saleh Syed'
+time: 1
+mem: 156
+tcIn: [
+  "0.4 0.9 0.999",
+  "0.01 0.1 0.01",
+  "0.00001 0.00001 0.00001",
+  "1 1 1",
+  "1 0 1",
+  "0 0.56 0.9",
+  "0.5 0.5 0",
+  "0.445 0.673 0.218"
+]
+tcOut: [
+  0.046516,
+  0.0,
+  0.0,
+  100.0,
+  0.0,
+  0.0,
+  0.0,
+  0.000278
+]
+---
+
+A new episode of a popular game show is being recorded. Contestants play the game one at a time and compete for a single grand prize. There are 3 spinners, each divided into two sections: "WIN" and "LOSE". A contestant wins the prize if all three spinners land on "WIN" every time they are spun. Each of the 3 spinners is spun 3 times. Write a program that calculates the percent chance a contestant can win the prize given the "chance" value of each spinner.
+
+# Input Format
+
+The input consists of one line, containing three space-separated float values representing the "chance" values of the spinners. Each input value is in the inclusive range of 0 to 1.
+
+# Output Format
+
+Output a float value representing the percent chance a contestant can win the prize. The output may be zero (0.0)
+
+# Sample Test Case - Input
+
+```
+0.4 0.9 0.999
+```
+
+
+# Sample Test Case - Output
+```
+0.046516
+```
+
+
+
+# Solution
+
+<Solution>
+```cpp
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+    int numTestCases;
+    cin >> numTestCases;
+
+    for (int i = 0; i < numTestCases; ++i) {
+        float spinner1, spinner2, spinner3;
+        cin >> spinner1 >> spinner2 >> spinner3;
+
+        float spinner1Chance = spinner1*spinner1*spinner1;
+        float spinner2Chance = spinner2*spinner2*spinner2;
+        float spinner3Chance = spinner3*spinner3*spinner3;
+
+
+        double winChance = spinner1Chance * spinner2Chance * spinner3Chance * 100.0;
+        cout << winChance << endl;
+    }
+
+}

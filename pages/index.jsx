@@ -30,23 +30,30 @@ export default function Landing() {
       <NicePage selected='home'>
         <div className='w-full overflow-hidden'>
           <div className='h-full flex-col lg:mt-24 mb-24 '>
-            <div className='flex flex-col justify-center items-center lg:mt-64 mt-52 mb-12 px-8'>
-              <Hack text='.DOT/SLASH' classy='text-6xl md:text-9xl text-primc'></Hack>
-              <h2 className='text-xl md:text-xl mt-4 mont text-center'>
+            <div className='flex flex-col justify-center items-center lg:mt-52 mt-52 mb-12 px-8 w-3/4 mx-auto'>
+              {/* <Hack text='.DOT/SLASH' classy='text-6xl md:text-9xl text-primc'></Hack> */}
+              {/* <h2 className='text-xl md:text-xl mt-4 mont text-center'>
                 A begginer-friendly competitive programming platform{' '}
+              </h2> */}
+              <h1 className='mont text-left  text-3xl lg:text-6xl lg:text-center lg:leading-normal'>
+                An <span className='text-primc italic font-bold underline'>OOGA BOOGA</span> to take your <br /> Dooga
+                Booda to the next level and beyond
+              </h1>
+              <h2 className='mt-8 robo  text-lg lg:text-xl text-neutral-400'>
+                Because that's crazy wowowowow. Thats amazing. This is such a good description
               </h2>
-              <Link
+              {/* <Link
                 href='signin'
-                className='mono text-white bg-transparent hover:bg-primc border-primc  rounded-full mt-8 px-8 py-2 hover:px-14 transition-all border '
+                className='mono text-white bg-transparent hover:bg-primc border-primc  rounded-full mt-16 px-8 py-2 hover:px-14 transition-all border '
               >
                 .getStarted()
-              </Link>
+              </Link> */}
             </div>
 
             {/* -------------------------------------------------------------------------- */
             /*                                Cards method                                */
             /* -------------------------------------------------------------------------- */}
-            <div className=' flex flex-col lg:flex-row scale-75 items-center justify-center pt-28 lg:pt-32 lg:gap-12 w-3/4 mx-auto '>
+            <div className=' flex flex-col lg:flex-row scale-75 items-center justify-center pt-28 lg:pt-44 lg:gap-12 w-3/4 mx-auto '>
               {/* <div className='bg-backL w-80 rounded shadow-xl'>
                 <div className='rounded-md bg-primc px-8 py-4 mont text-xl flex justify-start gap-3 items-center'>
                   <svg

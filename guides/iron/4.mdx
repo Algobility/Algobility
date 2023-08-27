@@ -2,8 +2,10 @@
 title: 'Variables'
 credits: Ahmad Bilal
 description: Learn how to declare and manipulate variables
-practicable: true
+practicable: false
 ---
+
+**Note**: From this guide onwards, it is **highly recommended** that you try out every single code snippet provided in the guides for yourself using Replit.
 
 # Variables
 
@@ -157,42 +159,58 @@ int main()
 }
 ```
 
-<Exercise number='1' question={`What would be the output of the following code if executed: 
-\`\`\`
-#include <iostream>
-int main()
-{
-  int a = 10;
-  int c;
-  c = a;
-  std::cout << c;
-}
-\`\`\`
+<Exercise number='1'>
 
-`} 
-answer={`
-If you were to execute the above code, the number 10 would be outputted. This is because we have created a variable called \`a\` (with value 10) as well as an empty variable called \`c\` and then assigned the value of \`c\` to that of \`a\` (which was 10). After that \`c\` was outputted to the CLI.
-`}></Exercise>
+  <ExerciseQuestion>
+  What would be the output of the following code if executed: 
+  ```
+  #include <iostream>
+  int main()
+  {
+    int a = 10;
+    int c;
+    c = a;
+    std::cout << c;
+  }
+  ```
 
-<Exercise number='2' question={`What would be the output of the following code if executed: 
-\`\`\`
-#include <iostream>
-int main()
-{
-  int a = 10;
-  int b = 20;
-  int c;
-  c = a;
-  b = c;
-  a = b;
-  std::cout << a;
-}
-\`\`\`
+  </ExerciseQuestion>
 
-`} 
-answer={`
-This one is a bit more confusing. The correct answer is 10. The variable \`a\` is first set to 10 and \`b\` to 20. Another variable, \`c\` is created and immediatly set to the value of \`a\` (which is 10). Then \`b\` is set to the value of \`c\` (which is now 10). Lastly, \`a\` is set to the value of \`b\` (which is now 10 as well). Finally, since \`a\` is outputted, the correct answer is 10.
-`}></Exercise>
+  <ExerciseAnswer>
+  If you were to execute the above code, the number 10 would be outputted. This is because we have created a variable called `a` (with value 10) as well as an empty variable called `c` and then assigned the value of `c` to that of `a` (which was 10). After that `c` was outputted to the CLI.
+
+  </ExerciseAnswer>
+
+</Exercise>
+
+<Exercise number='2'>
+
+  <ExerciseQuestion>
+
+  What would be the output of the following code if executed: 
+  ```
+  #include <iostream>
+  int main()
+  {
+    int a = 10;
+    int b = 20;
+    int c;
+    c = a;
+    b = c;
+    a = b;
+    std::cout << a;
+  }
+  ```
+
+  </ExerciseQuestion>
+
+  <ExerciseAnswer>
+  This one is a bit more confusing. The correct answer is 10. The variable `a` is first set to 10 and `b` to 20. Another variable, `c` is created and immediatly set to the value of `a` (which is 10). Then `b` is set to the value of `c` (which is now 10). Lastly, `a` is set to the value of `b` (which is now 10 as well). Finally, since `a` is outputted, the correct answer is 10.
+  </ExerciseAnswer>
+
+</Exercise>
+
+
 
 # Characters
 

@@ -1,4 +1,4 @@
-import { getFilteredPostData } from '../../../customStuff/problems';
+import { getFilteredPostData, getAllPostIds } from '../../../customStuff/problems';
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { GoCircle, GoCheckCircle } from 'react-icons/go';
 import { getAllGuides } from '../../../customStuff/guides';
+import { GoLinkExternal } from 'react-icons/go';
 
 export default function Search({ probs, rank, topic, chaps }) {
   const [value, setValue] = useState();
@@ -76,7 +77,6 @@ export default function Search({ probs, rank, topic, chaps }) {
           if (element.practicable) res.push(element.title);
         });
 
-        console.log(res);
         setTopicsList(anytop.concat(res));
       }
     }
@@ -88,6 +88,8 @@ export default function Search({ probs, rank, topic, chaps }) {
     const topicParam = topicVal == 'Any Topic' ? 'anytopic' : topicVal;
     router.push(`/practice/${routeParam}/${topicParam}`);
   };
+
+  console.log(probs);
 
   return (
     <NicePage selected='practice' title='Practice'>
@@ -142,7 +144,7 @@ export default function Search({ probs, rank, topic, chaps }) {
           <div className='grid grid-cols-1 gap-4 w-3/4 mt-12 '>
             {probs.map((element, index) => (
               <Link
-                href={`/problem/${element.id}`}
+                href={`/problem/${element.rank}/${element.topic}/${element.id}`}
                 key={index}
                 className='relative rounded-md bg-neutral-700 hover:bg-neutral-600 transition-all cursor-pointer px-6 py-4 flex justify-start items-center'
               >
@@ -153,7 +155,9 @@ export default function Search({ probs, rank, topic, chaps }) {
                   <h2 className='robo text-2xl'>{element.title}</h2>
                   <p className='robo'>{element.credits}</p>
                 </div>
-                <div className='absolute right-12 bg-backL rounded-full h-12 w-12'></div>
+                <div className='absolute right-12 text-4xl'>
+                  <GoLinkExternal />
+                </div>
               </Link>
             ))}
             {probs.length == 0 ? (
@@ -171,8 +175,12 @@ export default function Search({ probs, rank, topic, chaps }) {
 }
 
 export async function getStaticProps({ params }) {
-  const probs = await getFilteredPostData(params.rank, params.topic);
+  getAllPostIds();
   const chaps = await getAllGuides();
+  const probs = await getFilteredPostData(params.rank, params.topic);
+  console.log(probs[0]);
+  console.log(probs[0]);
+  console.log(probs[0]);
   return { props: { probs: probs, rank: params.rank, topic: params.topic, chaps: chaps } };
 }
 

@@ -1,0 +1,77 @@
+---
+title: New Cork Healthcare
+date: '2023-08-24'
+credits: 'Saleh Syed'
+time: 1
+mem: 156
+tcIn: [
+  "1 2 3 4 5 6",
+  "1 2 1 1 2 1",
+  "7 5 3 4 12 4",
+  "1 7 7 7 7 7",
+  "4 2 3 1 2 1"
+]
+tcOut: [5400.0, 0.0, 7000.0, 8400.0, 4200.0]
+---
+
+The local government is instituting a new healthcare plan for families of 3 or more people in New Cork Town. The plan will provide $1,200.00 for each family member in the eligible families. Given the number of family members in 6 families, write a program to return the average amount of money an eligible family will earn. If there are no eligible families, return 0. 
+
+Note: The output may be a `float`.
+
+# Input Format
+
+There are 6 integers on the first (and only) line of input, each representing the number of family members in one of the families.
+
+# Output Format
+
+The output should be a single float value representing the average amount of money a family eligible for the new healthcare program in that neighborhood will earn.
+
+# Sample Test Case - Input
+```
+ 2 3 4 5 6
+ ```
+
+# Sample Test Case - Output
+```
+5400.0
+```
+
+# Solution
+
+<Solution>
+```
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+    float total = 0;    //keep track of total earning for all families
+
+    for (int i = 0; i < 6; ++i) {   //loop 6 times (for each family)
+        int inputtedMember;
+        cin >> inputtedMember;
+
+
+        //increment total if family is eligible
+        if (inputtedMember >= 3) {  
+            total += inputtedMember * 1200.0;
+        }
+        else{
+            total += 0;
+        }
+    }
+
+    //output average
+    if (total == 0) {
+        cout << "0.0" << endl;
+    } else {
+        cout << total/6 << endl;
+    }
+
+    return 0;
+}
+```
+
+The program reads the number of family members in each family in a neighborhood, calculates the total amount eligible families will earn, and then prints the average amount as specified in the question.
+
+</Solution>

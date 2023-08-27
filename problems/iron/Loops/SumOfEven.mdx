@@ -1,0 +1,47 @@
+---
+title: 'Sum of Even Numbers'
+date: '2022-01-01'
+rank: iron
+credits: 'Ahmad Bilal'
+topic: 'loops'
+time: 1
+mem: 156
+tcIn: [1, 4, 6, 100, 3819203]
+tcOut: [0, 6, 12, 2550, 150654498]
+---
+
+
+Given an integer N, calculate and print the sum of all even numbers from 2 to N (inclusive).
+
+
+# Sample Test Case - Input
+
+```
+6
+```
+
+# Sample Test Case - Output
+
+```
+12
+```
+
+# Solution
+
+```
+
+int main() {
+int N;
+cin >> N;
+int sum_even = 0;
+
+    for (int num = 2; num <= N; num += 2) {
+        sum_even += num;
+    }
+
+    cout << sum_even << endl;
+    return 0;
+
+}
+
+```

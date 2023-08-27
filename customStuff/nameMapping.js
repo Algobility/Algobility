@@ -47,11 +47,11 @@ const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Emerald']
 const codedRanks = ['iron', 'bronze', 'silver', 'gold', 'platinum', 'emerald']
 const rankDescription = {
     'iron': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you should be familliar with basic programming concepts such as variables, conditions, loops, etc. ',
-    'bronze': 'Bronze is the second rank and deals with more  ',
-    'silver': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you shouconcepts such as variables, conditions, loops, etc. ',
-    'gold': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you should be familliar with basic programming concepts such as variables, conditions, ad uasdhj asjdlasjd lkasjd lkasjd89ajd oasn loops, etc. ',
-    'platinum': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you should be familliar with basic programming concepts such as variables, conditions, ad uasdhj asjdlasjd lk',
-    'emerald': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you should be familliar with basic programming concepts such as variables, conditions, ad uasdhj asjdlasjd lk'
+    'bronze': 'Bronze is the second rank and deals with more programming fundementals. To pass this rank, you should be able to use, search, and sort 1D and 2D arrays, use nested loops, and work with string/character manipulation.',
+    'silver': 'Silver is the third rank and deals with beginner competitive coding concepts. To pass this rank, you should be familiar with more complex data structures/types along with recursion, brute force searching, and other intermediate concepts.',
+    'gold': 'Gold is the fourth rank. The guides for this rank are a work in progress. Please use the resources listed in the post below to study the syllabus. ',
+    'platinum': 'Platinum is the fifth rank. The guides for this rank are a work in progress. Please use the resources listed in the post below to study the syllabus.',
+    'emerald': 'Emerald is the sixth and (currently) final rank. The guides for this rank are a work in progress. Please use the resources listed in the post below to study the syllabus.'
 }
 
 

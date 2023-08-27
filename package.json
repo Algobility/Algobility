@@ -48,6 +48,7 @@
     "remark-html": "^15.0.2",
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
+    "remark-spoilers": "^0.5.2",
     "unified": "^10.1.2",
     "xterm": "^5.2.1"
   },

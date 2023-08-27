@@ -1,0 +1,67 @@
+---
+title: Student Grade Calculator
+date: '2023-08-25'
+credits: 'Saleh Syed'
+time: 1
+mem: 156
+tcIn: [90.0, 72.6, 59.7, 80.1, 69.3, 0.0, 100.2, 11.1156]
+tcOut: ['A', 'C', 'D', 'B', 'D', 'F', 'A', 'F']
+---
+
+In a certain class, students are given a letter grade based on the following inclusive grade ranges:
+
+- A: (90+)
+- B: (80-89)
+- C: (70-79)
+- D: (60-69)
+- F: (0-59)
+
+At the end of each term, students are given a decimal grade which is then used to determine the letter grade of the student. Write a program to evaluate the letter grade of a student given their decimal grade.
+
+# Input Format
+
+The input consists of a single float variable representing the decimal grade of a student. The decimal grade is no less than 0.
+
+# Output Format
+
+The output should be a single character representing the letter grade of the student.
+
+# Sample Test Case - Input
+```
+90.0
+```
+
+# Sample Test Case - Output
+```
+A
+```
+
+
+# Solution
+
+<Solution>
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int main() {
+    float decimalGrade;
+    cin >> decimalGrade;
+
+    char letterGrade;
+    if (decimalGrade >= 90) {
+        letterGrade =  'A';
+    } else if (decimalGrade >= 80) {
+        letterGrade =  'B';
+    } else if (decimalGrade >= 70) {
+        letterGrade =  'C';
+    } else if (decimalGrade >= 60) {
+        letterGrade =  'D';
+    } else {
+        letterGrade =  'F';
+    }
+    cout << letterGrade << endl;
+}
+```

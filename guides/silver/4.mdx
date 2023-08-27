@@ -1,9 +1,89 @@
 ---
-title: 'Advanced Brute Force with reccursion'
-description: 'this is a nice desc'
+title: 'Advanced Brute Force & reccursion'
+description: 'Calling a function within its definition'
 date: '2022-01-01'
 credits: Ahmad Bilal
 number: 3
 ---
 
-# TODO - COmplete
+Recursion is a programming technique where a function calls itself to solve a problem. It's similar to a mathematical concept called "recurrence relation." Recursion is suitable for solving problems that can be divided into smaller instances of the same problem.
+
+# Termination Condition
+To avoid infinite recursion, every recursive function must have a termination condition. This condition ensures that the recursion stops at some point and doesn't lead to an endless loop.
+
+# Recursive Function Structure
+A recursive function has two parts:
+
+Recursive Case: This is where the function calls itself with modified inputs to solve a smaller instance of the problem.
+Base Case: This is the termination condition that stops the recursion. It represents the simplest form of the problem that can be solved directly. If there is no base case, all calls to the function will in turn call the function again, resulting in an infinite loop. 
+
+
+```
+return_type recursive_function(parameters) {
+    if (base_case_condition) {
+        // Base case: solve directly
+    } else {
+        // Recursive case: modify inputs and call function recursively
+        recursive_function(modified_parameters);
+    }
+}
+```
+
+# Factorial Calculation
+An example of a problem where recursion can be used effectively, is the factorial calculation problem: given a number `n` compute its factorial (i.e. compute <Math inline>n*n-1*n-2*n-3*...*1</Math>).
+
+Notice how the factorial of a number <Math inline>n</Math>, is really just <Math inline>n*(n-1!)</Math> where '!' donates the factorial of a number. In other words, the factorial of any numbers, is that number multiplied by the factorial of one number less than it. We can translate this logic into code like so:
+
+```
+int factorial(int n) {
+    if (n == 0) {
+        return 1; // Base case: 0! = 1
+    } else {
+        return n * factorial(n - 1); // Recursive case
+    }
+}
+```
+
+The `if(n==0)` here is an important if statement. Without it, the function would have no base case and thus, would repeat infinitely.
+
+
+# Fibonacci Series
+The Fibonacci series is a sequence where each number is the sum of the two preceding ones: 0, 1, 1, 2, 3, 5, 8, 13, ...
+We can write some code to find the <Math inline> n_th </Math> fibonacci number using recursion as well
+
+```
+int fibonacci(int n) {
+    if (n <= 1) {
+        return n; // Base case: fibonacci(0) = 0, fibonacci(1) = 1
+    } else {
+        return fibonacci(n - 1) + fibonacci(n - 2); // Recursive case
+    }
+}
+```
+
+# Sample Problem: Sum of an Array
+
+<Exercise>
+<ExerciseQuestion>
+Write some code to find the sum of elements in an array using recursion.
+</ExerciseQuestion>
+<ExerciseAnswer>
+```
+int array_sum(int arr[], int size) {
+    if (size == 0) {
+        return 0; // Base case: empty array has sum 0
+    } else {
+        return arr[size - 1] + array_sum(arr, size - 1); // Recursive case
+    }
+}
+```
+</ExerciseAnswer>
+</Exercise>
+
+
+
+# Tips for Using Recursion Wisely
+- Always define a base case to terminate recursion.
+- Ensure progress toward the base case in each recursive call.
+- Be cautious about performance in deeply nested recursion.
+- Consider using recursion only when it simplifies the problem.
