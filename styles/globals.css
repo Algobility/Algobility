@@ -175,52 +175,6 @@ h1{
   animation: scalefade 0.1s ease-in;
 }
 
-#ProblemMdWrapper{
-  @apply robo;
-}
-#ProblemMdWrapper > h1{
-  @apply text-2xl font-bold mt-12 robo underline;
-}
-#ProblemMdWrapper > h2{
-  @apply font-bold mt-6 robo text-lg;
-}
-#ProblemMdWrapper > p{
-  @apply mt-4 ;
-}
-#ProblemMdWrapper > pre{
-  @apply mt-3 bg-backL py-2 rounded-md px-4 border border-neutral-400;
-}
-#ProblemMdWrapper > code{
-  @apply mt-2 rounded-md bg-backL px-2 py-1;
-}
-#ProblemMdWrapper > blockquote{
-  @apply bg-backL text-backL rounded-md p-4;
-}
-#ProblemMdWrapper > blockquote:hover{
-  @apply bg-neutral-700 text-white;
-}
-
-
-#ExerciseMdWrapper{
-  @apply robo;
-}
-
-#ExerciseMdWrapper > h1{
-  @apply text-xl font-bold mt-4 robo underline;
-}
-#ExerciseMdWrapper > h2{
-  @apply font-bold mt-2 robo text-lg;
-}
-#ExerciseMdWrapper > p{
-  @apply mt-4 ;
-}
-#ExerciseMdWrapper > pre{
-  @apply mt-3 bg-backL py-2 rounded-md px-4 border border-neutral-400;
-}
-#ExerciseMdWrapper > code{
-  @apply mt-2 rounded-md bg-backL px-2 py-1;
-}
-
 
 .customScroll{
 

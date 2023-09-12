@@ -64,7 +64,7 @@ export default function viewQ({ postData }) {
   return (
     <NicePage selected='practice' title='Practice'>
       <div className='flex justify-start  w-3/4'>
-        <ProblemViewer postData={postData} backLink={`/practice/${props.postData.rank}/anytopic`}></ProblemViewer>
+        <ProblemViewer postData={postData} backLink={`/practice/${postData.rank}/anytopic`}></ProblemViewer>
       </div>
       <div className='h-5/6  flex flex-col justify-center items-center w-1/4 fixed top-32 right-8 z-10 '>
         <div className=' rounded-lg bg-backL h-full w-full relative'>
@@ -84,7 +84,7 @@ export default function viewQ({ postData }) {
             <div className='flex justify-start items-center '>
               <h2 className='text-lg font-bold'>Test Input: </h2>
               <button
-                className='ml-4 hover:bg-primc hover:border-primc transition-all px-4 py-2 border rounded-md'
+                className='ml-4 hover:bg-primc hover:border-primc transition-all px-4 pb-1 pt-0.5 border rounded-md'
                 onClick={() => {
                   navigator.clipboard.writeText(postData.tcIn[tcIndex - 1]);
                 }}
@@ -92,6 +92,9 @@ export default function viewQ({ postData }) {
                 Copy to clipboard
               </button>
             </div>
+            <p className='bg-neutral-800 border mono rounded-md p-4 mt-2 mb-12' style={{ whiteSpace: 'pre-line' }}>
+              {postData.tcIn[tcIndex - 1]}
+            </p>
             <h2 className='text-lg font-bold mt-2'>Expected Output: </h2>
             <div className='bg-neutral-800 border mono rounded-md p-4 mt-2'>{postData.tcOut[tcIndex - 1]}</div>
           </div>

@@ -11,7 +11,7 @@ In programming, loops are essential constructs that allow us to repeat a block o
 
 Let's begin with an example of repetitive code. Consider a simple scenario where we want to print the numbers from 1 to 5. Here's one way we could do it without using loops:
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -36,7 +36,7 @@ To solve this problem, we can use a `while` loop. The `while` loop executes a bl
 3. If condition is false, exit loop and continue with the rest of the code
 
 This is the syntax of a while loop
-```
+```cpp
 while(condition){
     code to be repeated
 }
@@ -44,7 +44,7 @@ while(condition){
 
 Here is the above code with a while loop
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -65,10 +65,10 @@ int main() {
 Let's go through the above code in more detail.
 
 1. We start by declaring a variable called number and set its initial value to 1.
-2. The while loop begins with the condition: number <= 5. This means that as long as the value of number is less than or equal to 5, the code inside the loop will execute.
+2. The while loop begins with the condition: `number <= 5`. This means that as long as the value of number is less than or equal to 5, the code inside the loop will execute.
 3. Inside the loop, we print the value of number using cout. So, in each iteration of the loop, the current value of number (which starts from 1 and increases by 1 in each iteration) is printed.
-4. After printing, we use the number++ statement to increase the value of number by 1. This is important, as it ensures that the value of number changes in each iteration. If we didn't do this, the loop would keep running forever because the condition (number <= 5) would always be true.
-5. The loop continues to execute as long as the condition number <= 5 is true.
+4. After printing, we use the `number++` statement to increase the value of number by 1. This is important, as it ensures that the value of number changes in each iteration. If we didn't do this, the loop would keep running forever because the condition `number <= 5` would always be true.
+5. The loop continues to execute as long as the condition `number <= 5` is true.
 6. Once number becomes 6, the condition becomes false, and the loop stops executing.
 7. The program continues with any code that comes after the loop.
 
@@ -81,7 +81,7 @@ It turns out, running a while loop for a fixed number of times is such a common 
 
 The syntax of a `for` loop is as follows:
 
-```
+```cpp
 for (initialization; condition; incrementation) {
     // Code to be repeated
 }
@@ -91,7 +91,7 @@ Under the hood, a `for` loop simply runs a `while` loop with the `condition` giv
 
 Let's rewrite the previous `while` loop example using a for loop:
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -104,7 +104,7 @@ int main() {
 
 The `for` loop does not add any functionality and simply makes code look a lot cleaner. Under the hood it is converted to a while loop that looks something like this:
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 

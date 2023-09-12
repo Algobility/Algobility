@@ -8,6 +8,8 @@ import Code from './code';
 import { MathJax } from 'better-react-mathjax';
 
 function removeTrailingWhite(input) {
+  console.log('UEAJJEKLAJDLKASDklj ad;lkjaslk;d jsakl;j');
+  console.log(input.charAt(0));
   if (input.charAt(0) === ' ') {
     return input.substring(1);
   } else {
@@ -22,18 +24,23 @@ const MdxRenderer = ({ mdxSource }) => {
       h2: (props) => <h2 className='font-bold mt-6 robo text-2xl' {...props} />,
       p: (props) => <p className='robo mt-4 text-lg text-neutral-300' {...props} />,
       a: (props) => <a className='robo text-primc mt-4 text-lg' {...props} />,
-      pre: (props) => <pre className='my-6 bg-backL py-6 rounded-md px-6  border-neutral-400' {...props} />,
-      code: (props) => (
-        <Code className='mt-2 rounded-md py-0.5 bg-backL px-2' children={removeTrailingWhite(props.children)} />
-      ),
+      pre: (props) => <pre {...props} />,
+      code: (props) => <Code {...props} codeClass='mt-2 rounded-md py-0.5 px-2 bg-backL' children={props.children} />,
       Exercise: (props) => <Exercise {...props} />,
       ExerciseQuestion: (props) => <ExerciseQuestion {...props} />,
       ExerciseAnswer: (props) => <ExerciseAnswer {...props} />,
       Solution: (props) => <Solution {...props} />,
-      Math: (props) => <MathJax {...props}></MathJax>,
+      Math: (props) => (
+        <MathJax
+          inline={!props.block}
+          className={props.block ? 'text-2xl my-4' : ''}
+          children={`${'\\('}${props.children}${'\\)'}`}
+        ></MathJax>
+      ),
       // Code: (props) => <Code {...props} />,
       li: (props) => <li className='mt-2  robo ml-8 ' {...props} />,
       ul: (props) => <ul className='mt-4 robo list-disc ' {...props} />,
+      ol: (props) => <ul className='mt-4 robo list-decimal ' {...props} />,
     }),
     []
   );

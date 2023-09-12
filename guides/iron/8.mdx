@@ -8,7 +8,7 @@ A function represents a self-contained block of code that is executed only when 
 
 The general syntax for defining a function is as follows (i.e. writing a code block that can be executed later):
 
-```
+```cpp
 void myFunctionName() { //declare function called myFunctionName
   // code to be executed
 }
@@ -16,7 +16,7 @@ void myFunctionName() { //declare function called myFunctionName
 
 To be specific, the above code consists of two parts, the function declaration and the function definition. The declaration is the part that says `void myFunction` and the definition is the code within. 
 
-```
+```cpp
 void myFunction() { // declaration
   // the body of the function (definition)
 }
@@ -35,7 +35,7 @@ myFunctionName();   //this statement runs all the code inside the function
 Here is a working example of a function being used in some code.
 
 
-```
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -52,7 +52,7 @@ int main(){
 
 The result of the above code looks like this
 
-```
+```cpp
 Hello 
 Inside Function
 Goodbye
@@ -60,7 +60,7 @@ Goodbye
 
 Functions can be called as many times as the programmer wants.
 
-```
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -90,7 +90,7 @@ Inside Function
 
 A function cannot be called before it is declared. The following code will produce an error:
 
-```
+```cpp
 int main() {
   myFunction();
 }
@@ -102,7 +102,7 @@ void myFunction() {
 
 To avoid this, we can declare and define the function before calling it like so:
 
-```
+```cpp
 void myFunction() {
   cout << "I'm getting executed!";
 }
@@ -114,7 +114,7 @@ int main() {
 
 Alterantively, we can declare the function first and then define it somewhere below (by splitting the function declaration and definition).
 
-```
+```cpp
 // Function declaration
 void myFunction();
 
@@ -137,20 +137,20 @@ The `void myFunction()` is really just telling the compiler that there is a func
 
 You can also write a function that returns a value (i.e. evaluates to a value). When such a function is called, the function call can be treated as a value. Let's say there is a function called `returningFunction` that returns the number 10. The function call can be treated as the value 10 like so:
 
-```
+```cpp
 int someNumber = 0;
 someNumber = returningFunction();       //returningFunction is executed and someNumber is set to the return value of returningFunction (i.e. 10)
 ```
 
 So far all our function declarations have used the `void` keyword. This keyword tells the compiler that this function does not return anything. However, if we want our function to return a value, we must replace `void` with the data type of the return value like so:
 
-```
+```cpp
 int myFunctionName()
 ```
 
 Now in our function definition, we can use the `return` keyword to return some value
 
-```
+```cpp
 int myFunctionName(){
     cout << "I am being executed!" << endl;     //normal function definition
     return 10;  //returning a value at the end
@@ -159,7 +159,7 @@ int myFunctionName(){
 
 We can call this function somewhere else and it will execute the `cout` statement as well as return the value 10.
 
-```
+```cpp
 int myFunction() {
   cout << "I am being executed!" << endl;     //normal function definition
   return 10;  //returning a value at the end
@@ -174,7 +174,7 @@ int main() {
 
 The above code should output the following:
 
-```
+```cpp
 I am being executed!
 10
 ```
@@ -184,7 +184,7 @@ A function can be called with some additional information known as paramaters th
 
 Here is the syntax for declaring and defining a function with some paramaters
 
-```
+```cpp
 void functionName(parameter1, parameter2, parameter3) {
   // code to be executed
 }
@@ -192,13 +192,13 @@ void functionName(parameter1, parameter2, parameter3) {
 
 and this is the syntax to call a function that has some paramaters
 
-```
+```cpp
 functionName(10,30,50);
 ```
 
 Note: A variable can also be passed into a function as a paramater like so:
 
-```
+```cpp
 int myVariable = 50;
 functionName(10,30,myVariable);
 ```
@@ -206,7 +206,7 @@ functionName(10,30,myVariable);
 
 Let's create a function that takes a number and returns the square of that number. This function would take the number to be squared as a paramater and return the squared value. 
 
-```
+```cpp
 int squareMe(int toSquare) {    
   cout << "I am being executed!" << endl; 
   return toSquare*toSquare;  //returning toSquare multiplied by itself
@@ -222,7 +222,7 @@ int main() {
 
 An important fact about functions is that any code within the function definition after a return statement is not executed. In other words, the return statement terminates the function. Here is an example:
 
-```
+```cpp
 bool isEven(int number){
     cout << "I am being executed\n";
     if(number%2 == 0){
@@ -238,7 +238,7 @@ bool isEven(int number){
 
 By default, when you pass a variable into a function, a copy of the original variable is sent to the function. Therefore, if you attempt to change the value of a paramater in the definition of a function, the change will only be visible in the function definition. 
 
-```
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -257,7 +257,7 @@ int main(){
 
 The above code outputs:
 
-```
+```cpp
 someParamater is: 5
 Now someParamater is: 10
 Now myFavoriteNumber is: 5
@@ -267,7 +267,7 @@ This is because when the function changed `someParamater`, only the copy of `myF
 
 We can change this behaviour and give the function access to the actaul variable by writing an `&` symbol before the paramater name in the function declaration. This is known as passing a variable by reference (to the function).
 
-```
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -286,7 +286,7 @@ int main(){
 
 Now the output looks like this:
 
-```
+```cpp
 someParamater is: 5
 Now someParamater is: 10
 Now myFavoriteNumber is: 10
@@ -299,7 +299,7 @@ This time `someParamater` did not act as a copy of `myFavoriteNumber` but rather
 
 Arrays can also be passed as paramaters to functions. However, the size of the array must be passed as a seperate paramater if the function requires its use as well. Here is an example of a function that, given an array, outputs all of its elements individually
 
-```
+```cpp
 int outputArray(int arr[], int size) {
   for(int i = 0; i < size; i++){
     cout << arr[i] << endl;
@@ -314,13 +314,13 @@ Arrays are always passed by reference, even if the programmer does not write `&`
 
 Some functions have been defined by C++ beforehand for you to call at your will. One example is the `min()` function that simply returns the smaller value of two values passed into the function.
 
-```
+```cpp
 cout << min(10,20);   //outputs 10
 ```
 
 There is also a function for every data type in C++. This function accepts any type of value as a paramater and returns what it thinks should be the translation of that value in the data type. For example, calling `int()` and passing a float (decimal number) will result in  the function returning the decimal number but in integer format with all digits after the decimal point being effectively chopped off.
 
-```
+```cpp
 cout << int(8.4); //returns 8
 ```
 

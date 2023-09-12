@@ -36,8 +36,11 @@ export default function Landing() {
                 A begginer-friendly competitive programming platform{' '}
               </h2> */}
               <h1 className='mont text-left  text-3xl lg:text-6xl lg:text-center lg:leading-tight'>
-                An <span className='text-primc italic font-bold underline'>OOGA BOOGA</span> to take your <br /> Dooga
-                Booda to the next level and beyond
+                An{' '}
+                <span className='font-bold drop-shadow-2xl text-7xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-pink-600'>
+                  OOGA BOOGA
+                </span>{' '}
+                to take your <br /> Dooga Booda to the next level and beyond
               </h1>
               <h2 className='mt-8 robo  text-lg lg:text-xl text-neutral-400'>
                 Because that's crazy wowowowow. Thats amazing. This is such a good description

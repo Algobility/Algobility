@@ -88,7 +88,7 @@ export default function practice({ chaps }) {
           <div className='rounded-lg w-3/4 robo py-8'>
             <h1 className='mont text-6xl text-primc '>Search Problemset</h1>
             <h2 className='mt-3 text-neutral-300'>
-              Practice your implementation skills by solving sample problems. You can find problems from past contests
+              Practice your implementation skills by solving practice problems. You can find problems from past contests
               here as well.
             </h2>
             <div className='mt-16 flex flex-col gap-4 md:gap-0 md:flex-row justify-center  items-stretch w-full md:px-4 '>

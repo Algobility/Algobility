@@ -1,0 +1,68 @@
+---
+title: 'Time Complexity & Big O Notation'
+description: 'More uses of nested for loops & estimating code efficiency'
+date: '2022-01-01'
+credits: Ahmad Bilal, Saleh Syed
+---
+# The Consecutive-Number Pair Finding Problem
+Imagine you have an array of numbers, and you need to find all consecutive pairs (pairs of numbers back-to-back in the array) such that the first number is strictly one less than the second. For instance, in the array `[1, 2, 3, 4, 5]`, the pairs would be `(1, 2)`, `(2, 3)`, `(3, 4)`, and `(4, 5)`. In the array [4,2,1,3,4], the only such pairs would be `(1,3)`
+
+# Naive Approach with Nested Loops
+Generally speaking, whenever a question asks to find some pair within an array, a **brute-force** solution is to search through every possible pair in the array with a nested for loop. 
+
+Note: In the context of competitive programming, **brute-force** refers to any solution which tries every possible solution to find an answer
+
+We can solve the above problem through this brute-force method as well. We can iterate through the array with a loop and, for each element in that first loop, iterate through the array again with a second loop to check for consecutive pairs.
+
+```int n = arr.size();
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+        if (arr[j] - arr[i] == 1 && j = i+1) {  //check if the first number is one less AND both indicies are back-to-back
+            std::cout << "Consecutive pair: (" << arr[i] << ", " << arr[j] << ")\n";
+        }
+    }
+}
+```
+In this approach, for each element arr[i], we compare it with every subsequent element arr[j] to check if they form a consecutive pair.
+
+# Inefficiency of Nested Loops
+While the nested loop approach works, it becomes inefficient as the size of the array increases. As the array grows larger, the number of comparisons increases exponentially, leading to longer execution times. But exactly how slow is this algortihm? Big O Notation allows us to represent the efficiency of an alogirithm numerically
+
+# Big O Notation
+Big O notation is a notation which is used to describe the number of steps an algorithm needs to perform in the worst possible case. More specifically, it describes how the time taken by an algorithm grows as the input size grows.
+
+A step is any operation which can be done in C++ that is not a function or a loop. For example, declaring/setting a variable is one step. An if statement is one step. A `cout` statement is also one step. 
+
+A **constant time** operation is anything that can be done in a fixed number of steps (independant of the input size). For example, the following code runs in constant time:
+
+```
+int a = 5;
+int b = 7;
+int c = 4;
+int d = a + b + c + 153;
+for(int i = 0; i<5;i++){
+    cout << i << endl;
+}
+```
+
+To denote an algorithm that takes constant time in big O notation, we write O(1)
+
+A **linear** time complexity algorithm is one that runs some constant time code <Math inline>n</Math> times (in the worst case) where <Math inline>n</Math> is the input size. Searching for a number in an array is a linear time algorithm because in the worst case in has to search through every element in the array (and the size of the array is the input size)
+
+To denote a linear time algorithm, we write O(n)
+
+A **quadratic** time complexity algorithim is one that runs some constant time code <Math inline>n^2</Math> times (in the worst case) where <Math inline>n</Math> is the input size. The above nested loop is the most common example of an algorithm that takes <Math inline>n^2</Math> time. 
+```
+for (int i = 1; i <= n; i++) {
+	for (int j = i; j <= n; j++) {
+		// constant time code here
+	}
+}
+```
+
+To denote a quadratic time algorithm, we write O(n^2)
+
+
+In Big O notation, all **constant factors** are ignored. Algorithms that take O(2n) steps, O(n/2) steps or O(n+4) steps are all considered O(n). Algorithms that take O(3n^2), O(n^2 + 5) or O(n^2) are all considered O(n^2). It is effectively only the exponent that matters. An O(n^3) algorithim cannot be described as O(n^2) in big O notation. 
+
+This simplification is done because big O notation aims to describe how an algorithm slows down as the input size gets extremely large - and when we are talking about numbers so large, the difference between 1x and 5x is insignificant. For instance, the difference between an algorithim that takes 100,000 and an algorithim which takes 500,000 steps is unnoticable compared to the difference between an algorithim which takes 100,000 steps and an algorithm which takes 10,000,000,000 steps (<Math inline>100,000^2</Math>)

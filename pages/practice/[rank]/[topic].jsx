@@ -89,8 +89,6 @@ export default function Search({ probs, rank, topic, chaps }) {
     router.push(`/practice/${routeParam}/${topicParam}`);
   };
 
-  console.log(probs);
-
   return (
     <NicePage selected='practice' title='Practice'>
       <div className=' w-screen h-screen hidden justify-center items-center '>
@@ -109,7 +107,7 @@ export default function Search({ probs, rank, topic, chaps }) {
           <div className='rounded-lg w-3/4 robo py-8 '>
             <h1 className='mont text-5xl md:text-6xl text-primc '>Search Problemset</h1>
             <h2 className='mt-3 text-neutral-300'>
-              Practice your implementation skills by solving sample problems. You can find problems from past contests
+              Practice your implementation skills by solving practice problems. You can find problems from past contests
               here as well.
             </h2>
             <div className='mt-16 flex flex-col gap-4 md:gap-0 md:flex-row justify-center  items-stretch w-full md:px-4 border-b pb-12'>
@@ -144,15 +142,22 @@ export default function Search({ probs, rank, topic, chaps }) {
           <div className='grid grid-cols-1 gap-4 w-3/4 mt-12 mb-24 '>
             {probs.map((element, index) => (
               <Link
-                href={`/problem/${element.rank}/${element.topic}/${element.id}`}
+                href={element.link ? element.link : `/problem/${element.rank}/${element.topic}/${element.id}`}
                 key={index}
                 className='relative rounded-md bg-neutral-700 hover:bg-neutral-600 transition-all cursor-pointer px-6 py-4 flex justify-start items-center'
               >
                 <div className='h-16 w-16 mr-8'>
-                  <img src={`/rank-icons/${element.rank}.png`} alt='rank icon' />
+                  <img src={`/rank-icons/${rank}.png`} alt='rank icon' />
                 </div>
                 <div>
-                  <h2 className='robo text-2xl'>{element.title}</h2>
+                  <h2 className='robo text-2xl flex justify-start items-center gap-4'>
+                    {element.title}{' '}
+                    {element.external ? (
+                      <span className='text-sm bg-primc rounded-full px-3 py-1'>External Site</span>
+                    ) : (
+                      ''
+                    )}{' '}
+                  </h2>
                   <p className='robo'>{element.credits}</p>
                 </div>
                 <div className='absolute right-12 text-4xl'>
@@ -178,9 +183,6 @@ export async function getStaticProps({ params }) {
   getAllPostIds();
   const chaps = await getAllGuides();
   const probs = await getFilteredPostData(params.rank, params.topic);
-  console.log(probs[0]);
-  console.log(probs[0]);
-  console.log(probs[0]);
   return { props: { probs: probs, rank: params.rank, topic: params.topic, chaps: chaps } };
 }
 

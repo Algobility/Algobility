@@ -8,41 +8,41 @@ import { ranks } from './nameMapping';
 
 const postsDirectory = path.join(process.cwd(), 'problems');
 
-export function getSortedPostsData() {
-  // Get file names under /posts
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
-    // Remove ".md" from file name to get id
-    const id = fileName.replace(/\.md$/, '');
+// export function getSortedPostsData() {
+//   // Get file names under /posts
+//   const fileNames = fs.readdirSync(postsDirectory);
+//   const allPostsData = fileNames.map((fileName) => {
+//     // Remove ".md" from file name to get id
+//     const id = fileName.replace(/\.md$/, '');
 
-    // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
+//     // Read markdown file as string
+//     const fullPath = path.join(postsDirectory, fileName);
+//     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
-    // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents);
+//     // Use gray-matter to parse the post metadata section
+//     const matterResult = matter(fileContents);
 
-    // Combine the data with the id
-    return {
-      id,
-      ...matterResult.data,
-    };
-  });
-  // Sort posts by date
-  return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
-}
+//     // Combine the data with the id
+//     return {
+//       id,
+//       ...matterResult.data,
+//     };
+//   });
+//   // Sort posts by date
+//   return allPostsData.sort((a, b) => {
+//     if (a.date < b.date) {
+//       return 1;
+//     } else {
+//       return -1;
+//     }
+//   });
+// }
 
 /**
  * Get array of object representing each problem that satisfies an inputted query
  */
 export function getFilteredPostData(rank, rawTopic) {
-  //Create var topics which stores an array of all topics to search (may have one or all topics of a rank)
+  //Create var topics which stores an array of all topics to search (either contains one or all topics of a rank)
   let topics = [];
   if (rawTopic == 'anytopic') {
     const fullPath = path.join(postsDirectory, `${rank}`);
@@ -67,28 +67,43 @@ export function getFilteredPostData(rank, rawTopic) {
     const fileNames = fs.readdirSync(fullPath);
 
     const filteredPostsData = fileNames.reduce((filteredData, fileName) => {
-      const id = fileName.replace(/\.mdx$/, '');
-      const fullPath = path.join(postsDirectory, `${rank}/${topic}/${id}.mdx`);
-      const fileContents = fs.readFileSync(fullPath, 'utf8');
-      const matterResult = matter(fileContents);
-      const postData = {
-        id,
-        rank,
-        topic,
-        ...matterResult.data,
-      };
+      if (fileName != 'external.json') {
+        const id = fileName.replace(/\.mdx$/, '');
+        const fullPath = path.join(postsDirectory, `${rank}/${topic}/${id}.mdx`);
+        const fileContents = fs.readFileSync(fullPath, 'utf8');
+        const matterResult = matter(fileContents);
+        const postData = {
+          id,
+          rank,
+          topic,
+          ...matterResult.data,
+        };
 
-      // Check if the problem matches the given rank and credit
-      if (!postData.invisible) {
-        filteredData.push(postData);
+        // Check if the problem matches the given rank and credit
+        if (!postData.invisible) {
+          filteredData.push(postData);
+        }
+      } else {
+        const data = fs.readFileSync(path.join(postsDirectory, `${rank}/${topic}/external.json`), 'utf8');
+        const jsonData = JSON.parse(data);
+        for (let problem of jsonData) {
+          filteredData.push({ ...problem, ...{ external: true } });
+        }
       }
-
       return filteredData;
     }, []);
+    console.log(filteredPostsData);
 
     result = [...result, ...filteredPostsData];
   }
 
+  result.sort((a, b) => {
+    if (a.external && !b.external) return 1;
+    if (!a.external && b.external) return -1;
+    else {
+      return a.title.localeCompare(b.title);
+    }
+  });
   return result;
 }
 

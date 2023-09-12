@@ -1,5 +1,5 @@
 ---
-title: Input, Output and Namespaces
+title: Input, Output and Math
 credits: Ahmad Bilal
 description: Learn how to prompt users for input and understand how namespaces work
 practicable: true
@@ -13,7 +13,7 @@ To get input from the user, we can use the `std::cin >>` keyword followed by the
 
 Here is an example
 
-```
+```cpp
 #include <iostream>
 
 int main() {
@@ -35,13 +35,13 @@ If you recall, the `cout` keyword was defined in some pre-written code inside of
 
 However, practically, competitive programmers know better than to name their variables something like `cout`. It also becomes quite tedious to write `std::` before each occurance of `cout` or `cin`. Therefore, most competitive programmers simply add the following line at the top of their code
 
-```
+```cpp
 using namespace std;
 ```
 
 This tells the compiler to consider everything as part of the `std` namespace. In other words, the compiler simply attaches an invisible `std::` before every variable or keyword. With this line, a programmer no longer needs to write `std::` before `cout`. On the flip side, now if a programmer try to declare a variable by the name of `cout`, the compiler **will** give an error since all variables will automatically become part of the std namespace.
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -58,9 +58,9 @@ Now `cout` and `cin` are special keyword in the fact that they are not exactly v
 
 # Multiple Inputs/Outputs
 
-C++ offers a useful shorthand notation for writing multiple input and output statements. Let's say you wanted to write some code which takes a character as input from the user and outputs, "The character you entered was: ", followed by the inputted character. Here is one way you could do that.
+C++ offers a useful shorthand notation for writing multiple input and output statements. Let's say you wanted to write some code which takes a character as input from the user and outputs, `"The character you entered was: "`, followed by the inputted character. Here is one way you could do that.
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -75,7 +75,7 @@ int main() {
 
 However, in C++, you can also merge the last two `cout` statements like so:
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -89,7 +89,7 @@ int main() {
 
 You can do something similar with `cin`. An input containing two numbers seperated by a space or newline can be written into two variables like so:
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -107,10 +107,10 @@ int main() {
 
 Some programs will use the `endl` keyword instead of `\n`. This has the same effect and outputs a newline. 
 
-Both of the programs below will have the same output
+Both of the programs below will have the same output:
 
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -118,7 +118,7 @@ int main() {
   cout << "I am on the first line" << endl << "I am on the second line";
 }
 ```
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -136,7 +136,7 @@ Using Repl.it to test your code, write some code that takes two numbers as input
 
   We can write some code to do that by creating two variables. I'll call them `inputA` and `inputB`. Then we can use `cin` to feed the user's input into those two variables. After that, we can add the two variables and store their result in a variable called `result`. Then we can simply output the value of `result`.
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -159,3 +159,93 @@ int main() {
 </ExerciseAnswer>
 
  </Exercise>
+
+
+{/* # Mathematical Problems and Integer Division
+Many seemingly difficult problems in the iron rank often simplify down to a very simple mathematical equation. A program can be written to solve such problems without the use of any of the complex techniques that we will discuss in later chapters. Take a look at the following question:
+
+_Write a program that outputs a whole number representing the number of steps requried to travel a distance of <Math>x</Math> feet given that each step can cover a maximum distance of <Math>k</Math> feet (and a minimum of 0 feet). The input contains one line with two space seperated integers, <Math>x</Math> and <Math>k</Math>_
+
+We can tackle such a problem by first storing the two inputs like so: 
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int x, k;
+  cin >> x >> k;
+}
+```
+
+If the question had instead said that the two input integers were line-seperated (i.e. the input had two lines with one integer on each line), the code above would have still worked. This is because both line breaks and spaces are considered whitespaces and `cin` distinguishes between seperate inputs by whitespaces. In other words, `cin` treats the following two inputs as the same thing:
+
+```
+1 2
+```
+and
+```
+1
+2
+```
+
+After storing the values of `x` and `k`, we can find the number of whole steps needed to cover `x` feet by dividing `x` by `k`. The only flaw with this system is that we want to output a whole number (by rounding up in the case that the answer is fractional). 
+
+An intresting feature in C++ is that by default, when two integers are divided using the `/` operator, the answer is always rounded down to the nearest whole number. This is why the following code doesn't work
+
+```
+float myNumber = 10/3;    //myNumber becomes 3 instead of 3.333
+```
+
+while this code does work
+
+```
+float myNumber = 10/3.0;  //myNumber becomes 3.333 because now we are not dividing two integers. We are instead dividing an integer and a float.
+```
+
+This, perhaps annoying, feature in C++ is known as integer division. 
+
+The problem is that our code needs to round up in the case of a fractional answer (if `x/k` is 2.5, we will need 3 steps with one of the steps being smaller in size). To do this we need to output `x/k` and add one to the result if `x%k` (remainder of k when divided by x) is more than 0.
+
+Here is a simple mathematical expression that simplifies to 0 if <Math>x</Math> is 0 and simplifies to 1 otherwise.
+
+<Math block large children="1 - \frac{{x^2}}{{x^2 + 1}}"></Math>
+
+Note: You won't be expected to whip up such complex mathematical equation in most competitive programming problems. The code above can be writen much more simply with conditions  */}
+
+# Mathematical Problems
+Many seemingly difficult problems in the iron rank often simplify down to a very simple mathematical equation. A program can be written to solve such problems without the use of any of the complex techniques that we will discuss in later chapters. Take a look at the following question:
+
+<Math>x</Math> _ounces of water are poured into buckets, each of capacity <Math>k</Math> such that the least possible amount of buckets are used. Given that <Math>x</Math> is not divisible by <Math>k</Math>, write a program that outputs the smallest amount of water (in ounces) needed such that every bucket can be filled to its maximum capacity. The input to the program is 2 space-seperated integers representing <Math>x</Math> and <Math>k</Math>_
+
+In order to solve this problem, we first need to develop a strong understanding of the problem by reading through it carefully. We are filling buckets with water in such a way that we use the least possible number of buckets. This means that we are essentially filling buckets one by one, only moving onto filling an empty bucket if the previous has been filled to full capacity. Since we know that <Math>x</Math> is not divisible by <Math>k</Math>, we know that the last bucket will not be filled to full capacity. To fill it, we need <Math>k-r</Math> ounces of water where <Math>r</Math> represents the amount of water in the last, partially filled, bucket. <Math>r</Math> can be computed by obtaining the remainder of <Math>x/k</Math>. Recall that the `%` operator in C++ does just that (i.e. find the remainder of two numbers if they are divided).
+
+Here is the solution code with comments to help explain what each part is doing:
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int x, k, r;    //declare the variables we will be using
+    cin >> x >> k;  //take x and k as inputs
+    r = x%k;    //compute the value of r and store it
+    cout << k-r;    //output k - r
+}
+```
+
+# Sidenote about cin
+
+If the question had instead said that the two input integers were line-seperated (i.e. the input had two lines with one integer on each line), the code above would have still worked. This is because both line breaks and spaces are considered whitespaces and `cin` distinguishes between seperate inputs only by whitespaces. In other words, `cin` treats the following two inputs as the same thing:
+
+```cpp
+1 2 
+3 4 5
+```
+and
+```cpp
+1
+2
+3
+4 5
+```
