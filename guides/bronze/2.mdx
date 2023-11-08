@@ -1,94 +1,180 @@
 ---
-title: 'Linear Search'
-description: 'Search through an array'
+title: '2D Arrays & Nested For Loops'
+description: 'Grid-like arrays and how to iterate over them'
 date: '2022-01-01'
 credits: Ahmad Bilal, Saleh Syed
 practicable: true
 ---
 
-# Looping Through Arrays
+# Motivation
 
-Often times when working with arrays, you will come across situations where you need to look at every element in an array. This is known as **traversing the array**. For loops are great for this purpose. Here is an example in which we look at every element in an array and simply output its value.
+A common, more complex form of an array, is the two-dimensional (2D) array. The simplest way to visualize a 2D array is as a grid with rows and columns of cells, each containing an element. A 2D array is used because it can store some data in a much more organized and accessible way than regular arrays. 2D arrays can represent matrices, two-dimensional spaces (like a map, or an image where each pixel is an element), or be used as an array of arrays.
+
+# Declaring and Initializing a 2D Array
+
+To declare a 2D array in C++, you specify the number of rows and columns it should have. Here's the basic syntax:
 
 ```
-for (int i = 0; i < 4; i++) {   //loop 4 times (since the array has a size of 4)
-    cout << myFavouriteNumber[i] << " "; // Print each element
+data_type array_name[row_size][column_size];
+```
+
+Let's create a 2D array to represent a simple 3x3 grid of integers:
+
+```
+int grid[3][3];
+```
+
+You can initialize a 2D array during declaration like so:
+
+```
+int matrix[2][2] = {
+    {1, 2},
+    {3, 4}
+};
+```
+
+# Accessing Elements of a 2D Array
+
+Accessing elements in a 2D array involves using two indices — one for the row and one for the column. Similarly to one-dimensional arrays, the first row and first column of the 2D array have the index 0. Here is the general syntax to access an element.
+
+```
+int element = matrix[row_index][column_index];
+```
+
+Here is an example of accessing a specific element.
+
+```
+int grid[3][3] = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+int x = grid[2][1] // Sets ‘x’ to 8.
+```
+
+# Nested Loops:
+
+Nested loops are loops that are contained within another loop's body. Think of it as a loop within a loop – the inner loop executes its entire iteration cycle for each iteration of the outer loop.
+
+Here’s the basic syntax of a single loop embedded in another loop.
+
+```
+for (outer initialization; outer condition; outer increment) {
+    // Outer loop code
+
+    for (inner initialization; inner condition; inner increment) {
+        // Inner loop code
+    }
 }
 ```
 
-Here, we create a for loop that executes `cout << myFavouriteNumber[i]` 4 times. On the first iteration, i is 0 and so the first element is outputted. On the second iteration, i is 1 and so the second element is outputted. This process continues until all 4 elements are outputted. Notice how the termination condition is `i < 4`. This is so that `i` never exceeds the length of the array, 3 (since the termination condition is checked **before** every iteration and not after). Alternatively, the condition `i <= 3` also works.
-
-# Searching for an element
-
-Another common occurance when working with arrays is searching for a specific value amongst all array elements. Here is one method of doing so:
+To see how nested loops function, let’s try to output a pattern of stars. We will print a rectangle of stars with 5 rows and 10 columns.
 
 ```
-int numbers[] = {12, 45, 7, 23, 56, 89, 34};
+for (int i = 0; i < 5; ++i) {
+    for (int j = 0; j < 10; ++j) {
+        cout << "\* ";
+    }
+    cout << endl;
+}
+```
+
+Result:
+
+```*****
+*****
+*****
+*****
+*****
+```
+
+For each iteration of the outer loop, the following happens:
+- the entire inner loop runs, causing 10 stars to be printed
+- a new line is printed
+These two steps are repeated 5 times because the outer loop is repeated 5 times.
+
+Here’s another simple example. It is intended to print a series of equations equivalent to a multiplication table with all integers from 1-10. Try and trace the code to figure out how it works on your own.
+
+```
+
+for (int i = 1; i <= 10; ++i) {
+for (int j = 1; j <= 10; ++j) {
+cout << i << " _ " << j << " = " << i _ j << endl;
+}
+cout << endl;
+}
+
+```
+
+<Exercise number='1'>
+<ExerciseQuestion>
+Write some code that outputs the following with a nested for loop:
+```10 20 30 40 50
+14 24 34 44 54
+18 28 38 48 58
+```
+</ExerciseQuestion>
+<ExerciseAnswer>
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+    for(int i = 0; i < 9; i+=4){
+        for(int j = 1; j < 6; j++){
+            cout << j << i << ' ';
+        }
+        cout << endl;
+    }
+
+}
+
+```
+
+This code runs a nested for loop. The outer loop increments a variable called `i` such that on the,
+- first iteration `i` is 0
+- second iteration `i` is 4
+- third iteration `i` is 8
+
+Within the outer loop, an inner loop outputs a variable `j` and then the current value of `i`, where `j` is a variable that increments from 1 to 5.
+
+Now the first iteration of the outer loop looks something like this
+```10 20 30 40 50``` 
+(since `j` is incrementing from 1 to 5 but `i` is locked at 0)
+
+The second and third iteration of the outer loop continues the pattern with each number ending with 4 and 8 respectively
+
+</ExerciseAnswer>
+</Exercise>
 
 
-int target = 56; // The number you're looking for
-bool found = false; // To keep track if the element is found
 
-for (int i = 0; i < 7; ++i) {
-    if (numbers[i] == target) {
-        found = true;
+Nested loops can be used in any other scenario in which a repeated action itself has to be repeated, with some modification between its repetitions. In a similar way to the printing of rows and columns of stars, nested loops can be used to access the rows and columns of matrices, or 2D arrays. 
+
+# Looping Through a 2D Array
+
+Looping through a 2D array requires nested loops — one outer loop to iterate the rows and another inner loop for each element within the row. 
+
+```
+
+for (int row = 0; row < row_size; ++row) {
+    for (int col = 0; col < col_size; ++col) {
+        // Access and process array[row][col]
+        // Reads through 2D array one row at a time
     }
 }
 
-if(found){
-    cout << "Found";
-}
-else{
-    cout << "Not found";
-}
 ```
 
-{/* # Efficiency
+On the first iteration of the outer loop, `row` is set to 0 and the entire inner for loop is executed. The inner for loop iterates through every element in row 0. Then, the outer loop increments `row` by 1 and the entire inner for loop now executes, iterating through every element in row 1. This process continues until the entire 2D array has been iterated through.
 
-Computers are extremely fast at executing all the statements we have looked at thus far. However, they cannot perform these complex operations instantly. While the above code only takes milliseconds to execute right now, if we bump up the size of the array to a few million elements, this same code may take a handful of seconds. In competitive programming, most problems have a limit to the number of seconds a program can take to execute. This forces programmers to be creative in their solves in order to reduce the number of operations their code performs, and thus reduce the time their code takes to execute.
-
-Let's look at a way to make the previous code much faster. Notice how our for loop runs through every element of the `number[]` array, even if it has found the target element early on. We can reduce the number of operations this code has to perform by making sure the for loop automatically ends as soon as the target element is found. We can do this like so:
+Lastly, when passing 2D arrays to a function, you must specify the number of columns. See below for an example.
 
 ```
-for (int i = 0; i < 7 && !found; ++i) {
-    if (numbers[i] == target) {
-        found = true;
-    }
+
+void processArray(int arr[][3]) {
+// Note that the “rows” size can be left empty but the number of columns must be specified. This is simply due to the way C++ was designed.
 }
-```
-
-Now the for loop will terminate when either it has iterated through all elements of the array, or it has found the target element. This means that once the target element is found, unnecessary time is not wasted in searching the remaining elements. In hard questions, optimizations like this are generally the difference between getting all test cases correct and getting a handful of TLE (Time Limit Exceeded) verdicts. */}
-
-# Variations of `for` Loops Through an Array
-
-Some problems require iterating through array elements in alternative ways. It is important to get familliar with iterating through an array in the following ways as well:
-
-- Reversed iteration
-- Skipping every second element
-- Starting from a different index.
-
-## Reverse itereration
-
-Reversing the for loop can be done by setting the starting index to the final index of the array, terminating the loop at ‘i = 0’, and incrementally reducing ‘i’. See below for the format.
 
 ```
-for (int i = arrayLength - 1; i >= 0; --i) {
-    // Access array elements in reverse order with array[i]
-}
-```
-
-## Skipping elements when iterating
-
-Skipping every second element can be achieved simply by incrementing the index by 2 instead of 1. Similarly, if you wish to skip 2 out of every 3 elements, or 3 out of every 4, you can increment the index by 3 or 4, and so on. Here is an example of a loop that skips every second element:
-
-for (int i = 0; i < arrayLength; i += 2) {
-// Access every second element with array[i]
-}
-
-## Starting iteration from a specific index
-
-Iterating an array starting from a different index is as simple as initializing the loop index to a different starting point, for example:
-
-for (int i = 3; i < arrayLength; ++i) {
-// Access elements starting from the fourth element (element with index 3) with array[i]
-}

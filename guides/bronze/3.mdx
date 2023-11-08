@@ -1,180 +1,80 @@
 ---
-title: '2D Arrays & Nested For Loops'
-description: 'Grid-like arrays and how to iterate over them'
+title: 'Strings and Character Representation'
+description: 'Work with text with ease'
 date: '2022-01-01'
-credits: Ahmad Bilal, Saleh Syed
+credits: Ahmad Bilal
 practicable: true
 ---
 
-# Motivation
+# Character sets
+All modern computers store data in their memory (RAM) as sequences of 0s and 1s. Boolean variables can easily be stored in memory by translating them into 0s and 1s with 0 representing false and 1 representing true. Mathematicians have already devised a system of storing decimal numbers into sequences of 0s and 1s through a number system known as **binary**. However, charcaters are a bit harder to store in 0s and 1s. They are usually converted into a corresponding number and then stored as 0s and 1s using binary. However, this requires us to plan out a mapping of every character and a unique decimal number that will be used to represent that character. Such mappings are known as character sets. One major example is the UNICODE character set (some version of UNICODE is generally used by every computer). Below are the main letters and their corresponding numbers in UNICODE.
 
-A common, more complex form of an array, is the two-dimensional (2D) array. The simplest way to visualize a 2D array is as a grid with rows and columns of cells, each containing an element. A 2D array is used because it can store some data in a much more organized and accessible way than regular arrays. 2D arrays can represent matrices, two-dimensional spaces (like a map, or an image where each pixel is an element), or be used as an array of arrays.
 
-# Declaring and Initializing a 2D Array
+In C++, when we do arithmatic on characters, the corresponding number (the actual value stored in memory) is changed. This is why if we try to add the number 2 to the character `a`, we get `c`;
 
-To declare a 2D array in C++, you specify the number of rows and columns it should have. Here's the basic syntax:
-
-```
-data_type array_name[row_size][column_size];
-```
-
-Let's create a 2D array to represent a simple 3x3 grid of integers:
-
-```
-int grid[3][3];
+```cpp
+char myChar = 'a';
+myChar += 2;
+cout << myChar; //outputs c
 ```
 
-You can initialize a 2D array during declaration like so:
+We can use this to find out how far apart to characters are in lexicographical ordering. All we have to do is subtract the two characters.
 
-```
-int matrix[2][2] = {
-    {1, 2},
-    {3, 4}
-};
-```
-
-# Accessing Elements of a 2D Array
-
-Accessing elements in a 2D array involves using two indices — one for the row and one for the column. Similarly to one-dimensional arrays, the first row and first column of the 2D array have the index 0. Here is the general syntax to access an element.
-
-```
-int element = matrix[row_index][column_index];
+```cpp
+char myChar = 'b';
+char mySecondChar = 'e';
+cout << mySecondChar-myChar;    //outputs 3
 ```
 
-Here is an example of accessing a specific element.
+One thing to note is that when adding/subtracting a number from a character, the default data type of the final value is a number. If you try to `cout` the following:
 
-```
-int grid[3][3] = {
-    {1, 2, 3},
-    {4, 5, 6},
-    {7, 8, 9}
-};
-int x = grid[2][1] // Sets ‘x’ to 8.
+```cpp
+cout << 'a'+1;
 ```
 
-# Nested Loops:
+You will get the corresponding numerical value of 'b', not the character 'b'. To fix this, you can explicitly tell the compiler to convert the value into a character by using the built-in `char` function:
 
-Nested loops are loops that are contained within another loop's body. They are used when you need to repeat a set of operations multiple times within the context of an outer loop. Think of it like a loop within a loop – the inner loop executes its entire iteration cycle for each iteration of the outer loop.
-
-Here’s the basic syntax of a single loop embedded in another loop.
-
-```
-for (outer initialization; outer condition; outer increment) {
-    // Outer loop code
-
-    for (inner initialization; inner condition; inner increment) {
-        // Inner loop code
-    }
-}
+```cpp
+cout << char('a'+1);
 ```
 
-To display how nested loops function, let’s try and make a pattern. We will print a rectangle of stars with 5 rows and 10 columns.
+Note: when setting a variable whose data type has already been told to the compiler, using `char()` or `int()` is not required. The compiler will automatically perform any neccessary translation to convert the number into the variable's data type.
 
-```
-for (int i = 0; i < 5; ++i) {
-    for (int j = 0; j < 10; ++j) {
-        cout << "\* ";
-    }
-    cout << endl;
-}
-```
-
-Result:
-
-<Code>
-```*****
-*****
-*****
-*****
-*****
-```
-
-</Code>
-
-The inner loop, which repeats 10 times, simply prints a star, causing a row of 10 stars to be printed. The outer loop repeats 5 times; after running the inner loop and printing a row of stars, its only code is to end the line, starting a new row before the loop repeats and the next row of stars is filled.
-
-Here’s another simple example. It is intended to print a series of equations equivalent to a multiplication table with all integers from 1-10. Try and trace the code to figure out how it works on your own.
-
-```
-
-for (int i = 1; i <= 10; ++i) {
-for (int j = 1; j <= 10; ++j) {
-cout << i << " _ " << j << " = " << i _ j << endl;
-}
-cout << endl;
-}
-
-```
-
-<Exercise number='1'>
+<Exercise>
 <ExerciseQuestion>
-Write some code that outputs the following with a nested for loop:
-```10 20 30 40 50
-14 24 34 44 54
-18 28 38 48 58
-```
+Write a function that, given a character, returns the next character in lexicographical order
+
 </ExerciseQuestion>
 <ExerciseAnswer>
 ```
 #include <bits/stdc++.h>
 using namespace std;
 
-int main(){
-
-    for(int i = 0; i < 9; i+=4){
-        for(int j = 1; j < 6; j++){
-            cout << j << i << ' ';
-        }
-        cout << endl;
-    }
-
+char nextChar(char input){
+    return char(input+1);
 }
 
+int main(){
+cout << nextChar('b');
+}
 ```
-
-This code runs a nested for loop. The outer loop increments a variable called `i` such that on the,
-- first iteration `i` is 0
-- second iteration `i` is 4
-- third iteration `i` is 8
-
-Within the outer loop, an inner loop outputs a variable `j` and then the current value of `i`, where `j` is a variable that increments from 1 to 5.
-
-Now the first iteration of the outer loop looks something like this
-```10 20 30 40 50``` 
-(since `j` is incrementing from 1 to 5 but `i` is locked at 0)
-
-The second and third iteration of the outer loop continues the pattern with each number ending with 4 and 8 respectively
 
 </ExerciseAnswer>
 </Exercise>
 
+# Strings
 
+Strings are a special data type which we have not discussed yet. They are used to store long pieces of text. They can be initalized like so:
 
-Embedded loops can be used in any other scenario in which a repeated action itself has to be repeated, with some modification between its repetitions. In a similar way to the printing of rows and columns of stars, nested loops can be used to access the rows and columns of matrices, or 2D arrays. This is covered in the 2D-arrays topic.
-
-# Looping Through a 2D Array
-
-Looping through a 2D array requires two nested loops — one outer loop to iterate the rows and another inner loop for the columns. This allows you to traverse each element by traversing every row and then traversing every element within the row.
-
+```cpp
+string myString = "Hello World";
 ```
 
-for (int row = 0; row < row_size; ++row) {
-    for (int col = 0; col < col_size; ++col) {
-        // Access and process array[row][col]
-        // Reads through 2D array one row at a time
-    }
-}
+Under the hood, strings are simply arrays of characters. That means that while a string variable looks and feels like a regular variable (and should be used just like one), it can be used with square-bracket notation. 
 
-```
-
-On the first iteration of the outer loop, `row` is set to 0 and the entire inner for loop is executed. The inner for loop iterates through every element in row 0. Then, the outer loop increments `row` by 1 and the entire inner for loop now executes, iterating through every element in row 1. This process continues until the entire 2D array has been iterated through.
-
-Lastly, when passing 2D arrays to a function, you must specify the number of columns. See below for an example.
-
-```
-
-void processArray(int arr[][3]) {
-// Note that the “rows” size can be left empty but the number of columns must be specified. This is simply due to the way C++ was designed.
-}
-
+```cpp
+string myString = "Hello World";
+cout << myString << endl;   //outputs 'Hello World'
+cout << myString[0] << endl;   //outputs 'h' (the first letter in the string)
+cout << myString[1] << endl;   //outputs 'e' (the second letter in the string)
 ```

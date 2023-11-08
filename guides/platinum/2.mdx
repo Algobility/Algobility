@@ -1,15 +1,85 @@
 ---
-title: Flood Fill
+title: Graph Representation
+description: Storing graphs in terms of vectors and arrays
 date: '2022-01-01'
 credits: Ahmad Bilal
 ---
 
-# Motivation
+There are several ways to represent graphs in code. Each method has its own strengths and weaknesses, so understanding when to use them is crucial.
 
-There is no Motivation
+## Adjacency Lists
+Adjacency lists are the most common and versatile way to represent graphs. In this representation, you maintain an array of vectors, with each vector representing the neighbors of a specific node. This method is efficient for 'sparse graphs', where the number of edges is much less than the number of total possible edges. 
 
-# Code
+Here's how you can implement an adjacency list in C++:
 
+```cpp
+// Graph represented as an adjacency list
+vector<vector<int>> adjList;
+
+// Add an edge from node u to node v
+void addEdge(int u, int v) {
+    adjList[u].push_back(v);
+}
 ```
-int arr[10] = [0,1,0,4]
+**Advantages:**
+
+- Efficient for sparse graphs.
+- Low memory usage.
+- Easy to find neighbors of a node.
+
+**Disadvantages:**
+
+- Slower for dense graphs.
+- Requires extra memory for storing lists.
+
+
+## Adjacency Matrices
+In an adjacency matrix, you use a 2D array to represent the graph. Each cell matrix[u][v] is 1 if there's an edge from node u to node v, and 0 otherwise. This method is efficient for dense graphs, where most pairs of nodes are connected.
+
+Here's how you can implement an adjacency matrix in C++:
+
+```cpp
+
+// Graph represented as an adjacency matrix
+vector<vector<int>> adjMatrix;
+
+// Add an edge from node u to node v
+void addEdge(int u, int v) {
+    adjMatrix[u][v] = 1;
+}
 ```
+
+**Advantages:**
+
+Efficient for dense graphs.
+- Easy to check if an edge exists between two nodes.
+- Simple to represent weighted graphs (use values other than 0 or 1).
+
+**Disadvantages:**
+- High memory usage for large graphs.
+- Inefficient for sparse graphs.
+
+## Edge Lists
+In an edge list, you simply list all the edges in the graph. This representation is suitable for a wide range of graphs, regardless of their density. However, for many algorithms, edge lists are harder to work with as it is not as straightfoward to figure out what neighbors a node has.
+
+Here's how you can implement an edge list in C++:
+
+```cpp
+// Graph represented as an edge list
+vector<pair<int, int>> edgeList;
+
+// Add an edge from node u to node v
+void addEdge(int u, int v) {
+    edgeList.emplace_back(u, v);
+}
+```
+
+**Advantages:**
+
+- Compact representation for all graph types.
+- Easy to iterate through all edges.
+- Well-suited for algorithms that need to process edges individually.
+
+**Disadvantages:**
+- Less efficient for certain operations like finding neighbors of a node.
+

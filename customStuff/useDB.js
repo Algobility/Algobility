@@ -3,10 +3,22 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, getDoc, where, get, query, doc, setDoc, getDocs, onSnapshot, getDocFromServer, addDoc, collection} from 'firebase/firestore';
+import {
+  getFirestore,
+  getDoc,
+  where,
+  get,
+  query,
+  doc,
+  setDoc,
+  getDocs,
+  onSnapshot,
+  getDocFromServer,
+  addDoc,
+  collection,
+} from 'firebase/firestore';
 import { useContext } from 'react';
 import { useSignOut } from 'react-firebase-hooks/auth';
-
 
 const db = getFirestore(firebase);
 const loadingUserData = {
@@ -15,10 +27,8 @@ const loadingUserData = {
   email: 'Loading ...',
   pRank: 'Loading ...',
   cRank: 'loading',
-  completed: []
-}
-
-
+  contests: [],
+};
 
 const getStorage = async (collectionName, name) => {
   return new Promise(async (resolve, reject) => {
@@ -34,24 +44,23 @@ const getStorage = async (collectionName, name) => {
   });
 };
 
-
-const  queryStorageFieldExists = async (collectionName, field, value)=>{
-  const querySnapshot = await getDocs(query(collection(db,collectionName), where(field, '==', value)))
+const queryStorageFieldExists = async (collectionName, field, value) => {
+  const querySnapshot = await getDocs(query(collection(db, collectionName), where(field, '==', value)));
   return !querySnapshot.empty;
-}
+};
 
-export const queryUser = async(userName)=>{
-  return new Promise(async (resolve, reject)=>{
+export const queryUser = async (userName) => {
+  return new Promise(async (resolve, reject) => {
     try {
-      const querySnapshot = await getDocs(query(collection(db,'Users'), where('username', '==', userName)))
+      const querySnapshot = await getDocs(query(collection(db, 'Users'), where('username', '==', userName)));
       const userData = querySnapshot.docs[0].data();
-      return resolve(userData)
+      return resolve(userData);
     } catch (error) {
       console.error('Error searching Firestore:', error);
-      return reject({ error: 'Internal server error' + error })
+      return reject({ error: 'Internal server error' + error });
     }
-  })
-}
+  });
+};
 
 const existsStorage = async (collectionName, name) => {
   return new Promise(async (resolve, reject) => {
@@ -65,7 +74,7 @@ const existsStorage = async (collectionName, name) => {
   });
 };
 
-const setStorage = async (collectionName, name, payload, overwrite=false) => {
+const setStorage = async (collectionName, name, payload, overwrite = false) => {
   return new Promise(async (resolve, reject) => {
     const docRef = await doc(db, collectionName, name);
     try {
@@ -80,7 +89,7 @@ const setStorage = async (collectionName, name, payload, overwrite=false) => {
 const addStorage = async (collectionName, payload) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const res = await addDoc(collection(db, collectionName), payload)
+      const res = await addDoc(collection(db, collectionName), payload);
       resolve(res.id);
     } catch (err) {
       reject(`Error ${err}`);
@@ -100,49 +109,46 @@ const useUser = () => {
   const [user, loading] = useAuthState(auth);
   // const [signedStateState, setSignedStateState] = useState(true);
 
-
   //Signed state is stored in local storage
-  const getSignedState = async ()=>{
+  const getSignedState = async () => {
     const fetchLocal = await localStorage.getItem('signedState');
-    if(fetchLocal != null){
-      return (fetchLocal=='true'?true:false)
-    }
-    else{
+    if (fetchLocal != null) {
+      return fetchLocal == 'true' ? true : false;
+    } else {
       await localStorage.setItem('signedState', 'false');
-      signOut().then(()=>{
-        setUserData(loadingUserData)
-        localStorage.removeItem('ud');
-      }
-      )
-      .catch(()=>{
-        alert('There was an error signing out')
-      })
-      return false
+      signOut()
+        .then(() => {
+          setUserData(loadingUserData);
+          localStorage.removeItem('ud');
+        })
+        .catch(() => {
+          alert('There was an error signing out');
+        });
+      return false;
     }
-  }
+  };
 
-  const setSignedState = async(newVal)=>{
-    await localStorage.setItem('signedState', (newVal?'true':'false'));
-  }
+  const setSignedState = async (newVal) => {
+    await localStorage.setItem('signedState', newVal ? 'true' : 'false');
+  };
 
-  
   const [userData, setUserData] = useState(loadingUserData);
 
   //update signedstae and clear ud (userdata)
-  const logoutUser = async ()=>{
-    let signedState = await getSignedState()
-    if(signedState){
-      signOut().then(()=>{
-        setSignedState(false)
-        setUserData(loadingUserData)
-        localStorage.removeItem('ud');
-      }
-      )
-      .catch(()=>{
-        alert('There was an error signing out')
-      })
+  const logoutUser = async () => {
+    let signedState = await getSignedState();
+    if (signedState) {
+      signOut()
+        .then(() => {
+          setSignedState(false);
+          setUserData(loadingUserData);
+          localStorage.removeItem('ud');
+        })
+        .catch(() => {
+          alert('There was an error signing out');
+        });
     }
-  }
+  };
 
   const updateUserData = async (payload) => {
     new Promise(async (resolve, reject) => {
@@ -153,7 +159,7 @@ const useUser = () => {
         setStorage('Users', user.uid, newUserData, false);
         resolve();
       } catch (e) {
-        reject(e); 
+        reject(e);
       }
     });
   };
@@ -175,18 +181,18 @@ const useUser = () => {
         }
         resolve();
       } catch (e) {
-        console.log('Couldnt get user Data: ', e)
+        console.log('Couldnt get user Data: ', e);
         reject(e);
       }
     });
   };
 
   useEffect(() => {
-    if (user && userData.name === 'Loading ...') getUserData();
-    if(!loading && !user) setSignedState(false)
+    if (user && userData.name === 'Loading ...') getUserData(true); //always force ig
+    if (!loading && !user) setSignedState(false);
   }, [loading]);
 
   return { userData, updateUserData, forceFetch, getSignedState, logoutUser };
 };
 
-export { useUser, getStorage, setStorage, existsStorage, mergeObjects, addStorage, queryStorageFieldExists};
+export { useUser, getStorage, setStorage, existsStorage, mergeObjects, addStorage, queryStorageFieldExists };

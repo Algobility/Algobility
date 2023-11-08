@@ -1,89 +1,97 @@
 ---
-title: 'Advanced Brute Force & reccursion'
-description: 'Calling a function within its definition'
-date: '2022-01-01'
+title: 'Brute force'
+description: 'Searching all possible answers to find the correct one'
+date: '2023-11-05'
 credits: Ahmad Bilal
-number: 3
+practicable: true
 ---
 
-Recursion is a programming technique where a function calls itself to solve a problem. It's similar to a mathematical concept called "recurrence relation." Recursion is suitable for solving problems that can be divided into smaller instances of the same problem.
 
-# Termination Condition
-To avoid infinite recursion, every recursive function must have a termination condition. This condition ensures that the recursion stops at some point and doesn't lead to an endless loop.
+# Finding pairs
+Brute force is an invaluable technique that can be used to solve most bronze level problems. It involves searching all possible answers for the correct one. Consider the following problem
 
-# Recursive Function Structure
-A recursive function has two parts:
+*Given an array of numbers, output the indicies of the two distinct elements whose difference is exactly 10*
 
-Recursive Case: This is where the function calls itself with modified inputs to solve a smaller instance of the problem.
-Base Case: This is the termination condition that stops the recursion. It represents the simplest form of the problem that can be solved directly. If there is no base case, all calls to the function will in turn call the function again, resulting in an infinite loop. 
-
-
+To solve this problem its useful to first understand how nested loops can be used to iterate over all possible pairs of numbers. Take a look at the following code:
+```cpp
+for (int i = 0; i < n; i++){
+  for (int j = 0; j < n; j++){
+    //for every iteration here, the values of i and j will be every possible 2-number permutation of 0...n
+  }
+}
 ```
-return_type recursive_function(parameters) {
-    if (base_case_condition) {
-        // Base case: solve directly
-    } else {
-        // Recursive case: modify inputs and call function recursively
-        recursive_function(modified_parameters);
+On the first iteration of the outer loop, `i` is set to 0. The inner loop runs and the value of `j` ranges between 0 and `n` whilst `i` is locked in at 0. On the second iteration of the outer loop, `i` is set to 1 and the inner loop sets `j` to every value between 0 and `n`. This way, for each iteration of the inner loop, the values of i and j  form every possible pair of numbers between 0 and `n`. More specifically, the values of i and j when `n` is set to 3 look like the following:
+
+- 0,0
+- 0,1
+- 0,2
+- 1,0
+- 1,1
+- 1,2
+- 2,0
+- 2,1
+- 2,2
+
+This is known as 'brute-forcing' each pair of numbers.
+
+To solve the original problem we can brute force pairs of possible indicies in the array and check the corresponding array elements. This will, in effect, check every pair of array elements. When checking a pair of elements, we can compute their difference and if it is 10, we can output the pair of indicies. 
+
+
+```cpp
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+        //for every possible i and j, check wheather the elements at those indicies have a diff of 10
+        if (abs(arr[i] - arr[j]) == 10) {      //using abs() to get absolute value distance
+            cout << i << ' ' << j; //if so cout the indicies with a space in between
+            return 0; //end the program by terminating main so we don't continue the search
+        }
     }
 }
 ```
 
-# Factorial Calculation
-An example of a problem where recursion can be used effectively, is the factorial calculation problem: given a number `n` compute its factorial (i.e. compute <Math inline>n*n-1*n-2*n-3*...*1</Math>).
 
-Notice how the factorial of a number <Math inline>n</Math>, is really just <Math inline>n*(n-1!)</Math> where '!' donates the factorial of a number. In other words, the factorial of any numbers, is that number multiplied by the factorial of one number less than it. We can translate this logic into code like so:
+## Farthest Two Points
 
-```
-int factorial(int n) {
-    if (n == 0) {
-        return 1; // Base case: 0! = 1
-    } else {
-        return n * factorial(n - 1); // Recursive case
+Consider the following question:
+
+*Given an array of coordinates, the problem of finding the farthest two points involves calculating the distances between all pairs of points and then selecting the maximum distance.*
+
+
+We can use our knowledge of coordinate geometry along with brute forcing each pair of array elements.
+
+```cpp
+#include <bits/stdc++.h> 
+
+using namespace std;
+
+int distance(pair<int, int> A, pair<int, int> B) {   //a function that returns the distance between two points
+    int dx = B.first - A.first;
+    int dy = B.second - A.second;
+    return sqrt(dx * dx + dy * dy);
+}
+
+int farthestDistance(pair<int, int> points[], int n) {
+    int maxDist = 0.0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            int dist = distance(points[i], points[j]);
+            maxDist = max(maxDist, dist);
+        }
     }
+    return maxDist;
+}
+
+int main() {
+    pair<int, int> points[] = {make_pair(1, 2), make_pair(4, 6), make_pair(7, 8)};
+    int n = sizeof(points) / sizeof(points[0]);
+
+    int maxDist = farthestDistance(points, n);
+    cout << "Farthest distance between points: " << maxDist << endl;
+
+    return 0;
 }
 ```
 
-The `if(n==0)` here is an important if statement. Without it, the function would have no base case and thus, would repeat infinitely.
-
-
-# Fibonacci Series
-The Fibonacci series is a sequence where each number is the sum of the two preceding ones: 0, 1, 1, 2, 3, 5, 8, 13, ...
-We can write some code to find the <Math inline> n_th </Math> fibonacci number using recursion as well
-
-```
-int fibonacci(int n) {
-    if (n <= 1) {
-        return n; // Base case: fibonacci(0) = 0, fibonacci(1) = 1
-    } else {
-        return fibonacci(n - 1) + fibonacci(n - 2); // Recursive case
-    }
-}
-```
-
-# Sample Problem: Sum of an Array
-
-<Exercise>
-<ExerciseQuestion>
-Write some code to find the sum of elements in an array using recursion.
-</ExerciseQuestion>
-<ExerciseAnswer>
-```
-int array_sum(int arr[], int size) {
-    if (size == 0) {
-        return 0; // Base case: empty array has sum 0
-    } else {
-        return arr[size - 1] + array_sum(arr, size - 1); // Recursive case
-    }
-}
-```
-</ExerciseAnswer>
-</Exercise>
-
-
-
-# Tips for Using Recursion Wisely
-- Always define a base case to terminate recursion.
-- Ensure progress toward the base case in each recursive call.
-- Be cautious about performance in deeply nested recursion.
-- Consider using recursion only when it simplifies the problem.
+# Additional resources
+To learn more about brute force, you may take a look at the following resource:
+- <a href='https://cses.fi/book/book.pdf#page=57'>https://cses.fi/book/book.pdf#page=57</a>

@@ -1,15 +1,85 @@
 ---
-title: Graphs
+title: Introduction to Graphs
+description: What graphs are, their types, and how they can be stored  
 date: '2022-01-01'
 credits: Ahmad Bilal
 ---
 
-# Motivation
+In computer science, a graph is a way to represent data in terms of entities, called nodes, and connections between them, called edges. This representation of relationships between different entities is quite versatile and has a wide range of applications in computer science, from social networks to transportation systems.
 
-There is no Motivation
+# Example: Social Network Graph
 
-# Code
+Imagine a simple social network with users as nodes and friendship connections as edges. Here's what it might look like:
 
 ```
-int arr[10] = [0,1,0,4]
+ Alice -- Bob -- Edgar
+   |       |
+  Carol   Dave
 ```
+
+In this graph, "Alice", "Bob", "Carol", "Dave", and "Edgar" are nodes, and the lines connecting them represent the connections (friendships) between them.
+
+# Types of Graphs
+Graphs can take various forms, depending on the nature of their edges and nodes. Here are some common types you may encounter:
+
+## Undirected Graph:
+
+In an undirected graph, edges have no direction, meaning they don't have a specific start or end point. They simply connect two nodes.
+
+**Example: Friendship Graph**
+
+The social network graph mentioned earlier is an undirected graph. The friendships between users are mutual, meaning if Alice is friends with Bob, Bob is also friends with Alice.
+
+## Directed Graph (Digraph):
+
+In a directed graph, edges have a direction, indicating that they go from one node to another. They are often used to represent relationships with a specific direction.
+
+**Example: Travel Flight Routes Graph**
+
+Imagine a directed graph that represents flight routes between different cities. This graph shows the one-way flight connections from one city to another:
+
+```
+New York ---> Los Angeles
+   |           |        |
+   v           v        v
+ Chicago <-- Miami <-- Houston
+```
+
+In this travel graph, the arrows indicate the direction of the flights. For instance, you can fly from New York to Miami, but there's no direct flight from Miami back to New York. It's a simplified example, but it illustrates the concept of a directed graph with real-world travel connections.
+
+## Weighted Graph:
+
+In a weighted graph, each edge has a weight or cost associated with it. These weights can represent distances, costs, or any other relevant metric.
+
+**Example: Road Network Graph**
+
+Imagine a graph that models a road network, with cities as nodes and the distances between them as weights on the edges.
+
+```
+   A --(100 km)--> B
+    |
+ (40 km) 
+    |          
+    v          
+    C --(50 km)--> D
+```
+
+The numbers in parentheses represent the distances between cities, making this a weighted graph. A weighted graph may be directed or undirected.
+
+## Cyclic and Acyclic Graph:
+
+A graph is cyclic if it contains at least one cycle, i.e., a path that starts and ends at the same node. In contrast, an acyclic graph has no cycles.
+
+**Example: Family Tree Graph**
+
+A family tree is typically an acyclic graph, as it doesn't contain loops or cycles. However, consider a case where two distant relatives marry, creating a loop in the graph.
+
+```
+A <--(marriage)--> B
+ |                  |
+ v                  v
+ C --(marriage)-->  D
+```
+
+In this case, the graph has a cycle involving A, B, C, and D.
+

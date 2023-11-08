@@ -10,16 +10,11 @@ Computers, at their core, are simply machines capable of processing information 
 
 For example, if I wanted to create a simple computer program that adds 2 numbers, which are provided by the user, and save them in the computer's memory, the series of operations I might instruct the computer to perform (i.e. code) may look something like this:
 
-```
-
+```jsx
 INPUT first_number
-
 INPUT second_number
-
 ADD first_number and second_number
-
 SAVE result
-
 ```
 
 Of course, this is an highly simplified example code and wouldn't actually work if fed into a computer. However, it is these types of building blocks that are used to create all your favorite applications.
@@ -34,7 +29,7 @@ Modern computers can only natively understand what is known as machine language 
 
 There are many way to start writing and executing code, however most options require some tedious work to get set up. One website that makes the process much simpler is [Repl.it](http://repl.it/). Repl.it allows you to write and execute code directly in your browser. To get started, simply create an account on [Repl.it](http://repl.it/) and create a Repl (a coding project) with the C++ Template. When you open your Repl you should see two large panels. For now we will focus on the one with some C++ code. It should already have some code written in it and should look something like this:
 
-```
+```cpp
 #include <iostream>
 
 int main() {
@@ -44,7 +39,7 @@ int main() {
 
 Don’t worry if you don’t understand what this means yet. Click the green run button at the top and your code should be executed. You’ll know you have done it correctly once you see something like this on the other large panel
 
-```
+```Terminal
 > sh -c make -s
 > ./main
 Hello World!
@@ -52,13 +47,13 @@ Hello World!
 
 # Understanding the command line
 
-The second panel is known as a CLI (Command Line Interface). Every computer comes with some sort of app that allows you to use the CLI. On Windows, this app is called Command Prompt and on Mac it’s called Terminal. You can open this app right now and take a look for yourself. A CLI is essentially an alternate way to communicate with your computer using only your keyboard. For example, you can use the CLI to create, edit, and delete files on your computer by inputting specific commands. You can also install CLI apps which do not open as new graphical windows but rather as simply text. Most compilers are simply CLI apps since there really is no need for them to have a graphical interface with buttons and icons. In competitive programming, we create CLI apps instead of graphical ones for the same reason. When working on a repl, [Repl.it](http://Repl.it) provides you with a virtual computer which you can talk to using the CLI. When you pressed the big green ‘Run’ button, Repl.it automatically ran some commands for you that executed your program. If you look back at the second panel, you will see the first line reads something like
+The second panel is known as a CLI (Command Line Interface). Every computer comes with some sort of app that allows you to use the CLI. On Windows, this app is called Command Prompt and on Mac it’s called Terminal. You can open this app right now and take a look for yourself! A CLI is essentially an alternate way to communicate with your computer using only your keyboard. For example, you can use the CLI to create, edit, and delete files on your computer by entering specific commands. You can also install CLI apps which do not open as new graphical windows but rather as simply text. Most compilers are simply CLI apps since there really is no need for them to have a graphical interface with buttons and icons. In competitive programming, we create CLI apps instead of graphical ones for the same reason. When working on a repl, [Repl.it](http://Repl.it) provides you with a virtual computer which you can talk to using the CLI. When you pressed the big green ‘Run’ button, Repl.it automatically ran some CLI commands for you that executed your program. If you look back at the second panel, you will see the first line reads something like
 
 ```jsx
 > sh -c make -s
 ```
 
-This command tells your virtual computer to run the compiler app and translate the C++ code you just wrote into machine language. The second line which says,
+This command tells your virtual computer to run the compiler app (a CLI application) which translates the C++ code you just wrote into machine language. The second line which says,
 
 ```jsx
 > ./main

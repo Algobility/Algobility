@@ -4,12 +4,81 @@ date: '2022-01-01'
 credits: Ahmad Bilal
 ---
 
-# Motivation
+Perhaps the two most important algorithms to understand when working with graphs are DFS (Depth-first search) and BFS (Breadth-first search). BFS and DFS are two algorithms that allow us to traverse graphs (i.e. visit every node in the graph and process them just like one would do with an array ). 
 
-There is no Motivation
 
-# Code
+## Depth-First Search (DFS)
+
+DFS is like exploring a maze by going as far as possible along one path before backtracking to the last intersection and repeating the process. More specically, DFS follows these steps:
+
+1. **Start at a node.**
+
+   Choose a starting node to begin your traversal.
+
+2. **Visit the node.**
+
+   Mark the node as visited and process it as needed.
+
+3. **Explore adjacent unvisited nodes.**
+
+   Move to an adjacent node that hasn't been visited yet.
+
+4. **Repeat steps 2 and 3.**
+
+   Continue this process until there are no more unvisited adjacent nodes, then backtrack to the previous node and repeat steps 2 and 3.
+
+Let's visualize this with an example:
 
 ```
-int arr[10] = [0,1,0,4]
+Graph:   1
+        / | \
+       2  3  4
+
+Starting at node 1, a DFS traversal might look like this:
+
+1 (visited) -> 2 (visited) -> 3 (visited) -> 4 (visited)
 ```
+
+DFS explores as deeply as possible before backtracking. In this example, it visited all nodes along a branch before moving to the next one.
+
+## Breadth-First Search (BFS)
+
+BFS is like exploring a maze level by level. It operates in a "breadth-first" manner. Here's how BFS works:
+
+1. **Start at a node.**
+
+   Choose a starting node to begin your traversal.
+
+2. **Visit the node.**
+
+   Mark the node as visited and process it as needed.
+
+3. **Explore all adjacent unvisited nodes.**
+
+   Move to all adjacent nodes that haven't been visited yet.
+
+4. **Repeat steps 2 and 3.**
+
+   Continue this process until you have visited all reachable nodes at the current level before moving to the next level.
+
+Let's visualize BFS with an example:
+
+```cpp
+Graph:   1
+        / | \
+       2  3  4
+
+Starting at node 1, a BFS traversal might look like this:
+
+1 (visited) -> 2 (visited) -> 3 (visited) -> 4 (visited)
+```
+
+BFS explores all nodes at the current level before moving to the next level, providing a broader view of the graph.
+
+## When to Use DFS or BFS
+
+- **DFS**: Use DFS when you want to explore as deeply as possible, like when searching for a path or finding connected components in an undirected graph.
+
+- **BFS**: Use BFS when you want to explore nodes level by level, like finding the shortest path between two nodes or solving problems that require finding the smallest number of steps to reach a goal.
+
+In competitive programming, having a strong grasp of DFS and BFS is invaluable, as they form the basis for solving various graph-related problems. By understanding when and how to use these algorithms, you'll be well-prepared to tackle a wide range of graph traversal challenges. Happy coding!

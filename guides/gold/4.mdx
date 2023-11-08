@@ -1,0 +1,35 @@
+---
+title: Two pointer
+description: Work with sorted arrays efficiently
+date: '2022-11-05'
+credits: Ahmad Bilal
+---
+
+
+# Motivation
+Consider the following problem
+*Given a sorted array of integers, find the indicies of two elements whose sum is 10*
+
+A naive approach to this problem would be to iterate over every pair of elements using brute force and checking wheather the pair sums up to 10. 
+
+# Two Pointers Approach
+We can solve this problem in linear (i.e. <Math inline>O(n)</Math>) time by using a general problem solving technique called 'Two Pointers'. Utalizing the fact that the array is sorted we can implement the following steps:
+
+1. Sum the first and last element of the array
+2. If the sum is larger than 10, we can remove the last element of the array and repeat from step 1 (this will reduce the sum as the last element would be larger than the second last)
+3. If the sum is less than 10, we can remove the first element of the array and repeate from step 1 (this will increase the sum as the second element would be larger than the first)
+
+Perhaps suprisingly, this algorithm always works. There is also one slight optimization we can do. Instead of actually removing elements from the array, we can simply keep track of two indicies (in two variables) which represent the perceived first and last elements of the new array at each step. This is why the approach is called 'Two Pointers'
+
+Keeping track of two indicies of elements in an array (i.e. maintaing two pointers) and shifting them in a predictable pattern is a technique that can be used to solve a lot more problems than the one above. How you use these two pointers depends on the question, which is why this topic requires considerable practice. 
+
+Note: It is important to understand that 'Two Pointers' isn't an algorithm itself (like binary search) but rather is a general problem solving technique that can be used in various ways.
+
+# Sliding Window Example
+
+Consider the following problem:
+*Given an array of <Math inline>n </Math> numbers and a value <Math inline>k </Math>, find the subarray of length <Math inline>k </Math> which has a sum of 10*
+
+Notice that if we look at the first <Math inline>k </Math> elements in the array and sum up them up, we can find the sum of the next <Math inline>k </Math> elements in the array in <Math inline>O(1)</Math> time. We can do so by subtracting the first element from the sum and adding the <Math inline>k+1^\{th\}</Math> element to the sum. By doing so we can shift two pointers (one representing the start of a <Math inline>k </Math> sized subarray and one representing its end) across the entire array, 1 element at a time. Each time we shift the two pointers by 1 element, we can compute a new sum and check wheather it is equal to 10 or not.
+
+The technique of moving two pointers across an array and shifting both pointers 1 element at a time is called 'Sliding Window' (because the two pointers form window that slides across the array). Again, sliding window is not a specific algorithm but a general problem solivng technique.

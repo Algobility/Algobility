@@ -10,7 +10,7 @@ practicable: true
 
 Let's say you are writing some code that takes the average of 3 numbers. The code may look something like this:
 
-```
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -25,17 +25,17 @@ int main(){
 
 This code works, but if we wanted to do the same with more numbers, this approach would soon become impractical since we have to create a seperate variable for each number.
 
-Arrays help solve this by offering us a way to store a fixed-size list of variables. The variables within these lists are known as elements. Array elements must all be of the same type. They are identified by their position in the array rather than by variable names.
+Arrays help solve this by offering us a way to store a list of variables (with a fixed number of variables). The variables within such a list are known as elements. Array elements must all be of the same type. They are identified by their position in the array rather than by variable names.
 
 To declare an array, define the variable type, specify the name of the array followed by square brackets and specify the number of elements it should store:
 
-```
+```cpp
 int myFavouriteNumber[4];
 ```
 
 Similar to normal variables, arrays can **optionally** be initialized with some values using the following syntax.
 
-```
+```cpp
 int myFavouriteNumber[4] = {1,4,5,9};
 ```
 
@@ -43,22 +43,227 @@ int myFavouriteNumber[4] = {1,4,5,9};
 
 Array elements are referred to by their index or position in the array. The first element in an array has an index of 0, the second has an index of 1, and so on. To access an element, write the name of the array followed by the index in square-brackets
 
-```
+```cpp
 myFavouriteNumber[2]
 ```
 
 Array elements can be treated just like variables. We can assign and retreive their values juts like ordinary variables.
 
-```
+```cpp
 myFavouriteNumber[0] = 1;       //changes first element to 1
 myFavouriteNumber[1] = 3;       //changes second element to 3
 myFavouriteNumber[2] = 5;       //changes third element to 5
 cout << myFavouriteNumber[2];   //should output 5
 ```
 
-These examples use the int data type, but other data types can be used. Let’s try an example with strings:
+These examples use the int data type, but other data types can be used. Let’s try an example with characters:
+
+```cpp
+char DNA[4] = {"A", "C", "G", "T"}; // Array of 4 strings
+```
+
+
+# Looping Through Arrays
+
+Often times when working with arrays, you will come across situations where you need to look at every element in an array. This is known as **traversing the array**. For loops are great for this purpose. Here is an example in which we look at every element in an array and simply output its value.
+
+```cpp
+for (int i = 0; i < 4; i++) {   //loop 4 times (since the array has a size of 4)
+    cout << myFavouriteNumber[i] << " "; // Print each element
+}
+```
+
+Here, we create a for loop that executes `cout << myFavouriteNumber[i]` 4 times. On the first iteration, i is 0 and so the first element is outputted. On the second iteration, i is 1 and so the second element is outputted. This process continues until all 4 elements are outputted. Notice how the termination condition is `i < 4`. This is so that `i` never exceeds the length of the array, 3 (since the termination condition is checked **before** every iteration and not after). Alternatively, the condition `i <= 3` also works.
+
+
+# Searching for an element
+
+Another common occurance when working with arrays is searching for a specific value amongst all array elements. We can do this by traversing the array and using a boolean variable to keep track of wheather the element has been found or not:
+
+```cpp
+int numbers[] = {12, 45, 7, 23, 56, 89, 34};
+
+
+int target = 56; // The number you're looking for
+bool found = false; // To keep track if the element is found
+
+for (int i = 0; i < 7; ++i) {
+    if (numbers[i] == target) {
+        found = true;
+    }
+}
+
+if(found){
+    cout << "Found";
+}
+else{
+    cout << "Not found";
+}
+```
+
+# Inputting into an array
+Almost all contest problems which require you to use arrays will ask you to work with an array which is inputted through `cin`. To do this, the contest problem will specify how the array will be presented in `cin`. Almost always, the contest problem will specify something like the following:
+
+*The first line of input will contain <Math inline>n</Math>, the number of elements in the array. The next line will contain <Math inline> n </Math> integers where the <Math inline> i^\{th\} </Math> integer represents the <Math inline> i^\{th\} </Math> element of the array.*
+
+This means that if the array to be inputted is `{3,4,1,6,9}`, the grading software will enter the following into cin:
+```
+5
+3 4 1 6 9
+```
+Your program will then have to interpret these integers from `cin` and store them into an array in order to solve the rest of the problem. It is advised you get comfortable with doing so before entering a contest. 
+```cpp
+#include <bits/stdc++.h>    
+using namespace std;
+
+int main(){
+    int n;
+    cin >> n;  //first number in cin represents n, the size of the array
+    int array[n];   //declare an array of size n
+    for (int i = 0; i < n; i++) {
+        cin >> array[i];  //take the ith number and put it into array[] 
+    }
+}
+```
+
+# Outputting an array
+Outputting the contents of an array is straightforward. Simply traverse the array and output every element;
+```cpp
+#include <bits/stdc++.h>    
+using namespace std;
+
+int main(){
+    int array[] = {4,5,2,1};   //initialize an array 
+    for (int i = 0; i < 4; i++) {   //traverse the array
+        cout << array[i] << ' ';    //output each element (seperated by spaces) 
+    }
+}
+```
+
+# Totalling an array
+Finding the sum or product of all elements in an array is also a common part of most contest problems. Getting familliar with doing so can help with a significant portion of problems. The following code totals (finds the sum of) the contents of an array by keeping track of the total in a variable.
+
+```cpp
+#include <bits/stdc++.h>    
+using namespace std;
+
+int main() {
+    int array[] = { 4,5,2,1 };   //initialize an array 
+    int total = 0;
+    for (int i = 0; i < 4; i++) {   //traverse the array
+        total += array[i];  //increment total by the ith element in the array
+    }
+}
+```
+
+# Minimum/Maximum of an array
+Finding the smallest or largest element in an array can be done by traversing the array whilst keeping track of the minimum so far in a variable. It is useful to set the inital amount to an arbitrarily large number so that the first element in the array causes the `min()` function to return the array element.
+
+```cpp
+#include <bits/stdc++.h>    
+using namespace std;
+
+int main() {
+    int array[] = { 4,5,2,1 };   //initialize an array 
+    int smallestValue = 100000000;  //set to a value that must be larger than any number in the array
+    //so that min(smallestValue, array[i]) returns array[i] on the first iteration of the for loop
+    for (int i = 0; i < 4; i++) {   //traverse the array's elements
+        //set smallestValue to whichever is smaller between the smallest value so far and the element  
+        smallestValue = min(smallestValue, array[i]);
+    }
+}
+```
+
+Note: the bounds of how large the numbers are in an array are almost always given in a contest problem. You should set the inital value of `smallestValue` to 1 larger than that upper bound.
+
+We can find the largets value of an array similarly:
+```cpp
+#include <bits/stdc++.h>    
+using namespace std;
+
+int main() {
+    int array[] = { 4,5,2,1 };   //initialize an array 
+    int largestValue = 0;
+    //set to 0 so that max(largestValue, array[i]) returns array[i] on the first iteration of the for loop
+    for (int i = 0; i < 4; i++) {   //traverse the array's elements
+        //set smallestValue to whichever is larger between the largest value so far and the element  
+        largestValue = max(largestValue, array[i]);
+    }
+}
+```
+
+Here you would want to set the inital value of largetsValue to the lower bound of the array (the smallest a number could possibly be in the array). If the array contains negative numbers, this value should be an arbitrarily large negative number.
+
+
+# Average of n numbers
+Going back to the motivation problem of taking the average of some <Math inline> n </Math> numbers, we can now use arrays along with our knowledge of inputting and totalling arrays to make the code more robust like so:
+
+```cpp
+#include <bits/stdc++.h>    
+using namespace std;
+
+int main() {
+    int size;
+    cout << "How many numbers are there: ";
+    cin >> size;
+    int numbers[size];
+    for (int i = 0; i < size; i++) {
+        cin >> numbers[i];
+    }
+    int sumOfNumbers = 0;
+    for (int i = 0; i < size; i++) {
+        sumOfNumbers += numbers[i];
+    }
+    cout << "\nThe average of these numbers is: " << sumOfNumbers / size;
+}
+```
+
+
+# Variations of `for` Loops Through an Array
+
+Some problems require iterating through array elements in alternative ways. It is important to get familliar with iterating through an array in the following ways as well:
+
+- Reversed iteration
+- Skipping every second element
+- Starting from a different index.
+
+## Reverse itereration
+
+Reversing the for loop can be done by setting the starting index to the final index of the array, terminating the loop at ‘i = 0’, and incrementally reducing ‘i’. See below for the format.
 
 ```
-string names[4] = {"Alice", "Bob", "Charlie", "David"}; // Array of 4 strings
-
+for (int i = arrayLength - 1; i >= 0; --i) {
+    // Access array elements in reverse order with array[i]
+}
 ```
+
+## Skipping elements when iterating
+
+Skipping every second element can be achieved simply by incrementing the index by 2 instead of 1. Similarly, if you wish to skip 2 out of every 3 elements, or 3 out of every 4, you can increment the index by 3 or 4, and so on. Here is an example of a loop that skips every second element:
+
+for (int i = 0; i < arrayLength; i += 2) {
+// Access every second element with array[i]
+}
+
+## Starting iteration from a specific index
+
+Iterating an array starting from a different index is as simple as initializing the loop index to a different starting point, for example:
+
+for (int i = 3; i < arrayLength; ++i) {
+// Access elements starting from the fourth element (element with index 3) with array[i]
+}
+
+
+# Passing arrays through functions
+
+Arrays can also be passed as paramaters to functions. However, the size of the array must be passed as a seperate paramater if the function requires its use as well. Here is an example of a function that, given an array, outputs all of its elements individually
+
+```cpp
+int outputArray(int arr[], int size) {
+  for(int i = 0; i < size; i++){
+    cout << arr[i] << endl;
+  }
+}
+```
+
+Arrays are always passed by reference, even if the programmer does not write `&` before the paramater name in the function declaration. Any modification to any array element within the function declaration affects the actual array.

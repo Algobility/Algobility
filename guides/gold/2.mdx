@@ -1,0 +1,50 @@
+---
+title: Prefix Sums
+description: Efficiently find range sums
+date: '2022-11-05'
+credits: Ahmad Bilal
+---
+
+# Motivation
+Say you are given an array of numbers. You want to efficiently find the sum of the elements from index <Math inline>i</Math> to <Math inline>j</Math>. A naive approach to solving this problem would be to simply loop through all elements from index <Math inline>i</Math> to <Math inline>j</Math> whenever you want to find the sum of those elements. However, if you need to do this operation <Math inline>m </Math> times, the overall algorithm would be <Math inline>O(nm)</Math> as a single summation is worst-case <Math inline>O(n)</Math> and you need to do <Math inline>m </Math> summations. 
+
+# Prefix Sum approach
+A better approach is to use what is known as a 'prefix sum' array. A prefix sum array is an array in which the <Math inline>i^\{th\}</Math> element is the sum of all elements from 0 to <Math inline>i </Math> in the original array. So, if our original array (let's call it `o[]`) was 
+
+```
+5 10 5 50 1
+```
+
+Our prefix sum array (let's call it `ps[]`) would be 
+
+```
+5 15 20 70 71 
+```
+
+The first element in our prefix sum is 5 becasue the first 1 numbers in the original add up to 5. The second element in our prefix sum is 15 because the first 2 numbers in the original array add up to 15 and so on.
+
+Now notice how we can obtain the sum of the elements from index <Math inline>i </Math> to <Math inline>j </Math>in constant time by simply doing `ps[j]-ps[i]`. This is because when the sum of `o[0]` to `o[j]` (i.e `ps[j]`) is subtracted by the sum of `o[0]` to `o[i]` (i.e. `ps[i]`) we are left with the sum of `o[i]` to `o[j]`
+
+With a prefix sum in place, all <Math inline>m </Math> summations can be done in <Math inline>o(1)</Math> time each instead of <Math inline>o(n)</Math> time. The only problem is efficiently creating the prefix sum. This can be done like so:
+
+Start with an empty prefix sum array like so:
+```cpp
+int ps[n];
+```
+
+the first element in `ps[]`  will always be the same as the first element in `o[]` so we can say:
+```cpp
+ps[0] = o[0];
+```
+
+Since `ps[k]` for any `k` is the sum of all elements from `o[0]` to `o[k]`, and `ps[k-1]` is the sum of all elements from `o[0]` to `o[k-1]`, we can safely say `ps[k]` is the sum of `ps[k-1]` and `o[k]`. We can implement this using a simple for loop (although recursion works as well, it may be slightly more complicated)
+```cpp
+for (int i = 1; i < n; i++){    //start from index 1 since we have already set ps[0]
+  ps[i] = ps[i-1] + o[i];
+}
+```
+
+This way, we have constructed the prefix sum array in <Math inline>O(n)</Math>. Since we only have to construct the prefix sum array once, the total time complexity of computing <Math inline>m </Math> summations is <Math inline>O(n)</Math> (for computing prefix sum array) + <Math inline>O(m)</Math> (for computing the m summations) which in total is <Math inline>O(n+m)</Math>. This is better than the naive <Math inline>O(nm)</Math> approach.
+
+# Conclusion
+Using a prefix sum array can be an easy way to efficiently solve problems in which you are required to query an array for the sum of elements from index <Math inline>i </Math> to <Math inline>j </Math> multiple times.

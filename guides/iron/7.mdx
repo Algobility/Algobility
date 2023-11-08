@@ -116,3 +116,30 @@ int main() {
     }
 }
 ```
+
+
+# Ommiting the braces
+One shorthand that can be used with `for` loops, `while` loops, `if` statements, and `else` statements is that if the code block that follows these statements is only one line, the curly braces can safely be ommited. For example
+
+```cpp
+if(xyz==abc){
+    cout << "inside if statement";
+}
+cout << "outside if statement";
+```
+
+can be written as 
+
+```cpp
+if(xyz==abc)
+    cout << "inside if statement";
+cout << "outside if statement";
+```
+
+or even 
+```cpp
+if(xyz==abc) cout << "inside if statement";
+cout << "outside if statement";
+```
+
+This shorthand does not add any functionality but makes code more concise. 

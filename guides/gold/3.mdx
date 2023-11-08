@@ -1,0 +1,203 @@
+---
+title: Binary Search
+description: Efficiently search sorted arrays and monotonic functions
+date: '2022-11-05'
+credits: Ahmad Bilal
+---
+
+
+Binary search is a fundamental and efficient algorithm used to find an element in a sorted array. 
+
+# Understanding Binary Search
+
+Binary search is like finding a word in a dictionary. If you start in the middle and compare the word you're looking for with the word on that page, you can quickly decide whether to look in the first half or the second half of the dictionary. By repeating this process, you can quickly locate your word. Binary search works the same way. 
+
+Here's how a binary search would work on an array when trying to find the number 7:
+
+1. Divide the array into two equal halves
+2. Compare the middle element with 7
+- If the middle element is greater than 7, we can discard the right half (at it must only contain elements larger than 7) and repeat from step 1 on only the left half
+- If the middle element is less than 7, we can discard the left half (at it must only contain elements less than 7) and repeat from step 1 on only the right half
+- If the middle element is 7, we have found our element
+
+In contrast to linear search, we do not search every single element in the array. In fact, the time complexity of binary search is <Math inline>O(log(n))</Math>
+
+Here is an example:
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int binarySearch(vector<int> arr, int target) {
+    int left = 0, right = arr.size() - 1;  
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == target) {
+            return mid; // Found the target
+        } else if (arr[mid] < target) {
+            left = mid + 1; // Continue on the right half by adjusting left
+        } else {
+            right = mid - 1; // Continue on the left half by adjusting right
+        }
+    }
+
+    return -1; // Target not found
+}
+
+int main() {
+    vector<int> numbers = {1, 3, 5, 7, 9, 11, 13, 15};
+    int target = 7;
+
+    int index = binarySearch(numbers, target);
+
+    if (index != -1) {
+        cout << "Found at index: " << index << endl;
+    } else {
+        cout << "Not found" << endl;
+    }
+
+    return 0;
+}
+```
+
+In this example, we have a sorted vector `numbers`. We want to find the index of the target value `7`. We use the `binarySearch` function, which employs the binary search algorithm. It returns the index of the target if found, or -1 if not found.
+
+# Binary Monotonic Functions
+A binary monotonic function, is one that
+- always false for any input larger than its 'critical point' and always true for any input lower than its 'critical point' 
+- - always true for any input larger than its 'critical point' and always false for any input lower than its 'critical point'
+
+For example, the below binary monotonic function has a 'critical point' of `f(6)`
+
+```
+f(1) = true
+f(2) = true
+f(3) = true
+f(4) = true
+f(5) = true
+f(6) = false  
+f(7) = false
+f(8) = false
+```
+
+The below functions is not monotonic as the output changes at two points: 
+
+```
+f(1) = false
+f(2) = false
+f(3) = false
+f(4) = false
+f(5) = false
+f(6) = true    // first critical point
+f(7) = true
+f(8) = true    
+f(9) = false     //second critical point
+f(10) = false
+f(11) = false
+```
+
+
+# Finding the Last True Input
+To find the critical point in a binary monotonic function where the output is true for all inputs lower than the critical point we can use binary search. The following steps would allow us to find the critical point efficiently:
+
+1. Determine a lower and upper bound between which the critical point must lie (often given in the question)
+2. Take the average of both bounds (middle number) and input it into the function
+3. If the output is false, we can disregard all inputs greater than the current input (as they must be false) and repeat from step 2 with the upper bound set to the current input 
+4. If the output is true, we can disregard all inputs less than the current input (as they must be true as well) and repeat from step 2 with the lower bound set to the current input 
+
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isTrue(int x) {
+    // Replace this with your function
+    return x <= 5;
+}
+
+int lastTrueInput(int left, int right) {    
+    int result = -1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (isTrue(mid)) {
+            result = mid;
+            left = mid + 1; // Continue on the right half
+        } else {
+            right = mid - 1; // Continue on the left half
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    int left = 1, right = 10;
+    int lastTrue = lastTrueInput(left, right);
+
+    if (lastTrue != -1) {
+        cout << "Last true input: " << lastTrue << endl;
+    } else {
+        cout << "No true input found in the range." << endl;
+    }
+
+    return 0;
+}
+```
+
+Finding the First True Input
+To find the first true input, the approach is quite similar but with a slight adjustment:
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isTrue(int x) {
+    // Replace this with your monotonic functions
+    return x >= 5;
+}
+
+int firstTrueInput(int left, int right) {
+    int result = -1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (isTrue(mid)) {
+            result = mid;
+            right = mid - 1; // Continue on the left half
+        } else {
+            left = mid + 1; // Continue on the right half
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    int left = 1, right = 10;
+    int firstTrue = firstTrueInput(left, right);
+
+    if (firstTrue != -1) {
+        cout << "First true input: " << firstTrue << endl;
+    } else {
+        cout << "No true input found in the range." << endl;
+    }
+
+    return 0;
+}
+```
+
+Again, in this C++ example, the isTrue function represents your specific function, and the firstTrueInput function employs binary search to find the first true input within the specified range.
+
+# Using binary search practically
+Perhaps the hardest part about binary search problems is figuring out if they can be solved with binary search. When solving Gold problems, it is important to always be on the lookout for problems which simplify to monotonic functions. 
+
+
+Consider the following question
+*Given <Math inline>n </Math> tasks and how many minutes each task takes as well as a value <Math inline>k </Math>, find the minimum of parallel task workers needed to complete all tasks in <Math inline>k </Math> minutes. A single task worker cannot work on multiple tasks at once. It is guaranteed that with enough parallel tasks workers, the entire workload may be completed in <Math inline>k </Math> minutes*
+
+Notice that wheather we can complete the tasks in time or not is a binary monotonic function (with input of the number of parallel workers). Below a certain point, this function will always return false (as we will not have enough parallel workers to complete the workload) but after that point, the function will always return true. In other words, if the answer to the question is 5 parallel workers, this function would return false for any input below 5 and true for any input above 5. Thus, we can use binary search to find the critical point and therefore, the answer to the question.

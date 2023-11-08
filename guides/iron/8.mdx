@@ -52,7 +52,7 @@ int main(){
 
 The result of the above code looks like this
 
-```cpp
+```
 Hello 
 Inside Function
 Goodbye
@@ -139,7 +139,8 @@ You can also write a function that returns a value (i.e. evaluates to a value). 
 
 ```cpp
 int someNumber = 0;
-someNumber = returningFunction();       //returningFunction is executed and someNumber is set to the return value of returningFunction (i.e. 10)
+someNumber = returningFunction();  
+//returningFunction is executed and someNumber is set to the return value of returningFunction (i.e. 10)
 ```
 
 So far all our function declarations have used the `void` keyword. This keyword tells the compiler that this function does not return anything. However, if we want our function to return a value, we must replace `void` with the data type of the return value like so:
@@ -174,7 +175,7 @@ int main() {
 
 The above code should output the following:
 
-```cpp
+```
 I am being executed!
 10
 ```
@@ -229,7 +230,9 @@ bool isEven(int number){
         return true;
         cout << "This will not be executed"; //This code will not be executed 
     }
-    return false;   //This code will not be executed if the above if statment was executed (since then, the previous return statement would have been executed)
+     //This code will not be executed if the above if statment was executed
+     //(since then, the previous return statement would have been executed)
+     return false;
     cout << "This will not be executed\n"   //This code will not execute when the function is called
 }
 ```
@@ -257,7 +260,7 @@ int main(){
 
 The above code outputs:
 
-```cpp
+```
 someParamater is: 5
 Now someParamater is: 10
 Now myFavoriteNumber is: 5
@@ -286,7 +289,7 @@ int main(){
 
 Now the output looks like this:
 
-```cpp
+```
 someParamater is: 5
 Now someParamater is: 10
 Now myFavoriteNumber is: 10
@@ -295,19 +298,6 @@ Now myFavoriteNumber is: 10
 This time `someParamater` did not act as a copy of `myFavoriteNumber` but rather an alias to be used within the function definition.
 
 
-# Passing arrays through functions
-
-Arrays can also be passed as paramaters to functions. However, the size of the array must be passed as a seperate paramater if the function requires its use as well. Here is an example of a function that, given an array, outputs all of its elements individually
-
-```cpp
-int outputArray(int arr[], int size) {
-  for(int i = 0; i < size; i++){
-    cout << arr[i] << endl;
-  }
-}
-```
-
-Arrays are always passed by reference, even if the programmer does not write `&` before the paramater name in the function declaration. Any modification to any array element within the function declaration affects the actual array.
 
 
 # Built-in functions
@@ -317,6 +307,15 @@ Some functions have been defined by C++ beforehand for you to call at your will.
 ```cpp
 cout << min(10,20);   //outputs 10
 ```
+
+Some other useful built-in functions are listed below:
+- `max(a,b)` - returns whichever number is larger between a and b
+- `abs(a)` - returns the absolute value of a
+- `pow(a,b)` - returns a raised to the power b
+- `sin(a)` - returns sin of a (where a is in radians)
+- `cos(a)` - returns cos of a (where a is in radians)
+- `tan(a)` - returns tan of a (where a is in radians)
+
 
 There is also a function for every data type in C++. This function accepts any type of value as a paramater and returns what it thinks should be the translation of that value in the data type. For example, calling `int()` and passing a float (decimal number) will result in  the function returning the decimal number but in integer format with all digits after the decimal point being effectively chopped off.
 

@@ -29,7 +29,12 @@ export default function LearnIndex({ chaps }) {
   return (
     <>
       <NicePage selected='learn' title='Guides'>
-        <div className=' min-h-screen relative'>
+        <div
+          className=' min-h-screen relative'
+          onKeyDownCapture={(e) => {
+            if (e.key == 'Escape') onClose();
+          }}
+        >
           <div className='flex flex-col lg:flex-row  justify-between items-center pt-44 pb-12 px-4 mb-12 mx-auto w-3/4 border-b gap-24'>
             <div className='lg:w-1/2 mb-12 lg:mb-0  '>
               <h1 className='mont text-6xl text-primc mb-2'>{rank}</h1>
@@ -41,7 +46,7 @@ export default function LearnIndex({ chaps }) {
                 View another rank
               </button>
               {isOpen && (
-                <div className=' fixed top-0 left-0 z-10 p-4 w-full h-full flex justify-center items-center '>
+                <div className='blur-bd fixed top-0 left-0 z-10 p-4 w-full h-full flex justify-center items-center '>
                   <div className='scalefade w-4/5 gap-14 p-14 shadow-2xl h-4/5 mt-8 rounded-lg bg-backL grid grid-rows-2 grid-cols-3 relative'>
                     {ranks.map((e) => (
                       <div className='rounded-md p-8' key={e}>
@@ -113,20 +118,27 @@ export default function LearnIndex({ chaps }) {
             <div className='grid grid-cols-1 gap-4 w-3/4 mt-12 '>
               {rank != 'loading'
                 ? chaps[unpretty(rank)].map((element, index) => (
-                    <Link
-                      href={`/learn/${unpretty(rank)}/${element.id}`}
-                      key={index}
-                      className='relative rounded-md bg-neutral-700 border border-neutral-500 hover:bg-neutral-600 transition-all cursor-pointer px-6 py-4 flex justify-start items-center'
-                    >
-                      <div className=' rounded-full mr-8 robo text-4xl text-primc pb-1'>{element.id}</div>
-                      <div className=''>
-                        <div>
-                          <h2 className='robo text-2xl'>{element.title}</h2>
-                          <p className='robo text-neutral-400'>{element.description}</p>
+                    <div className='flex justify-start items-center'>
+                      <div className='flex justify-center items-center mr-8 robo w-16  h-full  '>
+                        <div className='h-full w-2 rounded-lg -z-20 bg-neutral-600 scale-y-150'></div>
+                        <div className='absolute text-4xl text-neutral-300  w-16 h-16 border bg-neutral-700 rounded-full flex justify-center items-center'>
+                          {element.id}
                         </div>
-                        {/* <div className='absolute right-12 bg-backL rounded-full h-12 w-12'></div> */}
                       </div>
-                    </Link>
+                      <Link
+                        href={`/learn/${unpretty(rank)}/${element.id}`}
+                        key={index}
+                        className='relative flex-1 rounded-md bg-neutral-700 border border-neutral-500 hover:bg-neutral-600 transition-all cursor-pointer px-6 py-4 flex justify-start items-center'
+                      >
+                        <div className=''>
+                          <div>
+                            <h2 className='robo text-2xl'>{element.title}</h2>
+                            <p className='robo text-neutral-400'>{element.description}</p>
+                          </div>
+                          {/* <div className='absolute right-12 bg-backL rounded-full h-12 w-12'></div> */}
+                        </div>
+                      </Link>
+                    </div>
                   ))
                 : ''}
             </div>

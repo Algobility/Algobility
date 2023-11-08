@@ -11,6 +11,7 @@ import Link from 'next/link';
 
 import { serialize } from 'next-mdx-remote/serialize';
 import { pretty, ranks, unpretty } from '../../../customStuff/nameMapping';
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 
 export default function Learn({ content, frontMatter, chaps }) {
   const customify = (content) => {
@@ -22,8 +23,6 @@ export default function Learn({ content, frontMatter, chaps }) {
       return `<div data-component="CustomComponent" data-props='{"number": "${input[0]}", "question": "${input[1]}", "answer": "${input[2]}"}'></div>`;
     });
   };
-
-  const [rank, setRank] = useState(frontMatter.rank);
 
   return (
     <NicePage selected='learn' title='Guides'>
@@ -60,7 +59,44 @@ export default function Learn({ content, frontMatter, chaps }) {
           ></div> */}
           {/* <ParsedContentWrapper text={customify(guideData.contentHtml)}></ParsedContentWrapper> */}
           <MdxRenderer mdxSource={content} />
-          <p className='text-center  mt-12 text-neutral-400 mont pt-24'>
+          <div className='flex justify-center items-center mt-24'>
+            <Link
+              href={`/learn/${frontMatter.rank}/${parseInt(frontMatter.id) - 1}`}
+              onClick={(e) => {
+                if (frontMatter.id == 1) e.preventDefault();
+              }}
+              className={`mx-auto bg-neutral-700  ${
+                frontMatter.id == '1' ? 'text-neutral-500 ' : 'text-neutral-200 hover:bg-neutral-600'
+              } w-48 text-center py-3 rounded-md robo`}
+            >
+              <ArrowBackIcon className='text-xl -translate-y-0.5 -translate-x-1' /> Previous Chapter{' '}
+            </Link>
+            <Link
+              href={`/practice/${frontMatter.rank}/${frontMatter.title}`}
+              onClick={(e) => {
+                if (!frontMatter.practicable) e.preventDefault();
+              }}
+              className={`mx-auto  hover:lighten ${
+                frontMatter.practicable ? 'text-neutral-200 bg-primc' : 'text-neutral-400 bg-neutral-700'
+              } px-8 text-center py-3 rounded-md robo`}
+            >
+              {!frontMatter.practicable ? 'This chapter has no practice questions' : 'Practice Questions'}
+            </Link>
+            <Link
+              href={`/learn/${frontMatter.rank}/${parseInt(frontMatter.id) + 1}`}
+              onClick={(e) => {
+                if (frontMatter.id == 1) e.preventDefault();
+              }}
+              className={`mx-auto bg-neutral-700  ${
+                frontMatter.id == chaps[frontMatter.rank].length
+                  ? 'text-neutral-500 '
+                  : 'text-neutral-200 hover:bg-neutral-600'
+              } w-48 text-center py-3 rounded-md robo`}
+            >
+              Next Chapter <ArrowForwardIcon className='text-xl -translate-y-0.5 translate-x-1' />
+            </Link>
+          </div>
+          <p className='text-center mt-44 text-neutral-400 mont'>
             Credits: {frontMatter.credits} <br /> If you notice any issues with the above article, please send us
             feedback via discord{' '}
           </p>

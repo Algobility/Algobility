@@ -1,0 +1,102 @@
+---
+title: 'Time Complexity'
+description: 'Analyze algorithm efficiencies'
+date: '2022-11-05'
+credits: Ahmad Bilal
+---
+
+The efficiency of an algorithm can be measured in two ways. How long it takes to execute and how much memory it consumes. Both these measures can be described in what is known as 'Big-O' notation. Big-O notation describes how long/how much memory an algorithm takes in the worst case, in terms of the input size. 
+
+Let's first take a look at analyzing the time an algorithm takes.
+
+# Steps
+For the sake of explanation, I will cosider all statements except loops (and function calls which may in turn execute loops) a single step. The following code contains six steps.
+
+```cpp
+int x;  //1 step
+x = 10; //2 steps
+x = 40 * (x+1); //3 steps
+if(x > 40){ //4 steps
+    x = 40; //5 steps
+}
+cout << x; //6 steps
+```
+
+{/* # Big O notation
+Big O notation describes the number of steps an algorithm takes, ignoring constant factors. This means if some code takes <Math inline>6*n</Math> steps, it would not be considered <Math inline>O(6n)</Math> but rather just <Math inline>O(n)</Math>. Code that takes 100 steps would simply be considered <Math inline>O(1)</Math>. Code that takes <Math inline>6n^2 + 100</Math> steps would be considered <Math inline>O(n^2)</Math>. Code that takes <Math inline>(n+1)^3 + 4n^2 - 100</Math> steps would be considered <Math inline>O(n^3)</Math>. Notice how it is only the variable and its largest power that matter. */}
+
+# Constant-time algorithms
+Algorithms that take a constant number of steps are written as <Math inline>O(1)</Math> in Big O notation.
+
+```cpp
+int abc = 10; 
+abc = 100; 
+cout << abc;
+if(abc > 50) abc = 400;
+```
+
+The above code would be considered <Math inline>O(1)</Math> as it only takes a constant (i.e. 5) steps. The number of steps do not vary.
+
+# Linear-time algorithms
+A loop that runs `n` times is considered to take <Math inline>O(n)</Math> time to execute. However, with Big O notation, constant factors are ignored. Thus, two such loops or one loop that runs `n*5` times would still be considered <Math inline>O(n)</Math>. In other words, code that takes <Math inline>k*O(n)</Math> is always considered to simply take <Math inline>O(n)</Math> for any constant k.
+
+The following loops are all <Math inline>O(n)</Math>
+
+```cpp
+for (int i = 1; i <= n*500; i++) {
+	// constant time code here
+}
+int i = 0;
+while (i < 4+(n+32)*6) {
+	// constant time code here
+	i++;
+}
+```
+
+# Nested loops
+Nested loops are considered to take <Math inline>O(nm)</Math> where <Math inline>n</Math> is the number of iterations of the outer loop and <Math inline>m</Math> is the number of iterations of the inner loop. Again, since constant factors are ignored, the following code takes <Math inline>O(nm)</Math>
+
+```cpp
+for (int i = 1; i <= n+5; i++) {
+	for (int j = 1; j <= m*2; j++) {
+		// constant time code here
+	}
+}
+```
+
+The following code takes <Math inline>O(n^2)</Math> time
+
+```cpp
+for (int i = 1; i <= n; i++) {
+	for (int j = 1; j <= n; j++) {
+		// constant time code here
+	}
+}
+```
+
+In Big O notation only the highest power of each variable is considered. The following code technically takes <Math inline>O(n + n^2)</Math> time but we also consider it to be <Math inline>O(n)</Math>
+
+```cpp
+for (int i = 1; i <= n; i++) {
+	for (int j = 1; j <= n; j++) {
+		// constant time code here
+	}
+}
+for (int j = 1; j <= n; j++) {
+		// constant time code here
+	}
+```
+
+The following is said to take <Math inline>O(n + m)</Math> time
+```cpp
+for (int j = 1; j <= n; j++) {
+    // constant time code here
+}
+for (int j = 1; j <= m; j++) {
+    // constant time code here
+}
+```
+
+
+# Why the hand-waviness?
+Constant factors and lower powers of variables are ignored because Big O notation attempts to describe how long an algorithm takes as the input size (i.e. your `n`'s and `m`'s) becomes extremely large. For computers, the difference between <Math inline>O(n^2)</Math> and <Math inline>2 * O(n^2)</Math> is insignificant compared to the difference between <Math inline>O(n^2)</Math> and <Math inline>O(n)</Math>. If `n` is 1,000,000, the difference between <Math inline>O(n^2)</Math> and <Math inline>2 * O(n^2)</Math> would only be a factor of 2 but the difference between <Math inline>O(n^2)</Math> and <Math inline>O(n)</Math> would be a factor of 1,000,00!
