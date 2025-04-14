@@ -1,0 +1,154 @@
+---
+title: Grid Problems
+date: '2022-01-01'
+description: Solving Problems involving 2D grids of cells
+credits: Ahmad Bilal
+---
+
+Many problems will require you to process a grid-like structure as input. The input for such problems often looks something like,
+
+```text
+XXOOXX
+X0XX00
+X000XX
+```
+
+or 
+
+```text
+.#...#
+....##
+##....
+#..##.
+#.#..#
+#.....
+```
+
+
+
+Flood fill is an algorithm used to explore and mark connected components in a grid. It is commonly used for solving problems that involve filling regions, counting distinct areas, or finding paths in grid-based problems.  
+
+# Understanding Grids  
+
+A grid can be thought of as a graph where each cell represents a node, and edges exist between adjacent cells. The most common type is a **2D grid**, where each cell has up to four neighbors: up, down, left, and right. Some problems may also consider diagonal movement, increasing the number of neighbors to eight.  
+
+A grid can be represented in multiple ways, but the most common representation is a **matrix**. For a grid with `n` rows and `m` columns, it can be stored as a `n × m` array where `grid[i][j]` refers to the cell at row `i` and column `j`.  
+
+# Movement in a Grid  
+
+To traverse a grid, we define possible moves as changes in row and column values. If only four-directional movement is allowed, the possible moves can be represented as:  
+
+```text
+dx = {-1, 1,  0, 0}
+dy = { 0, 0, -1, 1}
+```
+
+Each `(dx[k], dy[k])` pair represents movement in one direction:  
+- `(-1, 0)`: Move **up**  
+- `(1, 0)`: Move **down**  
+- `(0, -1)`: Move **left**  
+- `(0, 1)`: Move **right**  
+
+If diagonal movement is allowed, additional directions are included:  
+
+```text
+dx = {-1, -1, -1,  0, 0,  1, 1, 1}
+dy = {-1,  0,  1, -1, 1, -1, 0, 1}
+```
+
+# Flood Fill Algorithm  
+
+Flood fill is a modified graph traversal algorithm used to explore all connected cells in a grid. It works by visiting a starting cell and recursively spreading to all valid neighboring cells. This is similar to exploring a connected component in a general graph.  
+
+Flood fill can be implemented using either DFS or BFS:  
+
+1. **DFS approach**:  
+   - Start at a given cell and mark it as visited.  
+   - Recursively visit all valid neighbors.  
+
+2. **BFS approach**:  
+   - Start at a given cell and push it into a queue.  
+   - Process each cell by marking it and adding all valid neighbors to the queue.  
+
+# Example Problem  
+
+Given a grid of size `n × m` consisting of `.` and `#`, count the number of connected components formed by `.`. Two `.` cells are considered connected if they are adjacent horizontally or vertically.  
+
+Example input:  
+
+```text
+.#..#.
+...##.
+.####.
+.#.#..
+##..#.
+```
+
+This grid has 3 connected components formed by `.`.
+
+# Solution
+
+
+To solve this problem, we need to find all connected components of `.` in the given grid. Since a connected component is defined as a group of `.` cells that are adjacent either horizontally or vertically, we can use flood fill to mark and count these regions.  
+
+The approach consists of the following steps:  
+
+1. Read the input grid into a 2D array.  
+2. Initialize a `visited` array to keep track of which cells have already been processed.  
+3. Iterate over all cells in the grid. If a cell contains `.` and has not been visited, this means a new connected component has been found.  
+4. Perform a flood fill from this cell using DFS, marking all reachable `.` cells as visited.  
+5. Repeat the process for all unvisited `.` cells and count the number of times a new component is found.  
+
+Note that using BFS for this implementation would have also worked. Choosing between BFS and DFS in such problems comes down to which ever you find easier to code.  
+
+Below is the implementation of this solution
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, m;
+vector<string> grid;
+vector<vector<bool>> visited;
+
+int dx[] = {-1, 1,  0, 0};
+int dy[] = { 0, 0, -1, 1};
+
+void dfs(int x, int y) {
+    visited[x][y] = true;
+
+    for (int k = 0; k < 4; k++) {
+        int nx = x + dx[k], ny = y + dy[k];
+
+        if (nx >= 0 && nx < n && ny >= 0 && ny < m && !visited[nx][ny] && grid[nx][ny] == '.') {
+            dfs(nx, ny);
+        }
+    }
+}
+
+int countComponents() {
+    visited.assign(n, vector<bool>(m, false));
+    int components = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == '.' && !visited[i][j]) {
+                dfs(i, j);
+                components++;
+            }
+        }
+    }
+
+    return components;
+}
+
+int main() {
+    cin >> n >> m;
+    grid.resize(n);
+    for (int i = 0; i < n; i++) {
+        cin >> grid[i];
+    }
+
+    cout << countComponents() << endl;
+}
+```

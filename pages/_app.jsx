@@ -5,6 +5,7 @@ import { generatePalette } from 'palette-by-numbers';
 import { extendTheme } from '@chakra-ui/react';
 import { createTheme } from '@mui/material/styles';
 import { MathJaxContext } from 'better-react-mathjax';
+import Script from 'next/script.js';
 
 const muiTheme = createTheme({
   palette: {
@@ -63,6 +64,11 @@ function MyApp({ Component, pageProps }) {
     <ChakraProvider cssVarsRoot=':root' theme={theme}>
       <ThemeProvider theme={muiTheme}>
         <MathJaxContext>
+          <Script
+            onLoad={() => console.log('Discord widget script loaded')}
+            src='https://dipped.dev/static/plugins/discordwidget/index.js'
+            strategy='lazyOnload'
+          ></Script>
           <Component {...pageProps} />
         </MathJaxContext>
       </ThemeProvider>
@@ -71,3 +77,4 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
+

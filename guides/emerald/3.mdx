@@ -1,15 +1,178 @@
 ---
-title: Knapsack/Bitmask/Range/ DP
+title: Minimum Spanning Trees
 date: '2022-01-01'
+description: Remove edges while keeping a graph connected
 credits: Ahmad Bilal
+practicable: false
 ---
 
-# Motivation
+# Motivation  
 
-There is no Motivation
+Imagine you are designing a network of roads to connect multiple cities. Your goal is to ensure that every city is connected while keeping the total construction cost as low as possible. You don’t want to build unnecessary connections because that would increase costs without adding value—once all cities are connected, adding extra roads only wastes resources.
 
-# Code
+This problem is exactly what Minimum Spanning Trees (MSTs) solve. The Minimum Spanning Tree of a graph is the set of edges that:
 
+1. Connects all nodes (cities) together without forming cycles.
+2. Minimizes the total edge cost.
+ 
+
+# Example
+
+Let's say you have five cities, and some roads between them with different costs. 
+
+<Figure src='/guide_images/mstexample.png' classExtensions='w-1/2' />
+
+The numbers on the edges represent the cost of building a road between those two cities. Your goal is to ensure every city is connected to every other city, but you want to do it at the lowest possible cost.
+
+One incorrect way to do this is to simply include all roads:
+
+The total cost here is 4 + 6 + 3 + 5 + 2 + 1 = 21, but some roads are unnecessary!
+
+Instead, the Minimum Spanning Tree (MST) only picks the cheapest edges that still keep everything connected:
+
+<Figure src='/guide_images/mste2.png' classExtensions='w-1/2' />
+
+The total cost is now 4 + 2 + 1 + 3 = 10, which is the minimum possible cost to connect all cities.
+
+# Why Can't We Have cycles
+
+If you have a cycle, that means there must be an unnecessary extra path.
+
+In our example, if we have the road `(A) → (C)` and also `(A) → (B) → (C)`, then one of these paths is unnecessary.
+If we remove the more expensive one, we still remain connected while reducing cost.
+Thus, every cycle represents at least one edge that can be removed to reduce cost while keeping everything connected.
+
+
+# Key Observations  
+
+1. **Heaviest Cycle Edge Can Be Removed:**
+   - If there is a cycle in the chosen edges, removing the heaviest edge always leads to a better or equal solution.  
+   - The MST can never have a cycle because removing a cycle edge always decreases or maintains the cost.  
+
+2. **Greedy Choice Works**  
+   - If you always pick the smallest available edge that does not create a cycle, you will eventually reach the MST.  
+   - This is why MST algorithms (like Kruskal’s and Prim’s) use greedy strategies.  
+
+3. **MST is Unique for Distinct Edge Weights**  
+   - If all edge weights are distinct, the MST is unique (i.e. there is only one MST that exists)  
+   - If some edge weights are the same, multiple MSTs may exist, but they all have the same total weight.  
+
+
+
+# Kruskal’s Algorithm
+Kruskal’s algorithm is a greedy algorithm for finding the MST of a graph. It builds the MST **one edge at a time**, always picking the cheapest available edge that doesn’t form a cycle.  
+
+Unlike other algorithms that grow a tree from a starting node, Kruskal’s starts with all nodes separate and then gradually connects them.  It follows these steps:
+
+
+1. Sort all edges by increasing weight.  
+2. Start with an empty set of edges (no connections).  
+3. Go through the sorted edges one by one:  
+   - If adding an edge does **not** create a cycle, **add it** to the MST.  
+   - Otherwise, **skip it**.  
+4. Stop when all nodes are connected.  
+
+The **key observation** is that at each step, the algorithm only considers the next **cheapest possible connection** that won’t introduce redundancy (cycles).  
+
+# Example Walkthrough  
+
+To understand how Kruskal’s algorithm constructs a Minimum Spanning Tree (MST), let's go through an example step by step.  
+
+Consider a graph with `6` nodes and the following weighted edges:  
+
+<Figure src='/guide_images/mst.png' classExtensions='w-1/2' />  
+
+## Step 1: Sort Edges by Weight  
+
+First, we sort all edges in **ascending order** of weight:  
+
+```text
+1 → 3  (1)  
+2 → 4  (2)  
+2 → 3  (3)  
+1 → 2  (4)  
+3 → 4  (5)  
+4 → 6  (6)  
+4 → 5  (7)  
 ```
-int arr[10] = [0,1,0,4]
+
+## Step 2: Initialize Disjoint Sets  
+
+Each node is initially its own separate component:  
+
+```text
+{1} {2} {3} {4} {5} {6}
 ```
+
+We will add edges one by one, ensuring that we don’t form cycles.  
+
+## Step 3: Process Edge `1 → 3`  
+
+- Nodes `1` and `3` are in different components, so we add this edge to the MST.  
+- Merge sets `{1}` and `{3}` → `{1,3}`.  
+
+```text
+Components: {1,3} {2} {4} {5} {6}
+```
+
+## Step 4: Process Edge `2 → 4`  
+
+- Nodes `2` and `4` are in different components, so we add this edge to the MST.  
+- Merge sets `{2}` and `{4}` → `{2,4}`.  
+
+```text
+Components: {1,3} {2,4} {5} {6}
+```
+
+## Step 5: Process Edge `2 → 3`  
+
+- Nodes `2` and `3` are in different components, so we add this edge to the MST.  
+- Merge sets `{1,3}` and `{2,4}` → `{1,2,3,4}`.  
+
+```text
+Components: {1,2,3,4} {5} {6}
+```
+
+## Step 6: Process Edge `1 → 2`  
+
+- Both `1` and `2` are already in the same component `{1,2,3,4}`, so we **skip this edge** to avoid a cycle.  
+
+```text
+Components: {1,2,3,4} {5} {6}
+```
+
+## Step 7: Process Edge `3 → 4`  
+
+- Both `3` and `4` are already in the same component `{1,2,3,4}`, so we **skip this edge** to avoid a cycle.  
+
+```text
+Components: {1,2,3,4} {5} {6}
+```
+
+## Step 8: Process Edge `4 → 6`  
+
+- Nodes `4` and `6` are in different components, so we add this edge to the MST.  
+- Merge sets `{1,2,3,4}` and `{6}` → `{1,2,3,4,6}`.  
+
+```text
+Components: {1,2,3,4,6} {5}
+```
+
+## Step 9: Process Edge `4 → 5`  
+
+- Nodes `4` and `5` are in different components, so we add this edge to the MST.  
+- Merge sets `{1,2,3,4,6}` and `{5}` → `{1,2,3,4,5,6}`.  
+
+```text
+Components: {1,2,3,4,5,6}  (all nodes connected)
+```
+
+Since all nodes are now in **one component**, the MST is complete.  
+
+# Final MST  
+
+The Minimum Spanning Tree consists of the following edges:  
+
+<Figure src='/guide_images/mstfinal.png' classExtensions='w-1/2' />
+
+The **total weight** of the MST is `1 + 2 + 3 + 6 + 7 = 19`.  

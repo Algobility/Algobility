@@ -23,9 +23,17 @@ export default function MdxRenderer({ mdxSource }) {
       h1: (props) => <h1 className='text-4xl font-bold mt-20 robo' {...props} />,
       h2: (props) => <h2 className='font-bold mt-6 robo text-2xl' {...props} />,
       p: (props) => <p className='robo mt-4 text-lg text-neutral-300' {...props} />,
-      a: (props) => <a className='robo text-primc mt-4 text-lg' {...props} />,
+      strong: (props) => <span className='text-primc font-semibold' {...props} />,
+      a: (props) => <a className='robo !text-primc mt-4 text-lg hover:underline ' {...props} />,
       pre: (props) => <pre className='rounded-lg p-8 my-6' style={{ 'background-color': '#2B2B2B' }} {...props} />,
       code: (props) => <Code {...props} codeClass='mt-2 rounded-md py-0.5 px-2 bg-backL' children={props.children} />,
+      Figure: (props) => (
+        <img
+          {...props}
+          className={`rounded-md  mx-auto outline my-12 ${props.classExtensions}`}
+          children={props.children}
+        />
+      ),
       Exercise: (props) => <Exercise {...props} />,
       ExerciseQuestion: (props) => <ExerciseQuestion {...props} />,
       ExerciseAnswer: (props) => <ExerciseAnswer {...props} />,
@@ -33,15 +41,16 @@ export default function MdxRenderer({ mdxSource }) {
       Math: (props) => (
         <MathJax
           inline={!props.block}
-          className={props.block ? 'text-2xl my-4' : ''}
-          children={`${'\\('}${props.children}${'\\)'}`}
+          className={props.block ? 'my-4 mx-auto w-full text-center' : ''}
+          children={props.block ? `${'$$'}${props.children}${'$$'}` : `${'\\( '}${props.children}${'\\) '}`}
         ></MathJax>
       ),
-      li: (props) => <li className='mt-2  robo ml-8 ' {...props} />,
-      ul: (props) => <ul className='mt-4 robo list-disc ' {...props} />,
-      ol: (props) => <ul className='mt-4 robo list-decimal ' {...props} />,
+      li: (props) => <li className='mt-2  robo ml-8  text-lg' {...props} />,
+      ul: (props) => <ul className='mt-4 robo list-disc  text-lg' {...props} />,
+      ol: (props) => <ul className='mt-4 robo list-decimal  text-lg' {...props} />,
     }),
     []
   );
   return <MDXRemote {...mdxSource} components={components} />;
 }
+

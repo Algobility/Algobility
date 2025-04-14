@@ -97,6 +97,7 @@ export function getFilteredPostData(rank, rawTopic) {
     result = [...result, ...filteredPostsData];
   }
 
+  console.log(result);
   result.sort((a, b) => {
     if (a.external && !b.external) return 1;
     if (!a.external && b.external) return -1;
@@ -188,3 +189,4 @@ export async function getPostData(rank, topic, id) {
   const matterResult = await matter(fileContents);
   return { id, rank, topic, contentHtml: matterResult.content, ...matterResult.data };
 }
+

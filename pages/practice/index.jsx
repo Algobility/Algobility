@@ -136,3 +136,4 @@ export async function getStaticProps({ params }) {
   const chaps = await getAllGuides();
   return { props: { chaps: chaps } };
 }
+

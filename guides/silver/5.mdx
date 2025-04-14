@@ -1,131 +1,100 @@
 ---
-title: 'Recursion'
-description: 'Functions calling themselves'
+title: 'Brute force'
+description: 'Searching all possible answers to find the correct one'
 date: '2023-11-05'
 credits: Ahmad Bilal
+practicable: true
 ---
 
-Recursion is a powerful programming technique where a function calls itself within its own definition. It's akin to a mathematical concept known as a "recurrence relation." Recursion is a valuable tool for solving problems that can be broken down into smaller instances of the same problem. In this article, we'll delve into recursion with a more detailed walkthrough of two classic examples: factorial calculation and the Fibonacci series.
 
-## Factorial Calculation
+# Finding pairs
+Brute force is an invaluable technique that can be used to solve most bronze level problems. It involves searching all possible answers for the correct one. 
 
-Let's begin our journey into recursion by trying to solve following question:
+Consider the following problem:
 
-*The factorial of a number <Math inline> n </Math>, denoted as <Math inline> n! </Math>, is the product of all positive integers from 1 to n. For instance, <Math inline>5! = 5*4*3*2*1</Math>. Write some code that computes the the factorial of any given number* 
+*Given an array of numbers, output the indicies of the two distinct elements whose difference is exactly 10*
 
-This problem can be solved using a for loop, however a more elegant and concise solution can be obtained using recursion. 
+To solve this problem its useful to first understand how nested loops can be used to iterate over all possible pairs of numbers. Take a look at the following code:
+```cpp
+for (int i = 0; i < n; i++){
+  for (int j = 0; j < n; j++){
+    //the values of i and j here will be every possible 2-number permutation of 0...n
+  }
+}
+```
+On the first iteration of the outer loop, `i` is set to 0. The inner loop runs and the value of `j` ranges between 0 and `n` whilst `i` is locked in at 0. On the second iteration of the outer loop, `i` is set to 1 and the inner loop sets `j` to every value between 0 and `n`. This way, for each iteration of the inner loop, the values of i and j  form every possible pair of numbers between 0 and `n`. More specifically, the values of i and j when `n` is set to 3 look like the following:
 
-Notice how the factorial of a number <Math inline>n</Math>, is really just <Math inline>n*(n-1!)</Math>. In other words, the factorial of any numbers, is that number multiplied by the factorial of one number less than it. For example,
+- 0,0
+- 0,1
+- 0,2
+- 1,0
+- 1,1
+- 1,2
+- 2,0
+- 2,1
+- 2,2
 
-<Math>
-5! = 5 * 4 * 3 * 2 * 1
-5! = 5 * (4 * 3 * 2 * 1)
-5! = 5 * 4!
-</Math>
+This is known as 'brute-forcing' each pair of numbers.
 
-Since the problem of finding a factorial of a number can be broken down into a smaller version of itself, we can create a recursive function that computes the factorial of a number like so:
+To solve the original problem we can brute force pairs of possible indicies in the array and check the corresponding array elements. This will, in effect, check every pair of array elements. When checking a pair of elements, we can compute their difference and if it is 10, we can output the pair of indicies. 
+
 
 ```cpp
-int factorial(int n) {
-    return n * factorial(n - 1); //the factorial of n is just n * (n-1)!
-}
-int main(){
-    int input;
-    cin >> input;
-    cout << factorial(input);   //output the factorial of the input
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+        //for every possible i and j, check wheather the elements at those indicies have a diff of 10
+        if (abs(arr[i] - arr[j]) == 10) {      //using abs() to get absolute value distance
+            cout << i << ' ' << j; //if so cout the indicies with a space in between
+            return 0; //end the program by terminating main so we don't continue the search
+        }
+    }
 }
 ```
 
-There's one slight problem with the above code, however. If this code were to be run, it would end up running in an infinite loop and never stopping. This is because any call to the `factorial()` function would cause a  call to the `factorial()` function which would in turn cause another call to the `factorial()` function. More specifically:
 
-- `factorial(5)` calls `factorial(4)`
-- `factorial(4)` calls `factorial(3)`
-- `factorial(3)` calls `factorial(2)`
-- `factorial(2)` calls `factorial(1)`
-- `factorial(1)` calls `factorial(0)`
-- `factorial(0)` calls `factorial(-1)`
-- `factorial(-1)` calls `factorial(-2)`
-- and so on ...
+## Farthest Two Points
 
-What we really want is for our recursive calls to stop as soon as we reach `factorial(1)`. This is known as a base case, or the smallest version of the problem where the answer can be computed directly. The correct code should look something like this:
+Consider the following question:
+
+*Given an array of coordinates, the problem of finding the farthest two points involves calculating the distances between all pairs of points and then selecting the maximum distance.*
+
+
+We can use our knowledge of coordinate geometry along with brute forcing each pair of array elements.
 
 ```cpp
-int factorial(int n) {
-    if (n == 0) {
-        return 1; // Base case: 0! = 1
-    } else {
-        return n * factorial(n - 1); // Recursive case
+#include <bits/stdc++.h> 
+
+using namespace std;
+
+int distance(pair<int, int> A, pair<int, int> B) {   //a function that returns the distance between two points
+    int dx = B.first - A.first;
+    int dy = B.second - A.second;
+    return sqrt(dx * dx + dy * dy);
+}
+
+int farthestDistance(pair<int, int> points[], int n) {
+    int maxDist = 0.0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            int dist = distance(points[i], points[j]);
+            maxDist = max(maxDist, dist);
+        }
     }
+    return maxDist;
+}
+
+int main() {
+    pair<int, int> points[] = {make_pair(1, 2), make_pair(4, 6), make_pair(7, 8)};
+    int n = sizeof(points) / sizeof(points[0]);
+
+    int maxDist = farthestDistance(points, n);
+    cout << "Farthest distance between points: " << maxDist << endl;
+
+    return 0;
 }
 ```
 
-Now the calls look something like so:
-- `factorial(5)` calls `factorial(4)`
-- `factorial(4)` calls `factorial(3)`
-- `factorial(3)` calls `factorial(2)`
-- `factorial(2)` calls `factorial(1)`
-- `factorial(1)` returns 1;
-- At this point, the base case is reached, and the recursion stops.
+# Additional resources
+To learn more about brute force, you may take a look at the following resource:
 
-The result is computed step by step, and the final result is 120, which is indeed 5!.
-
-# General Structure
-
-In general, recursive functions consist of two key elements:
-
-- Recursive Case: This is where the function calls itself with modified inputs to solve a smaller instance of the problem.
-- Base Case: This is the termination condition that stops the recursion and represents the simplest form of the problem that can be solved directly. Without this, the recursion would repeat indefinitely and cause the program to eventually crash.
-
-
-## The Fibonacci Series
-
-Moving on to our next example, let's explore the Fibonacci series. The Fibonacci sequence is a series where each number is the sum of the two preceding ones. It begins with 0 and 1, as follows: 0, 1, 1, 2, 3, 5, 8, 13, and so on. We'll write code to find the nth Fibonacci number using recursion.
-
-Notice how the nth Fibonacci number can be obtained by simply adding the (n-1)th and (n-2)th Fibonacci numbers. Since the question can be broken down into strictly smaller versions of itself, it can be solved using recursion.
-
-```cpp
-int fibonacci(int n) {
-    if (n == 0) {
-        return 0; // Base case: Fibonacci(0) = 0
-    }
-    if (n == 1) {
-        return 1; // Base case: Fibonacci(1) = 1
-    }
-    return fibonacci(n - 1) + fibonacci(n - 2); // Recursive case
-}
-```
-
-Similar to the factorial example, we have base cases to terminate the recursion. When `n` reaches 0 or 1, we return the corresponding value directly. In the recursive case, we call the `fibonacci` function for (n-1) and (n-2), summing up their results.
-
-
-Remember, recursion should be used judiciously and always incorporate a base case to prevent infinite loops. It's a powerful tool for solving problems by breaking them down into smaller, manageable pieces.
-
-# Sample Problem: Sum of an Array
-
-<Exercise>
-<ExerciseQuestion>
-Write some code to find the sum of elements in an array using recursion instead of a linear search.
-</ExerciseQuestion>
-<ExerciseAnswer>
-Notice how the sum of an array is simply the sum of:
-- the last element of that array
-- the array without the last element
-```
-int array_sum(int arr[], int size) {
-    if (size == 0) {
-        return 0; // Base case: empty array has sum 0
-    } else {
-        return arr[size - 1] + array_sum(arr, size - 1); // Recursive case
-    }
-}
-```
-Note: The same idea can be achieved using the first element of the array instead of the last
-</ExerciseAnswer>
-</Exercise>
-
-
-
-# Tips for Using Recursion Wisely
-- Consider using recursion only when it simplifies the problem.
-- Always define a base case to terminate recursion. Identify these when planning your solution.
-- Ensure progress toward the base case in each recursive call.  
+[https://cses.fi/book/book.pdf#page=57](https://cses.fi/book/book.pdf#page=57)

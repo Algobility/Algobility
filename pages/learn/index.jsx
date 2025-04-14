@@ -30,7 +30,7 @@ export default function LearnIndex({ chaps }) {
     <>
       <NicePage selected='learn' title='Guides'>
         <div
-          className=' min-h-screen relative'
+          className=' min-h-screen relative mont'
           onKeyDownCapture={(e) => {
             if (e.key == 'Escape') onClose();
           }}
@@ -45,43 +45,46 @@ export default function LearnIndex({ chaps }) {
               >
                 View another rank
               </button>
+
               {isOpen && (
-                <div className='blur-bd fixed top-0 left-0 z-10 p-4 w-full h-full flex justify-center items-center '>
-                  <div className='scalefade w-4/5 gap-14 p-14 shadow-2xl h-4/5 mt-8 rounded-lg bg-backL grid grid-rows-2 grid-cols-3 relative'>
+                <div className='fixed blur-bd inset-0 z-10 p-4 w-full flex justify-center items-center bg-black bg-opacity-50 '>
+                  <div
+                    className=' relative w-5/6 bg-backL rounded-lg shadow-2xl p-8 md:p-14 mt-24 
+                    max-h-[80vh] grid gap-6 scalefade 
+                    grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-auto overflow-auto  '
+                  >
+                    {/* Rank Cards */}
                     {ranks.map((e) => (
-                      <div className='rounded-md p-8' key={e}>
-                        <h1 className='text-4xl text-bold mont border-l-2 border-primc pl-2'>{e}</h1>
-                        <p className='mont text-neutral-300 mt-4 text-sm'>{rankDescription[unpretty(e)]}</p>
+                      <div
+                        key={e}
+                        className='flex flex-col justify-between rounded-md p-4 sm:p-6 border border-neutral-500 bg-neutral-800'
+                      >
+                        <h1 className='text-lg sm:text-xl lg:text-3xl font-bold mont border-l-2 border-primc pl-2'>
+                          {e}
+                        </h1>
+                        <p className='mont text-neutral-300 mt-2 sm:mt-4 text-sm sm:text-base'>
+                          {rankDescription[unpretty(e)]}
+                        </p>
                         <button
                           onClick={() => {
                             setRank(e);
                             onClose();
                           }}
-                          className=' mont mt-6 bg-neutral-600 px-4 py-2 rounded-md hover:bg-primc transition-all'
+                          className='mont mt-4 bg-neutral-600 px-3 py-2 rounded-md hover:bg-primc transition-all w-full text-sm sm:text-base bottom-1'
                         >
-                          View this rank
+                          View
                         </button>
                       </div>
                     ))}
-                    <div
-                      onClick={onClose}
-                      className='absolute cursor-pointer hover:bg-neutral-600 top-8 right-10 mont scale-150 bg-neutral-700 rounded-full w-10 h-10 flex justify-center items-center'
-                    >
-                      {' '}
-                      X
-                    </div>
-                    {/* <div></div>
-                    <div className='flex justify-center items-center flex-col gap-8 mt-8 '>
-                      <div onClick={onClose} className='rounded-md px-4 py-2 transition-all italic text-center  mont'>
-                        You can view guides of other ranks but you will still have to compete in your rank.
-                      </div> 
-                      <button
+                    {/* Top bar with X and Close button */}
+                    <div className='col-span-full flex justify-center items-center gap-2 mb-2 w-full '>
+                      <div
                         onClick={onClose}
-                        className='rounded-md px-4 py-2 transition-all hover:bg-primc bg-neutral-600 mont'
+                        className='cursor-pointer hover:bg-neutral-600 bg-neutral-700 rounded-sm w-full h-8 flex justify-center items-center text-white text-lg'
                       >
                         Close
-                      </button>
-                    </div> */}
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
@@ -163,3 +166,4 @@ export async function getStaticProps({ params }) {
   const chaps = await getAllGuides();
   return { props: { chaps: chaps } };
 }
+

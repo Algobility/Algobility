@@ -1,0 +1,87 @@
+---
+
+title: 'Integer Average Subarrays'  
+date: '2025-03-21'  
+credits: 'Ahmad Bilal'  
+time: 3  
+mem: 256  
+tcIn: ["5\n1 2 3 4 5"]  
+tcOut: ["9"]
+
+---
+
+You are given an array of <Math inline>N</Math> integers, <Math inline>A[1]</Math>, <Math inline>A[2]</Math>, …, <Math inline>A[N]</Math>. Your task is to count the number of contiguous subarrays of <Math inline>A</Math> whose arithmetic mean is an integer. The arithmetic mean of a subarray <Math inline>A[L..R]</Math> is defined as  
+
+<Math block>\frac\{A[L] + A[L+1] + \cdots + A[R]\}\{R-L+1\}</Math> 
+
+Output the count of such subarrays modulo <Math inline>10^9 + 7</Math>.  
+
+# Input  
+
+- The first line contains an integer <Math inline>N</Math> (<Math inline>1 \leq N \leq 2000</Math>).  
+- The second line contains <Math inline>N</Math> integers <Math inline>A[1]</Math>, <Math inline>A[2]</Math>, …, <Math inline>A[N]</Math> (<Math inline>|A[i]| \leq 10^5</Math>).  
+
+# Output  
+
+Output a single integer, the number of contiguous subarrays whose arithmetic mean is an integer, modulo <Math inline>10^9 + 7</Math>.  
+
+# Example  
+
+Input:  
+```
+5
+1 2 3 4 5
+```
+
+Output:  
+```
+9
+```
+
+Explanation:  
+
+The subarrays with an integer average are:  
+
+<Math inline>[1]</Math> (average = <Math inline>1</Math>)  
+<Math inline>[2]</Math> (average = <Math inline>2</Math>)  
+<Math inline>[3]</Math> (average = <Math inline>3</Math>)  
+<Math inline>[4]</Math> (average = <Math inline>4</Math>)  
+<Math inline>[5]</Math> (average = <Math inline>5</Math>)  
+<Math inline>[1,2,3]</Math> (average = <Math inline>2</Math>)  
+<Math inline>[2,3,4]</Math> (average = <Math inline>3</Math>)  
+<Math inline>[3,4,5]</Math> (average = <Math inline>4</Math>)  
+<Math inline>[1,2,3,4,5]</Math> (average = <Math inline>3</Math>)  
+
+<Solution>  
+
+To determine when a subarray <Math inline>A[L..R]</Math> has an integer arithmetic mean, we start by defining the prefix sum array <Math inline>S</Math> as follows:  
+
+<Math inline>S[i] = A[1] + A[2] + \cdots + A[i]</Math>, with <Math inline>S[0] = 0</Math>.  
+
+Then, the sum of a subarray <Math inline>A[L..R]</Math> is  
+
+<Math inline>S[R] - S[L-1]</Math>.  
+
+The arithmetic mean of <Math inline>A[L..R]</Math> is an integer if and only if  
+
+<Math block>\frac\{S[R] - S[L-1]\}\{R-L+1\}</Math>  
+
+is an integer. This condition holds exactly when  
+
+<Math inline>S[R] - S[L-1]</Math> is divisible by <Math inline>(R-L+1)</Math>.  
+
+A direct approach is to iterate over all possible pairs <Math inline>(L, R)</Math> and check the divisibility condition. The steps are:  
+
+1. Compute the prefix sums <Math inline>S[0..N]</Math> in <Math inline>O(N)</Math> time.  
+2. For every <Math inline>L</Math> from <Math inline>1</Math> to <Math inline>N</Math> and every <Math inline>R</Math> from <Math inline>L</Math> to <Math inline>N</Math>, compute:  
+
+   <Math inline>sub = S[R] - S[L-1]</Math>  
+
+   and check if <Math inline>sub \mod (R-L+1) == 0</Math>.  
+3. Maintain a counter for valid subarrays and output the counter modulo <Math inline>10^9 + 7</Math>.  
+
+Since there are <Math inline>O(N^2)</Math> subarrays and <Math inline>N</Math> can be as large as <Math inline>2000</Math>, this solution is feasible within the problem constraints.  
+
+Edge cases such as negative numbers are correctly handled by the prefix sum formulation.  
+
+</Solution>  

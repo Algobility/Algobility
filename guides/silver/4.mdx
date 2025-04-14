@@ -1,97 +1,128 @@
 ---
-title: 'Brute force'
-description: 'Searching all possible answers to find the correct one'
-date: '2023-11-05'
+title: 'Coordinate Geometry and Pairs'
+description: 'Learn how to tackle basic coordinate geometry questions'
+date: '2022-01-01'
 credits: Ahmad Bilal
 practicable: true
 ---
 
+Coordinate geometry is a fundamental concept in mathematics that involves understanding the relationships between points on a plane using their numerical coordinates. In competitive programming, coordinate geometry is often used to solve problems involving points, lines, and shapes in a two-dimensional space. This guide will walk you through the basics of coordinate geometry using C++ and show you how to tackle common problems like finding the farthest two points, calculating the area of a rectangle, and checking for collision between rectangles.
 
-# Finding pairs
-Brute force is an invaluable technique that can be used to solve most bronze level problems. It involves searching all possible answers for the correct one. Consider the following problem
 
-*Given an array of numbers, output the indicies of the two distinct elements whose difference is exactly 10*
+# Using std::pair for Coordinates
 
-To solve this problem its useful to first understand how nested loops can be used to iterate over all possible pairs of numbers. Take a look at the following code:
-```cpp
-for (int i = 0; i < n; i++){
-  for (int j = 0; j < n; j++){
-    //for every iteration here, the values of i and j will be every possible 2-number permutation of 0...n
-  }
-}
-```
-On the first iteration of the outer loop, `i` is set to 0. The inner loop runs and the value of `j` ranges between 0 and `n` whilst `i` is locked in at 0. On the second iteration of the outer loop, `i` is set to 1 and the inner loop sets `j` to every value between 0 and `n`. This way, for each iteration of the inner loop, the values of i and j  form every possible pair of numbers between 0 and `n`. More specifically, the values of i and j when `n` is set to 3 look like the following:
-
-- 0,0
-- 0,1
-- 0,2
-- 1,0
-- 1,1
-- 1,2
-- 2,0
-- 2,1
-- 2,2
-
-This is known as 'brute-forcing' each pair of numbers.
-
-To solve the original problem we can brute force pairs of possible indicies in the array and check the corresponding array elements. This will, in effect, check every pair of array elements. When checking a pair of elements, we can compute their difference and if it is 10, we can output the pair of indicies. 
-
+In C++, the `std::pair` data type can be used to represent a coordinate point neatly. It's a convenient way to store and manipulate coordinates together. Here's an example of how you can use it:
 
 ```cpp
-for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
-        //for every possible i and j, check wheather the elements at those indicies have a diff of 10
-        if (abs(arr[i] - arr[j]) == 10) {      //using abs() to get absolute value distance
-            cout << i << ' ' << j; //if so cout the indicies with a space in between
-            return 0; //end the program by terminating main so we don't continue the search
-        }
-    }
-}
-```
-
-
-## Farthest Two Points
-
-Consider the following question:
-
-*Given an array of coordinates, the problem of finding the farthest two points involves calculating the distances between all pairs of points and then selecting the maximum distance.*
-
-
-We can use our knowledge of coordinate geometry along with brute forcing each pair of array elements.
-
-```cpp
-#include <bits/stdc++.h> 
+#include <iostream>
+#include <utility> // Include the utility header for std::pair
 
 using namespace std;
 
-int distance(pair<int, int> A, pair<int, int> B) {   //a function that returns the distance between two points
-    int dx = B.first - A.first;
-    int dy = B.second - A.second;
-    return sqrt(dx * dx + dy * dy);
-}
-
-int farthestDistance(pair<int, int> points[], int n) {
-    int maxDist = 0.0;
-    for (int i = 0; i < n; ++i) {
-        for (int j = i + 1; j < n; ++j) {
-            int dist = distance(points[i], points[j]);
-            maxDist = max(maxDist, dist);
-        }
-    }
-    return maxDist;
-}
-
 int main() {
-    pair<int, int> points[] = {make_pair(1, 2), make_pair(4, 6), make_pair(7, 8)};
-    int n = sizeof(points) / sizeof(points[0]);
-
-    int maxDist = farthestDistance(points, n);
-    cout << "Farthest distance between points: " << maxDist << endl;
+    pair<int, int> point1 = make_pair(3, 5);
+    cout << "Point 1: (" << point1.first << ", " << point1.second << ")" << endl;
 
     return 0;
 }
 ```
 
-# Additional resources
-To learn more about brute force, you may take a look at the following resource:
-- <a href='https://cses.fi/book/book.pdf#page=57'>https://cses.fi/book/book.pdf#page=57</a>
+# Distance between Two Points
+
+To calculate the distance between two points `A(x1, y1)` and `B(x2, y2)`, you can use the distance formula:
+
+```text
+distance = sqrt((x2 - x1)^2 + (y2 - y1)^2)
+```
+
+This formula is based on the Pythagorean theorem.
+
+```cpp
+#include <iostream>
+#include <cmath> // Include the math header for sqrt
+#include <utility>
+
+using namespace std;
+
+double distance(pair<int, int> A, pair<int, int> B) {
+    int dx = B.first - A.first;
+    int dy = B.second - A.second;
+    return sqrt(dx * dx + dy * dy);
+}
+
+int main() {
+    pair<int, int> point1 = make_pair(1, 2);
+    pair<int, int> point2 = make_pair(4, 6);
+
+    double dist = distance(point1, point2);
+    cout << "Distance between points: " << dist << endl;
+
+    return 0;
+}
+```
+
+
+# Area of a Rectangle
+
+Given coordinates of two opposite corners `(x1, y1)` and `(x2, y2)` of a rectangle, you can calculate its area using the formula:
+
+```cpp
+area = abs(x2 - x1) * abs(y2 - y1)
+```
+
+```cpp
+#include <iostream>
+#include <cmath>
+#include <utility>
+
+using namespace std;
+
+int rectangleArea(pair<int, int> A, pair<int, int> B) {
+    int width = abs(B.first - A.first);
+    int height = abs(B.second - A.second);
+    return width * height;
+}
+
+int main() {
+    pair<int, int> corner1 = make_pair(1, 2);
+    pair<int, int> corner2 = make_pair(5, 5);
+
+    int area = rectangleArea(corner1, corner2);
+    cout << "Rectangle area: " << area << endl;
+
+    return 0;
+}
+```
+
+# Checking Rectangle Collision
+
+To check if two rectangles are colliding, compare their x and y ranges. If the x-range and y-range of one rectangle overlap with the x-range and y-range of the other rectangle, then they are colliding.
+
+```cpp
+#include <iostream>
+#include <cmath>
+#include <utility>
+
+using namespace std;
+
+bool isColliding(pair<int, int> A1, pair<int, int> A2, pair<int, int> B1, pair<int, int> B2) {
+    bool xOverlap = (A1.first <= B2.first && B1.first <= A2.first);
+    bool yOverlap = (A1.second <= B2.second && B1.second <= A2.second);
+    return xOverlap && yOverlap;
+}
+
+int main() {
+    pair<int, int> rect1A = make_pair(1, 2);
+    pair<int, int> rect1B = make_pair(4, 5);
+    pair<int, int> rect2A = make_pair(3, 4);
+    pair<int, int> rect2B = make_pair(6, 7);
+
+    bool colliding = isColliding(rect1A, rect1B, rect2A, rect2B);
+    if (colliding)
+        cout << "Rectangles are colliding." << endl;
+    else
+        cout << "Rectangles are not colliding." << endl;
+
+    return 0;
+}
+```

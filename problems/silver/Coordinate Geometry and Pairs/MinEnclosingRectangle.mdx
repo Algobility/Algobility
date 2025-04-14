@@ -1,0 +1,74 @@
+---
+title: 'Maximum Triangle Area'  
+date: '2025-03-28'  
+credits: 'Ahmad Bilal'  
+time: 4  
+mem: 512  
+tcIn: ["3\n0 0\n10 0\n0 10", "4\n0 0\n10 0\n10 10\n0 10", "5\n0 0\n4 0\n4 3\n2 5\n0 3"]  
+tcOut: ["50.000000", "50.000000", "10.000000"]  
+---
+
+# Maximum Triangle Area
+
+Given a convex polygon with <Math inline>n</Math> vertices provided in order (either clockwise or counterclockwise), compute the maximum area of a triangle formed by any three vertices of the polygon. The output should be formatted to six decimal places.
+
+# Input
+
+- The first line contains an integer <Math inline>n</Math> (<Math inline>3 \leq n \leq 10^5</Math>), the number of vertices of the convex polygon.  
+- Each of the next <Math inline>n</Math> lines contains two numbers <Math inline>x</Math> and <Math inline>y</Math> (<Math inline>-10^4 \leq x,y \leq 10^4</Math>), representing the coordinates of a vertex. The vertices are given in order along the polygon's boundary.  
+
+# Output
+
+Print a single floating-point number: the maximum area of a triangle formed by any three vertices of the polygon. The answer should have an absolute or relative error of at most <Math inline>10^\{-6\}</Math>.
+
+# Example
+
+Input:  
+```
+3
+0 0
+10 0
+0 10
+```
+
+Output:  
+```
+50.000000
+```
+
+# Solution
+
+<Solution>
+
+# Approach
+
+The problem requires calculating the maximum area of a triangle formed by three vertices of a convex polygon efficiently. A direct approach would involve examining all possible triples, but this would take <Math inline>O(n^3)</Math> time, which is too slow for large values of <Math inline>n</Math>. Instead, we can use a more efficient approach that runs in <Math inline>O(n^2)</Math> time.
+
+# Algorithm
+
+1. Iterate through each edge of the polygon, treating it as a base for potential triangles.
+2. For each base, find the third vertex that maximizes the area of the triangle:
+   - Fix two points <Math inline>A</Math> and <Math inline>B</Math> as the endpoints of the base.  
+   - Using a third point <Math inline>C</Math>, calculate the area of the triangle using the formula:  
+
+     <Math inline>\text\{Area\} = \frac\{1\}\{2\} \times \left| x_A (y_B - y_C) + x_B (y_C - y_A) + x_C (y_A - y_B) \right|</Math>
+
+   - Move the third point along the polygon boundary in order, and keep track of the maximum area for this base.  
+   - The third point can be efficiently updated by moving it forward as long as the area increases. Once the area decreases, stop and continue with the next base.  
+   - This ensures each vertex is considered at most twice, giving a total complexity of <Math inline>O(n^2)</Math>.
+3. Output the maximum area found.  
+
+This approach efficiently computes the maximum area by avoiding unnecessary calculations and leveraging the convexity of the polygon.  
+
+# Complexity Analysis
+
+- Each vertex is examined in a linear pass for each base, resulting in <Math inline>O(n^2)</Math> complexity.  
+- This is fast enough for <Math inline>n \leq 10^5</Math>.
+
+# Implementation Outline
+
+1. Read the polygon vertices.  
+2. For each pair of consecutive vertices, determine the maximum area of a triangle using a third vertex.  
+3. Track and output the maximum area found, formatted to six decimal places.  
+
+</Solution>

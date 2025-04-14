@@ -1,124 +1,115 @@
 ---
-title: 'Linear Data Structures'
-description: 'Different types of linear data structures and when to use them'
-date: '2022-01-01'
+title: 'Time Complexity'
+description: 'Analyze algorithm efficiencies'
+date: '2022-11-05'
 credits: Ahmad Bilal
-number: 2
 ---
 
-Data strucutres are different ways to organize data in a computer. You have already seen the most basic data structure in C++, the array. However, there are many other data structures that allow you to store multiple values in different ways. They each have their tradeoffs. Some are faster to search through while others take less space. This guide goes through the most used 'linear' data structures, or the data structures that store data in a 1D sequence.
+The efficiency of an algorithm can be measured in two ways. How long it takes to execute and how much memory it consumes. Both these measures can be described in what is known as 'Big-O' notation. Big-O notation describes how long/how much memory an algorithm takes in the worst case, in terms of the input size. 
 
-# Dynamic Arrays (Vectors in C++)
+Let's first take a look at analyzing the time an algorithm takes.
 
-A vector is a powerful data strucutres that automatically adjusts its size based on the number of elements it holds. It's like having an array that can grow or shrink as needed. This flexibility makes vectors incredibly useful for scenarios where the number of elements may change over time.
+# Steps
+For the sake of explanation, let us cosider all statements except loops (and function calls which may in turn execute loops) to be a single step. The following code contains six steps.
 
-## Creating Vectors
-
-Creating Vectors:
-You can create a vector and initialize it with elements of a specific data type using the following syntax:
-
-```
-vector<int> numbers = {1, 2, 3, 4, 5};
-```
-
-Here are some alternate methods of creating vectors:
-
-```
-vector<int> a;                                       // empty vector of ints
-vector<int> b (5, 10);                               // five ints with value 10
-vector<int> c (b.begin(),b.end());                   // iterating through second
-vector<int> d (c);                                   // copy of c
+```cpp
+int x;  //1 step
+x = 10; //2 steps
+x = 40 * (x+1); //3 steps
+if(x > 40){ //4 steps
+    x = 40; //5 steps
+}
+cout << x; //6 steps
 ```
 
-## Adding Elements:
+{/* # Big O notation
+Big O notation describes the number of steps an algorithm takes, ignoring constant factors. This means if some code takes <Math inline>6*n</Math> steps, it would not be considered <Math inline>O(6n)</Math> but rather just <Math inline>O(n)</Math>. Code that takes 100 steps would simply be considered <Math inline>O(1)</Math>. Code that takes <Math inline>6n^2 + 100</Math> steps would be considered <Math inline>O(n^2)</Math>. Code that takes <Math inline>(n+1)^3 + 4n^2 - 100</Math> steps would be considered <Math inline>O(n^3)</Math>. Notice how it is only the variable and its largest power that matter. */}
 
-You can add elements to the end of a vector using the push_back() function. This function appends a new element to the end of a vector:
+# Constant-time algorithms
+Algorithms that take a constant number of steps are written as <Math inline>O(1)</Math> in Big O notation.
 
-```
-vector<string> names;
-names.push_back("Alice");
-names.push_back("Bob");
-```
-
-Inserting elements like so is efficient: It **usually** takes around O(1) time (More formally, it is said to have an amortized time complexity of O(1)).
-
-## Accessing Elements:
-
-Accessing elements is similar to arrays using the index notation:
-
-```
-vector<int> numbers = {1, 2, 3, 4, 5};
-numbers[2] = 99;
-cout << "Second number: " << numbers[1] << endl;
+```cpp
+int abc = 10;
+int inp = 0;
+cin >> inp; 
+abc = 100; 
+cout << abc;
+if(abc > 50) abc = 400;
 ```
 
-This operation has a time complexity of O(1)
+The above code would be considered <Math inline>O(1)</Math> as it only takes a constant (i.e. 6) steps. The number of steps do not vary with the input value.
 
-## Removing Elements:
+# Linear-time algorithms
+A loop that runs `n` times is considered to take <Math inline>O(n)</Math> time to execute. An important thing to note is that in Big O notation constant factors are ignored. Thus, two loops that run `n` times or one loop that runs `n*5` times would **both** still be considered <Math inline>O(n)</Math>. In other words, code that takes <Math inline>k*O(n)</Math> is always considered to simply take <Math inline>O(n)</Math> for any constant k.
 
-Remove elements from the end using the pop_back() function:
+The following loops are all <Math inline>O(n)</Math>
 
-```
-vector<int> numbers = {1, 2, 3, 4, 5};
-names.pop_back();
-cout << numbers.size()
-```
-
-This is also an O(1) operation
-
-## Inserting/Deleting Elements at specific positions
-
-To insert an element at a specific position within a vector, you can use the insert() function. This function takes two arguments: an iterator pointing to the position where the new element should be inserted and the value of the element to be inserted.
-
-An **iterator** is like a pointer that helps you traverse through the elements of a container. It supports many useful functions and works on almost any standard-library container.
-
-Here's how you can use the `insert()` and `erase()` function to insert an element into the middle of a vector:
-
-```
-#include <iostream>
-#include <vector>
-using namespace std;
-
-int main() {
-    vector<int> numbers = {10, 20, 30, 40, 50};
-    vector<int>::iterator iter = numbers.begin(); // Create iterater pointing to the first element of numbers
-    iter = iter + 2; //When you add a constant to an iterator, the iterator traverses the array. The iterator now points to the third element in the array
-    numbers.insert(iter, 25); // Insert 25 at the third position
-    numbers.erase(iter+2)   //deletes the element at the fifth position
-    return 0;
+```cpp
+for (int i = 1; i <= n*500; i++) {
+	// constant time code here
+}
+int i = 0;
+while (i < 4+(n+32)*6) {
+	// constant time code here
+	i++;
 }
 ```
 
-## Traversing a Vector with Iterators
+# Nested loops
+Nested loops are considered to take <Math inline>O(nm)</Math> where <Math inline>n</Math> is the number of iterations of the outer loop and <Math inline>m</Math> is the number of iterations of the inner loop. Again, since constant factors are ignored, the following code takes <Math inline>O(nm)</Math>
 
-While a vector can be traversed just like an array like so:
-
-```
-for(int i = 0; i < myVector.size(); i++){
-    cout << myVector[i];
+```cpp
+for (int i = 1; i <= n+5; i++) {
+	for (int j = 1; j <= m*2; j++) {
+		// constant time code here
+	}
 }
 ```
 
-Iterators provide an alternate way to traverse a vector (using the `*` syntax to obtain the value that the iterator is pointing to):
+The following code takes <Math inline>O(n^2)</Math> time
 
-```
-for (vector<string>::iterator it = names.begin(); it != names.end(); ++it) {
-    cout << *it << " ";
+```cpp
+for (int i = 1; i <= n; i++) {
+	for (int j = 1; j <= n; j++) {
+		// constant time code here
+	}
 }
 ```
 
-The reason this is useful is that iterators work with all sorts of containers. As we are about to see, not all containers use the same square-bracket syntax to access elements and in some cases iterators are used by neccessity. However, iterators also make for loops extremely long to write out. C++ offers a handy shorthand for the above code
+In Big O notation only the highest power of each variable is considered. The following code seems to take <Math inline>O(n + n^2)</Math> time but we also consider it to be <Math inline>O(n)</Math> in Big-O notation.
 
+```cpp
+for (int i = 1; i <= n; i++) {
+	for (int j = 1; j <= n; j++) {
+		// constant time code here
+	}
+}
+for (int j = 1; j <= n; j++) {
+		// constant time code here
+	}
 ```
-for(const string name: names){
-    cout << *name << endl;
+
+The following is said to take <Math inline>O(n + m)</Math> time
+```cpp
+for (int j = 1; j <= n; j++) {
+    // constant time code here
+}
+for (int j = 1; j <= m; j++) {
+    // constant time code here
 }
 ```
 
-Or to the same effect:
 
-```
-for(const string &name: names){
-    cout << name << endl;
-}
-```
+# Why the hand-waviness?
+Constant factors and lower powers of variables are ignored because Big-O notation attempts to describe how long an algorithm takes as the input size (i.e. your `n`'s and `m`'s) becomes extremely large. For computers, the difference between <Math inline>O(n^2)</Math> and <Math inline>2 * O(n^2)</Math> is insignificant compared to the difference between <Math inline>O(n^2)</Math> and <Math inline>O(n)</Math>. If `n` is 1,000,000, the difference between <Math inline>O(n^2)</Math> and <Math inline>2 * O(n^2)</Math> would only be a factor of 2 but the difference between <Math inline>O(n^2)</Math> and <Math inline>O(n)</Math> would be a factor of 1,000,00! Since computers are incredibly fast at performing operations, we only really care about the time algorithms take when the number of operations is extremely large (over a few billion). Therefore, it is reasonable to worry more about how the processing time of an algorithm grows as you increase the input (does it grow exponentially, linearly, etc.) rather than the exact number of steps. 
+
+
+{/* # Time complexity of built-in functions and data stuctures
+
+- `sort()` takes <Math inline>O(nlogn)</Math> time
+- accessing array and vector elements takes <Math inline>O(1)</Math>
+- inserting/removing elements from a vector using `push_back()` or `pop_back()` takes <Math inline>O(1)</Math>
+- inserting/removing elements from a vector using `insert()`  and `erase()` takes <Math inline>O(n)</Math>
+- traversing a vector/array takes <Math inline>O(n)</Math> time
+- inserting/acceessing enteries in an unordered_map and unordered_set takes <Math inline>O(1)</Math>
+- inserting/accessing enteries in an ordered map or ordered set takes <Math inline>O(logn)</Math> */}

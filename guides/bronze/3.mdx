@@ -1,14 +1,15 @@
 ---
 title: 'Strings and Character Representation'
-description: 'Work with text with ease'
+description: 'Working with text'
 date: '2022-01-01'
 credits: Ahmad Bilal
 practicable: true
 ---
 
 # Character sets
-All modern computers store data in their memory (RAM) as sequences of 0s and 1s. Boolean variables can easily be stored in memory by translating them into 0s and 1s with 0 representing false and 1 representing true. Mathematicians have already devised a system of storing decimal numbers into sequences of 0s and 1s through a number system known as **binary**. However, charcaters are a bit harder to store in 0s and 1s. They are usually converted into a corresponding number and then stored as 0s and 1s using binary. However, this requires us to plan out a mapping of every character and a unique decimal number that will be used to represent that character. Such mappings are known as character sets. One major example is the UNICODE character set (some version of UNICODE is generally used by every computer). Below are the main letters and their corresponding numbers in UNICODE.
+All modern computers store data in their memory (RAM) as sequences of 0s and 1s. Boolean variables can easily be stored in memory by translating them into 0s and 1s with 0 representing false and 1 representing true. Mathematicians have already devised a system of storing decimal numbers into sequences of 0s and 1s through a number system known as **binary**. However, charcaters are a bit harder to store in 0s and 1s. They are usually converted into a corresponding number and then stored as 0s and 1s using binary. However, this requires us to plan out a mapping of every character and a unique decimal number that will be used to represent that character. Such mappings are known as character sets. One major example is the UNICODE character set (some version of UNICODE is generally used by every computer). Below are some example characters and their corresponding numerical values in UNICODE.
 
+<Figure src='/guide_images/unicode.png' />
 
 In C++, when we do arithmatic on characters, the corresponding number (the actual value stored in memory) is changed. This is why if we try to add the number 2 to the character `a`, we get `c`;
 
@@ -46,7 +47,7 @@ Write a function that, given a character, returns the next character in lexicogr
 
 </ExerciseQuestion>
 <ExerciseAnswer>
-```
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -70,11 +71,14 @@ Strings are a special data type which we have not discussed yet. They are used t
 string myString = "Hello World";
 ```
 
-Under the hood, strings are simply arrays of characters. That means that while a string variable looks and feels like a regular variable (and should be used just like one), it can be used with square-bracket notation. 
+Note the use of double quotation marks rather than single quotation marks to denote the use of a string rather than a character.
+
+Under the hood, strings are simply arrays of characters. That means that while a string variable can be used like a regular variable, it can also be used with square-bracket notation (if a certain character from the string needs to be extracted).
 
 ```cpp
 string myString = "Hello World";
-cout << myString << endl;   //outputs 'Hello World'
+cout << myString << endl;   //outputs Hello World
 cout << myString[0] << endl;   //outputs 'h' (the first letter in the string)
 cout << myString[1] << endl;   //outputs 'e' (the second letter in the string)
 ```
+

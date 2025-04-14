@@ -1,15 +1,205 @@
 ---
-title: Spanning Trees
+title: Topoligical Sort
 date: '2022-01-01'
+description: A way to linearly order DAG vertices
 credits: Ahmad Bilal
 ---
 
-# Motivation
+# Motivation  
 
-There is no Motivation
+Suppose we have a set of `n` tasks, where some tasks must be completed before others. Our goal is to find an ordering of tasks that respects these dependencies.  
 
-# Code
+For example, consider the following dependency list:  
+
+- Task `A` must be completed before task `B`.  
+- Task `A` must be completed before task `C`.  
+- Task `B` must be completed before task `D`.  
+- Task `C` must be completed before task `D`.  
+
+A valid order to complete the tasks would be `A → B → C → D` or `A → C → B → D`.  
+
+This problem can be represented as a **directed graph**, where each node is a task, and a directed edge `u → v` means `u` must be completed before `v`. The solution to this problem is called a **topological sorting** of the graph.  
+
+# Definition  
+
+A **topological sort** of a directed graph is an ordering of its nodes such that for every directed edge `u → v`, node `u` appears **before** node `v` in the ordering.  
+
+A valid topological sort exists **only if the graph has no cycles**. If there is a cycle, at least one task depends on itself indirectly, making it impossible to complete all tasks.  
+
+For example, in the following directed graph:  
 
 ```
-int arr[10] = [0,1,0,4]
+    A → B → D  
+    ↓    ↘  
+    C →  E  
 ```
+
+One valid topological order is: `A → C → B → E → D`. Another valid order is `A → B → C → E → D`.  
+
+However, if we introduce an edge `D → A`, we get a cycle (`A → B → D → A`), and no valid topological order exists.  
+
+# Approaches to Topological Sorting  
+
+There are two main algorithms for computing a topological sort:  
+
+1. **Kahn’s Algorithm (BFS-based approach)** – Uses an **in-degree** array to iteratively select nodes with no incoming edges.  
+2. **DFS-based approach** – Uses a depth-first search and stores nodes in reverse postorder.  
+
+Both methods produce a valid topological ordering if the graph is acyclic. If the graph has a cycle, neither method can produce a valid ordering.
+
+# Kahn’s Algorithm (BFS-Based Approach)  
+
+Kahn’s algorithm is a method to generate a **topological ordering** of a **directed acyclic graph (DAG)** using a **breadth-first search (BFS) approach**. Instead of processing nodes in an arbitrary order, it ensures that each node appears **only after all its prerequisites** have been processed.  
+
+# Core Idea  
+
+Every node in the graph has an **in-degree**, which represents the number of edges pointing **toward** it. If a node has an in-degree of `0`, it means **no other node depends on it**, so it can be safely placed at the beginning of the topological order.  
+
+Kahn’s algorithm works by repeatedly selecting nodes with `in-degree = 0`, placing them in the topological order, and reducing the in-degree of their neighbors. This continues until all nodes are processed.  
+
+# Step-by-Step Example  
+
+Consider the following directed graph:  
+
+```
+    A → B → D  
+    ↓    ↘  
+    C →  E  
+```  
+
+### Step 1: Compute In-Degrees  
+
+First, we calculate the **in-degree** of each node by counting how many edges point toward it:  
+
+```
+A: 0  
+B: 1 (A → B)  
+C: 1 (A → C)  
+D: 1 (B → D)  
+E: 2 (C → E, B → E)  
+```
+
+### Step 2: Initialize the Queue  
+
+We place all nodes with `in-degree = 0` into a queue since they have no dependencies and can be processed immediately.  
+
+**Queue:** `[A]`  
+
+### Step 3: Process Nodes  
+
+#### Process `A`:  
+- Add `A` to the topological order.  
+- Reduce the in-degree of `B` and `C` (since `A → B` and `A → C`).  
+
+Updated in-degrees:  
+```
+B: 0  
+C: 0  
+D: 1  
+E: 2  
+```
+
+**Queue:** `[B, C]`  
+**Order:** `[A]`  
+
+#### Process `B`:  
+- Add `B` to the order.  
+- Reduce the in-degree of `D` and `E` (since `B → D` and `B → E`).  
+
+Updated in-degrees:  
+```
+C: 0  
+D: 0  
+E: 1  
+```
+
+**Queue:** `[C, D]`  
+**Order:** `[A, B]`  
+
+#### Process `C`:  
+- Add `C` to the order.  
+- Reduce the in-degree of `E` (since `C → E`).  
+
+Updated in-degrees:  
+```
+D: 0  
+E: 0  
+```
+
+**Queue:** `[D, E]`  
+**Order:** `[A, B, C]`  
+
+#### Process `D`:  
+- Add `D` to the order.  
+- `D` has no outgoing edges, so nothing changes.  
+
+**Queue:** `[E]`  
+**Order:** `[A, B, C, D]`  
+
+#### Process `E`:  
+- Add `E` to the order.  
+- `E` has no outgoing edges.  
+
+**Queue:** `[]`  
+**Order:** `[A, B, C, D, E]`  
+
+Since all nodes are processed, the final **topological order** is:  
+
+```
+A → B → C → D → E
+```
+
+# General Algorithm  
+
+1. **Compute the in-degree** of each node.  
+2. **Add all nodes with in-degree `0`** to a queue.  
+3. **Process nodes one by one** from the queue:  
+   - Add the node to the topological order.  
+   - Reduce the in-degree of all its neighbors.  
+   - If any neighbor’s in-degree becomes `0`, add it to the queue.  
+4. **If all nodes are processed, we have a valid order**.  
+
+If there are still nodes left unprocessed, this means the graph contains a cycle, and **a topological order does not exist**.  
+
+# Implementation  
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+const int N = 100005;
+vector<int> adj[N];
+int in_degree[N];
+
+vector<int> topological_sort(int n) {
+    queue<int> q;
+    vector<int> order;
+
+    for (int i = 0; i < n; i++) {
+        if (in_degree[i] == 0) {
+            q.push(i);
+        }
+    }
+
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        order.push_back(node);
+
+        for (int neighbor : adj[node]) {
+            in_degree[neighbor]--;
+            if (in_degree[neighbor] == 0) {
+                q.push(neighbor);
+            }
+        }
+    }
+
+    if (order.size() < n) {
+        return {}; // Cycle detected
+    }
+
+    return order;
+}
+```
+
+This implementation ensures that nodes appear **only after their dependencies**, making it an efficient and reliable method for **topological sorting**.

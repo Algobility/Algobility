@@ -1,149 +1,124 @@
 ---
-title: 'Maps and Sets'
-description: 'Advanced data structures'
+title: 'Linear Data Structures'
+description: 'Different types of linear data structures and when to use them'
 date: '2022-01-01'
 credits: Ahmad Bilal
-number: 4
+number: 2
 ---
 
-# Unordered Maps
+Data strucutres are different ways to organize data in a computer. You have already seen the most basic data structure in C++, the array. However, there are many other data structures that allow you to store multiple values in different ways. They each have their tradeoffs. Some are faster to search through while others take less space. This guide goes through the most used 'linear' data structures, or the data structures that store data in a 1D sequence.
 
-Unordered Maps are data strucutres which can store data in key-value pairs. Instead of storing values in a 1D sequence, unordered maps store entries in a 2 column table-like structure. Each entry consists of a unique key (of any data type) and a corresponding value (of any data type). The value corresponding to a specific key can be looked up in O(1) time. Under the hood, this time complexity is made possible by something known as a hash map. However, the inner workings of hash maps is beyond the scope of this guide.
+# Dynamic Arrays (Vectors in C++)
 
-# Creating an Unordered Map
+A vector is a powerful data strucutres that automatically adjusts its size based on the number of elements it holds. It's like having an array that can grow or shrink as needed. This flexibility makes vectors incredibly useful for scenarios where the number of elements may change over time.
 
-To declare an unordered map, use the following syntax:
+## Creating Vectors
 
-```
-unordered_map<KeyType, ValueType> mapName;
-```
+You can create a vector and initialize it with elements of a specific data type using the following syntax:
 
-Here, KeyType is the type of the keys, and ValueType is the type of the associated values.
-
-Example:
-
-```
-unordered_map<string, int> studentMarks;        //this unorderd map stores the marks of each student on a test
+```cpp
+vector<int> numbers = {1, 2, 3, 4, 5};
 ```
 
-# Inserting and Accessing Elements
+Here are some alternate methods of creating vectors:
 
-You can access and insert elements in a map using their keys with square-bracket notation:
-
-```
-studentMarks["Bill"] = 98;  //inserting into the unordered map
-int marks = studentMarks["Bill"]; // retrieving the marks of bill
-```
-
-# Removing Elements
-
-To remove elements from a map, use the erase method with the key:
-
-```
-studentMarks.erase("Bill"); // Removes entry with key "Bill"
+```cpp
+vector<int> a;                                       // empty vector of ints
+vector<int> b (5, 10);                               // five ints with value 10
+vector<int> c (b.begin(),b.end());                   // iterating through second
+vector<int> d (c);                                   // copy of c
 ```
 
-# Iterating Over a Map
+## Adding Elements:
 
-You can iterate over a map using iterators which point to a `pair` for each entry. The first value in the pair is the entry key while the second value is the entry value:
+You can add elements to the end of a vector using the `push_back()` function. This function appends a new element to the end of a vector:
 
-```
-for (unorderd_map<string, int>::iterator iter = studentMarks.begin(); iter != studentMarks.end(); ++iter) {
-cout << "Student Name: " << iter->first << ", Marks: " << iter->second << endl;
-}
-```
-
-Alteratively use the shorthand
-
-```
-for(auto &x:studentMarks){
-    //Do something with x.first or x.second
-}
+```cpp
+vector<string> names;
+names.push_back("Alice");
+names.push_back("Bob");
 ```
 
-# Map Size and Clearing
+Inserting elements like so is efficient: It usually takes around <Math inline>O(1)</Math> time (More formally, it is said to have an amortized time complexity of <Math inline>O(1)</Math>).
 
-To get the size of a map, use the size method:
+## Accessing Elements:
 
-```
-int size = myMap.size();
-```
+Accessing elements is similar to arrays using the index notation:
 
-To empty out a map, use the clear method:
-
-```
-myMap.clear();
+```cpp
+vector<int> numbers = {1, 2, 3, 4, 5};
+numbers[2] = 99;
+cout << "Second number: " << numbers[1] << endl;
 ```
 
-# Time Complexity Summary
+This operation has a time complexity of <Math inline>O(1)</Math>
 
-Here is a summary of the time complexity of all the above operations
+## Removing Elements:
 
-- Insertion: O(1) on average
-- Access/Update: O(1) on average
-- Deletion: O(1) on average
+Remove elements from the end using the `pop_back() ` function:
 
-# Unorderd map efficiency
-
-The O(1) access time complexity of hash maps makes them quite efficient for many use cases. For example, a hash map is almost always better than using an array of pairs if you have to search for corresponding numbers. This is because, with an array of pairs you would have to search the entire array for the correct pair whilst a hash map allows you to look up, the corresponding value of a certain key in O(1) time.
-
-# Ordered Maps
-
-Ordered maps, like `unordered_map`s are used to store data in key-value pairs. However key-value pairs are automatically sorted in ordered maps (by default, in ascending order of keys). This makes the map slightly slower in terms of inserting and accessing elements (usually O(log n) where n is the size of the map). Under the hood, these use a binary search tree which, again, is beyond the scope of this guide. Ordered Maps have the same functions with the only visible difference being that when iterating over an ordered map, the entries are iterated in order.
-
+```cpp
+vector<int> numbers = {1, 2, 3, 4, 5};
+names.pop_back();
+cout << numbers.size()
 ```
-#include <bits/stdc++.h>
+
+This is also an <Math inline>O(1)</Math> operation
+
+## Inserting/Deleting Elements at specific positions
+
+To insert an element at a specific position within a vector, you can use the `insert()` function. This function takes two arguments: an iterator pointing to the position where the new element should be inserted and the value of the element to be inserted.
+
+An **iterator** is like a pointer that helps you traverse through the elements of a container. It supports many useful functions and works on almost any standard-library container.
+
+Here's how you can use the `insert()` and `erase()` function to insert an element into the middle of a vector:
+
+```cpp
+#include <iostream>
+#include <vector>
 using namespace std;
 
-int main(){
-    map<string, int> myMap;
-    myMap["aaa"] = 4;
-    myMap["ccc"] = 8;
-    myMap["bbb"] = 12;
-    for(const auto &x:myMap){
-        cout << x.second;
-    }
+int main() {
+    vector<int> numbers = {10, 20, 30, 40, 50};
+    vector<int>::iterator iter = numbers.begin(); // Create iterater pointing to the first element of numbers
+    iter = iter + 2; //When you add a constant to an iterator, the iterator traverses the array. The iterator now points to the third element in the array
+    numbers.insert(iter, 25); // Insert 25 at the third position
+    numbers.erase(iter+2)   //deletes the element at the fifth position
+    return 0;
 }
 ```
 
-The above code spits out the following
 
-```
-4
-12
-8
-```
+## Traversing a Vector with Iterators
 
-# Unordered Sets
+While a vector can be traversed just like an array like so:
 
-Unordered sets are data structures that can efficiently store elements and check if an element exists. Unordered sets have 2 unique properties:
-
-- Inserted elements cannot be changed
-- Duplicate elements cannot be inserted. If an element that already exists in a set is inserted, the element will not be inserted again.
-  Unordered sets use hash maps under the hood to gain efficiency. An unordered set supports three operations shown in the below code example
-
-```
-unordered_set<int> s;   //create set to store integers
-s.insert(1);    //insert element into set
-s.insert(4);
-s.insert(2);
-s.insert(4);    // does nothing because 4 is already in the set
-cout << s.count(4) << endl;  // Outputs 1 since 4 is in the set
-cout << s.count(5) << endl;  // Outputs 0 since 5 is not in the set
-s.erase(1); //deletes element from set
+```cpp
+for(int i = 0; i < myVector.size(); i++){
+    cout << myVector[i];
+}
 ```
 
-# Ordered Sets
+Iterators provide an alternate way to traverse a vector (using the `*` syntax to obtain the value that the iterator is pointing to):
 
-These support the same operations as unordered sets but are slower and store elements in order. Inserting/Accessing usually takes O(log N) time. They can be created with the following syntax
-
+```cpp
+for (vector<string>::iterator it = names.begin(); it != names.end(); ++it) {
+    cout << *it << " ";
+}
 ```
-set<string> s; //creates a set of strings named s
+
+The reason this is useful is that iterators work with all sorts of containers. As we are about to see, not all containers use the same square-bracket syntax to access elements and in some cases iterators are used by neccessity. However, iterators also make for loops extremely long to write out. C++ offers a handy shorthand for the above code
+
+```cpp
+for(const string name: names){
+    cout << *name << endl;
+}
 ```
 
-# Use Cases of Sets
+Or to the same effect:
 
-Sets are primarily used in two cases:
-
-- When elements need to efficiently be checked for existence
-- When duplicates need to be removed from an array or other data structure
+```cpp
+for(const string &name: names){
+    cout << name << endl;
+}
+```

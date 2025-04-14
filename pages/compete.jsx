@@ -233,8 +233,8 @@ export default function Compete({ contests }) {
 
   return (
     <NicePage selected='compete' title='Contest Schedule'>
-      <div className='h-screen flex justify-center items-center '>
-        <div className='w-1/2 h-full  flex flex-col justify-center items-center '>
+      <div className='h-screen flex flex-col lg:flex-row justify-center items-center '>
+        <div className='w-5/6 lg:w-1/2  lg:h-full  flex flex-col justify-center items-center pb-12 '>
           <div className='w-2/3 '>
             <h1 className='robo text-primc text-5xl'>Upcoming Contest Schedule</h1>
             <h3 className='robo text-neutral-400  mt-2 '>
@@ -253,11 +253,11 @@ export default function Compete({ contests }) {
             )}
           </div>
         </div>
-        <div className={`flex-1 ${!live ? 'pr-24' : ''}  `}>
+        <div className={`lg:flex-1  h-auto   ${!live ? 'lg:mr-24' : ''}  `}>
           {!live ? (
             <Table data={contests}></Table>
           ) : (
-            <div className='m-24 bg-backL robo p-12  h-full rounded-md border border-neutral-500'>
+            <div className='m-24 bg-backL robo p-12 h-full rounded-md border border-neutral-500'>
               <div className='grid grid-cols-5 grid-rows-1 gap-4'>
                 <div className=' col-span-3  flex flex-col justify-center'>
                   <h2 className='font-bold text-primc text-4xl'>
@@ -362,3 +362,4 @@ export async function getStaticProps() {
     },
   };
 }
+

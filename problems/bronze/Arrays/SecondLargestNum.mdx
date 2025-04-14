@@ -1,0 +1,81 @@
+---
+title: 'Second Largest Number'  
+date: '2025-03-23'  
+credits: 'Ahmad Bilal'  
+---
+
+# Second Largest Number  
+
+Given an array of <Math inline>N</Math> integers, find the second largest distinct number in the array. If no such number exists, output <Math inline>-1</Math>.  
+
+# Input  
+
+- The first line contains an integer <Math inline>N</Math> (<Math inline>2 \leq N \leq 10^5</Math>), the number of elements in the array.  
+- The second line contains <Math inline>N</Math> space-separated integers <Math inline>A[1], A[2], ..., A[N]</Math> (<Math inline>-10^9 \leq A[i] \leq 10^9</Math>).  
+
+# Output  
+
+Print the second largest distinct number in the array, or <Math inline>-1</Math> if no such number exists.  
+
+# Example  
+
+**Input:**  
+```
+5
+2 8 4 6 8
+```
+
+**Output:**  
+```
+6
+```
+
+# Solution  
+
+<Solution>  
+
+## Approach  
+
+1. Initialize two variables `largest` and `secondLargest`, both set to a very small value.  
+2. Iterate through the array once to find the largest value.  
+3. Iterate again to find the largest value smaller than `largest`.  
+
+## Implementation  
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+    
+    int A[N];
+    for (int i = 0; i < N; i++) {
+        cin >> A[i];
+    }
+
+    int largest = INT_MIN, secondLargest = INT_MIN;
+
+    for (int i = 0; i < N; i++) {
+        if (A[i] > largest) {
+            largest = A[i];
+        }
+    }
+
+    for (int i = 0; i < N; i++) {
+        if (A[i] > secondLargest && A[i] < largest) {
+            secondLargest = A[i];
+        }
+    }
+
+    cout << (secondLargest == INT_MIN ? -1 : secondLargest) << endl;
+}
+```
+
+## Complexity Analysis  
+
+Time complexity is <Math inline>O(N)</Math> due to two linear passes.  
+Space complexity is <Math inline>O(1)</Math> as only a few integer variables are used.  
+
+</Solution>

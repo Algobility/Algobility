@@ -23,7 +23,7 @@ int main(){
 }
 ```
 
-This code works, but if we wanted to do the same with more numbers, this approach would soon become impractical since we have to create a seperate variable for each number.
+This code works, but if we wanted to do the same with more numbers (e.g. 100 numbers), this approach would soon become impractical since we would  have to create a seperate variable for each number.
 
 Arrays help solve this by offering us a way to store a list of variables (with a fixed number of variables). The variables within such a list are known as elements. Array elements must all be of the same type. They are identified by their position in the array rather than by variable names.
 
@@ -33,7 +33,7 @@ To declare an array, define the variable type, specify the name of the array fol
 int myFavouriteNumber[4];
 ```
 
-Similar to normal variables, arrays can **optionally** be initialized with some values using the following syntax.
+Similar to normal variables, arrays can optionally be initialized with some values using the following syntax.
 
 ```cpp
 int myFavouriteNumber[4] = {1,4,5,9};
@@ -56,7 +56,7 @@ myFavouriteNumber[2] = 5;       //changes third element to 5
 cout << myFavouriteNumber[2];   //should output 5
 ```
 
-These examples use the int data type, but other data types can be used. Let’s try an example with characters:
+These examples use the int data type, but other data types can be used. Here is an example where we are initializing an array of characters:
 
 ```cpp
 char DNA[4] = {"A", "C", "G", "T"}; // Array of 4 strings
@@ -78,7 +78,7 @@ Here, we create a for loop that executes `cout << myFavouriteNumber[i]` 4 times.
 
 # Searching for an element
 
-Another common occurance when working with arrays is searching for a specific value amongst all array elements. We can do this by traversing the array and using a boolean variable to keep track of wheather the element has been found or not:
+Another common task when working with arrays is searching for a specific value amongst all array elements. We can do this by traversing the array and using a boolean variable to keep track of wheather the element has been found or not:
 
 ```cpp
 int numbers[] = {12, 45, 7, 23, 56, 89, 34};
@@ -107,7 +107,7 @@ Almost all contest problems which require you to use arrays will ask you to work
 *The first line of input will contain <Math inline>n</Math>, the number of elements in the array. The next line will contain <Math inline> n </Math> integers where the <Math inline> i^\{th\} </Math> integer represents the <Math inline> i^\{th\} </Math> element of the array.*
 
 This means that if the array to be inputted is `{3,4,1,6,9}`, the grading software will enter the following into cin:
-```
+```text
 5
 3 4 1 6 9
 ```
@@ -231,7 +231,7 @@ Some problems require iterating through array elements in alternative ways. It i
 
 Reversing the for loop can be done by setting the starting index to the final index of the array, terminating the loop at ‘i = 0’, and incrementally reducing ‘i’. See below for the format.
 
-```
+```cpp
 for (int i = arrayLength - 1; i >= 0; --i) {
     // Access array elements in reverse order with array[i]
 }
@@ -241,18 +241,21 @@ for (int i = arrayLength - 1; i >= 0; --i) {
 
 Skipping every second element can be achieved simply by incrementing the index by 2 instead of 1. Similarly, if you wish to skip 2 out of every 3 elements, or 3 out of every 4, you can increment the index by 3 or 4, and so on. Here is an example of a loop that skips every second element:
 
+```cpp
 for (int i = 0; i < arrayLength; i += 2) {
 // Access every second element with array[i]
 }
+```
 
 ## Starting iteration from a specific index
 
 Iterating an array starting from a different index is as simple as initializing the loop index to a different starting point, for example:
 
+```cpp
 for (int i = 3; i < arrayLength; ++i) {
 // Access elements starting from the fourth element (element with index 3) with array[i]
 }
-
+```
 
 # Passing arrays through functions
 

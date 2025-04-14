@@ -36,27 +36,27 @@ export default function Landing() {
                 A begginer-friendly competitive programming platform{' '}
               </h2> */}
               <h1 className='mont text-left  text-3xl lg:text-6xl lg:text-center lg:leading-tight'>
-                An{' '}
-                <span className='font-bold drop-shadow-2xl text-7xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-pink-600'>
-                  OOGA BOOGA
+                A{' '}
+                <span className='font-bold drop-shadow-2xl text-3xl lg:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-pink-600'>
+                  beginner-friendly
                 </span>{' '}
-                to take your <br /> Dooga Booda to the next level and beyond
+                competitive programming platform designed to optimize your learning journey
               </h1>
               <h2 className='mt-8 robo  text-lg lg:text-xl text-neutral-400'>
-                Because that's crazy wowowowow. Thats amazing. This is such a good description
+                Free, open-source, and driven by a passionate community{' '}
               </h2>
-              {/* <Link
-                href='signin'
+              <Link
+                href='/learn'
                 className='mono text-white bg-transparent hover:bg-primc border-primc  rounded-full mt-16 px-8 py-2 hover:px-14 transition-all border '
               >
-                .getStarted()
-              </Link> */}
+                .startLearning()
+              </Link>
             </div>
 
             {/* -------------------------------------------------------------------------- */
             /*                                Cards method                                */
             /* -------------------------------------------------------------------------- */}
-            <div className=' flex flex-col lg:flex-row scale-75 items-center justify-center pt-28 lg:pt-44 lg:gap-12 w-3/4 mx-auto '>
+            <div className=' flex flex-col lg:flex-row scale-75 items-center justify-center pt-20  lg:gap-12 w-3/4 mx-auto '>
               {/* <div className='bg-backL w-80 rounded shadow-xl'>
                 <div className='rounded-md bg-primc px-8 py-4 mont text-xl flex justify-start gap-3 items-center'>
                   <svg
@@ -119,7 +119,7 @@ export default function Landing() {
               </div> */}
 
               <div className=' w-80 rounded p-4  text-center mb-4 '>
-                <h2 className='text-4xl text-primc mb-4 mont'>Train</h2>
+                <h2 className='text-3xl lg:text-4xl text-primc mb-4 mont'>Train</h2>
                 <p className='robo text-lg'>Learn competitive programming topics through interactive tutorials</p>
               </div>
 
@@ -140,7 +140,7 @@ export default function Landing() {
               </svg>
 
               <div className=' w-80 rounded p-4 text-center mb-4'>
-                <h2 className='text-4xl text-primc mb-4 mont'>Compete</h2>
+                <h2 className='text-3xl lg:text-4xl text-primc mb-4 mont'>Compete</h2>
                 <p className='robo text-lg'>
                   Participate in weekly or monthly competitions and show what you have learned
                 </p>
@@ -163,10 +163,8 @@ export default function Landing() {
               </svg>
 
               <div className=' w-80 rounded p-4 text-center mb-4'>
-                <h2 className='text-4xl text-primc mb-4 mont'>Climb</h2>
-                <p className='robo text-lg'>
-                  Climb the ranks as you participate in competitions and build your portfolio
-                </p>
+                <h2 className='text-3xl lg:text-4xl text-primc mb-4 mont'>Climb</h2>
+                <p className='robo text-lg'>Climb the rank ladder and build your portfolio</p>
               </div>
             </div>
           </div>
@@ -178,10 +176,9 @@ export default function Landing() {
           <div className='bg-gradient mb-24'>
             <div className='flex-col lg:grid grid-cols-2 grid-rows-2 my-12 w-4/6 mx-auto'>
               <div className='md:h-96 pb-8 md:pt-0 md:pb-0 pt-24  px-8 flex flex-col justify-center'>
-                <h1 className='mont text-4xl text-primc pb-2 glow'>Structured Learning Roadmap </h1>
+                <h1 className='mont text-3xl lg:text-4xl text-primc pb-2 glow'>Structured Learning Roadmap </h1>
                 <p className='robo text-neutral-300'>
-                  Forget trying to learn complex data strucutres and algorithms. DotSlash divides topics into
-                  well-organized ranks to help you grasp topics with ease.
+                  Algobility divides learning and practice material into ranks and chapters to make progress easier.
                 </p>
               </div>
               <div className=' flex justify-center items-center gap-4'>
@@ -223,7 +220,7 @@ export default function Landing() {
                   <div className='flex flex-col justify-start '>
                     <h3 className='text-4xl robo mb-2'>Iron</h3>
                     <p className='robo'>
-                      To pass this rank, you are only required to have a solid understanding of fundemental programming
+                      To pass this rank, you are required to have a solid understanding of fundemental programming
                       concepts such as variables, conditions, loops, etc.{' '}
                     </p>
                   </div>
@@ -232,10 +229,10 @@ export default function Landing() {
               </div>
               <div className=''>
                 <div className='md:h-96 pb-24 pt-8 md:pb-0 md:pt-0 px-8 flex flex-col justify-center'>
-                  <h1 className='mont text-4xl lg:text-right text-primc pb-2 glow'>Beginner Friendly </h1>
+                  <h1 className='mont  lg:text-right text-primc pb-2 glow text-3xl lg:text-4xl'>Beginner Friendly </h1>
                   <p className='robo text-neutral-300 lg:text-right '>
-                    Whether you are a seasoned competitive programmer or completely new to programming, DotSlash helps
-                    you master the sport
+                    Whether you are a seasoned competitive programmer or have never written a line of code before,
+                    Algobility has a rank to fit your needs.
                   </p>
                 </div>
               </div>
@@ -246,21 +243,43 @@ export default function Landing() {
           /*                                   Socials                                  */
           /* -------------------------------------------------------------------------- */}
 
-          <div className=' mb-36 mt-24 w-3/4 mx-auto flex flex-col lg:grid grid-cols-2 h-96 gap-12'>
+          <div className=' mb-36 mt-24 w-3/4 mx-auto flex flex-col lg:grid grid-cols-2 h-auto gap-12'>
             <div className='flex justify-center flex-col  robo py-8'>
-              <h2 className='text-6xl mb-4 mont lg:text-left text-center'>
+              <h2 className='text-3xl lg:text-4xl mb-4 mont lg:text-left text-center'>
                 {' '}
                 <span className='text-primc  underline'>Community</span> Centered
               </h2>
-              <p className='text-neutral-400 lg:text-left text-center'>
-                We value our community over everything. It's what drives us forward. Follow our socials and join our
-                discord to be a part of our thriving community.
+              <p className='text-neutral-400 lg:text-left text-center pr-24'>
+                Join our discord to be a part of our thriving community. Share your knowledge, ask questions, and
+                connect with like-minded individuals.
               </p>
             </div>
-            <div className='flex justify-center items-center '>
-              <div className=' h-45  flex justify-evenly items-center w-96'>
-                <div className='border p-4 scale-150 rounded-full hover:bg-primc transition-all '>
-                  <svg
+            <div className='flex justify-center items-center rounded-md border-neutral-300 border-2   '>
+              <iframe
+                className='w-full h-96 '
+                src='https://discord.com/widget?id=1360994703872491703&theme=dark'
+                allowtransparency='false'
+                frameborder='1'
+                sandbox='allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts'
+              ></iframe>
+              {/* <discord-widget
+                  id='222078108977594368'
+                  width='350px'
+                  height='490px'
+                  footerText='Placeholder'
+                  color='#5865f2'
+                  backgroundColor='#0c0c0d'
+                  textColor='#ffffff'
+                  statusColor='#858585'
+                ></discord-widget> */}
+              {/* <Link
+                  href='/learn'
+                  className='mono text-white bg-transparent hover:bg-primc border-primc  rounded-full mt-16 px-8 py-2 hover:px-14 transition-all border '
+                >
+                  .joinDiscord()
+                </Link> */}
+              {/* <div className='border p-4 scale-150 rounded-full hover:bg-primc transition-all '> */}
+              {/* <svg
                     stroke='currentColor'
                     fill='cyan'
                     stroke-width='0'
@@ -298,9 +317,9 @@ export default function Landing() {
                     xmlns='http://www.w3.org/2000/svg'
                   >
                     <path d='M297.216 243.2c0 15.616-11.52 28.416-26.112 28.416-14.336 0-26.112-12.8-26.112-28.416s11.52-28.416 26.112-28.416c14.592 0 26.112 12.8 26.112 28.416zm-119.552-28.416c-14.592 0-26.112 12.8-26.112 28.416s11.776 28.416 26.112 28.416c14.592 0 26.112-12.8 26.112-28.416.256-15.616-11.52-28.416-26.112-28.416zM448 52.736V512c-64.494-56.994-43.868-38.128-118.784-107.776l13.568 47.36H52.48C23.552 451.584 0 428.032 0 398.848V52.736C0 23.552 23.552 0 52.48 0h343.04C424.448 0 448 23.552 448 52.736zm-72.96 242.688c0-82.432-36.864-149.248-36.864-149.248-36.864-27.648-71.936-26.88-71.936-26.88l-3.584 4.096c43.52 13.312 63.744 32.512 63.744 32.512-60.811-33.329-132.244-33.335-191.232-7.424-9.472 4.352-15.104 7.424-15.104 7.424s21.248-20.224 67.328-33.536l-2.56-3.072s-35.072-.768-71.936 26.88c0 0-36.864 66.816-36.864 149.248 0 0 21.504 37.12 78.08 38.912 0 0 9.472-11.52 17.152-21.248-32.512-9.728-44.8-30.208-44.8-30.208 3.766 2.636 9.976 6.053 10.496 6.4 43.21 24.198 104.588 32.126 159.744 8.96 8.96-3.328 18.944-8.192 29.44-15.104 0 0-12.8 20.992-46.336 30.464 7.68 9.728 16.896 20.736 16.896 20.736 56.576-1.792 78.336-38.912 78.336-38.912z'></path>
-                  </svg>
-                </div>
-              </div>
+                  </svg> */}
+              {/* </div> */}
+              {/* </div> */}
             </div>
           </div>
 
@@ -312,11 +331,11 @@ export default function Landing() {
             <div className='bg-backL border border-neutral-600 py-8 px-12 robo rounded-md'>
               <h2 className='text-4xl text-center mb-4'>Join Us</h2>
               <p className='text-center text-neutral-400'>
-                DotSlash is a non-profit DotSlashimed to promote competitive programming. Wheather you are a web
-                developer, project manager, or problem-setter, we would love to have you on our journey.{' '}
+                Algobility is a non-profit aimed at promoting competitive programming. Wheather you are a web developer,
+                project manager, or problem-setter, we would love to have you on our journey.{' '}
               </p>
               <a
-                href='https://forms.gle/wvhfa1ncoiSkqtwE8'
+                href='https://forms.gle/CRZQXxWpgEURQyUs5'
                 target='_blank'
                 className='bg-neutral-700 mt-12 w-full px-4 py-2 block hover:bg-primc transition-all mono rounded-md text-center cursor-pointer'
               >
@@ -326,7 +345,7 @@ export default function Landing() {
             <div className='bg-backL border border-neutral-600 py-8 px-12 robo rounded-md'>
               <h2 className='text-4xl text-center mb-4'>Support Us</h2>
               <p className='text-center text-neutral-400'>
-                Being non-profit, DotSlash is supported financially only by its community. To keep our servers running
+                As a non-profit, Algobility is supported financially only by its community. To keep our servers running
                 and services online, we need your help.
               </p>
               <a className='bg-neutral-700 mt-12 w-full px-4 py-2 block  hover:bg-primc transition-all mono rounded-md text-center cursor-pointer '>
@@ -335,8 +354,14 @@ export default function Landing() {
             </div>
           </div>
           <div className='bg-neutral-800 w-full px-8 py-8 robo flex flex-col text-center justify-start gap-2 text-neutral-600 '>
-            <h3>©️2023 DotSlash</h3>
-            <h3>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</h3>
+            <h3>©️2025 Algobility</h3>
+            <p>
+              Algobility is licensed under{' '}
+              <a href='https://creativecommons.org/licenses/by-nc-sa/4.0/' className='text-primc hover:underline'>
+                {' '}
+                Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+              </a>{' '}
+            </p>
           </div>
           <Slide in={showScroll} direction='bottom'>
             <div className=' sticky  pb-12  robo lg:flex justify-center items-center gap-2 hidden w-96 '>
@@ -484,3 +509,4 @@ export default function Landing() {
                 </div>
               </div> */
 }
+

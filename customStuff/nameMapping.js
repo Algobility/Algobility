@@ -22,10 +22,10 @@
 //     return map[inp]
 // }
 
-const prettyCRank = (inp)=>{
-    if(inp == 'loading') return 'Loading ...'
-    if(inp == 'unranked') return 'Unranked'
-    // Extract the word and the number
+const prettyCRank = (inp) => {
+  if (inp == 'loading') return 'Loading ...';
+  if (inp == 'unranked') return 'Unranked';
+  // Extract the word and the number
   const word = inp.slice(0, -1); // Remove the last character (digit)
   const number = inp.slice(-1); // Get the last character (digit)
 
@@ -34,25 +34,29 @@ const prettyCRank = (inp)=>{
 
   // Return the formatted string with a space between the word and number
   return formattedWord + ' ' + number;
-}
+};
 
-const pretty = (inp)=>{
-    return inp.charAt(0).toUpperCase() + inp.slice(1)
-}
-const unpretty = (inp)=>{
-    return inp.charAt(0).toLowerCase() + inp.slice(1);
-}
+const pretty = (inp) => {
+  return inp.charAt(0).toUpperCase() + inp.slice(1);
+};
+const unpretty = (inp) => {
+  return inp.charAt(0).toLowerCase() + inp.slice(1);
+};
 
-const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Emerald']
-const codedRanks = ['iron', 'bronze', 'silver', 'gold', 'platinum', 'emerald']
+const ranks = ['Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Emerald'];
+const codedRanks = ['iron', 'bronze', 'silver', 'gold', 'platinum', 'emerald'];
 const rankDescription = {
-    'iron': 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you should be familliar with basic programming concepts such as variables, conditions, loops, etc. ',
-    'bronze': 'Bronze is the second rank and deals with more programming fundementals. To pass this rank, you should be able to use, search, and sort 1D and 2D arrays, use nested loops, and work with string/character manipulation.',
-    'silver': 'Silver is the third rank and deals with beginner competitive coding concepts. To pass this rank, you should be familiar with more complex data structures/types along with recursion, brute force searching, and other intermediate concepts.',
-    'gold': 'Gold is the fourth rank. The guides for this rank are a work in progress. Please use the resources listed in the post below to study the syllabus. ',
-    'platinum': 'Platinum is the fifth rank. The guides for this rank are a work in progress. Please use the resources listed in the post below to study the syllabus.',
-    'emerald': 'Emerald is the sixth and (currently) final rank. The guides for this rank are a work in progress. Please use the resources listed in the post below to study the syllabus.'
-}
+  iron: 'Iron is the first rank and deals with the fundementals of programming. To pass this rank, you should be familliar with basic programming concepts such as variables, conditions, loops, etc. ',
+  bronze:
+    'Bronze is the second rank and deals with more programming fundementals. To pass this rank, you should be able to use, search, and sort 1D and 2D arrays, use nested loops, and work with string/character manipulation.',
+  silver:
+    'Silver is the third rank and deals with beginner competitive coding concepts. To pass this rank, you should be familiar with more complex data structures/types along with recursion, brute force searching, and other intermediate concepts. It is almost equivalent to the USACO bronze rank.',
+  gold: 'Gold is the fourth rank and requires strong problem-solving skills. Most problems require greedy solutions and work with one dimensional data. It is almost equivalent to the USACO silver rank excluding graphs and trees. ',
+  platinum:
+    'Platinum is the fifth rank. This rank focuses heavily on graph problems as well as introductory dynamic programming. It is almost equivalent to the complete USACO silver rank.',
+  emerald:
+    'Emerald is the sixth and currently final rank (more ranks are coming soon!). This rank covers more advanced graph problems as well as advanced dynamic programming. It is almost equivalent to the complete USACO gold rank.',
+};
 
+export { ranks, codedRanks, pretty, unpretty, prettyCRank, rankDescription };
 
-export {ranks, codedRanks, pretty, unpretty, prettyCRank, rankDescription};

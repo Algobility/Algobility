@@ -1,15 +1,94 @@
 ---
-title: Bitwise Operators & Uses
-date: '2022-01-01'
+title: Point Update Range Sum 
 credits: Ahmad Bilal
+description:  Using Segment Trees for range sum queries
+practicable: true
 ---
 
+
 # Motivation
+Efficiently computing range sums is a common problem in competitive programming. The simplest way to do this is by using prefix sums, which allow us to compute the sum of any subarray in constant time. However, prefix sums have a major limitation: updating a single element requires modifying all subsequent values, which takes linear time. This makes them inefficient when both range queries and point updates (updating a single element) are required.  
 
-There is no Motivation
+Segment trees solve this problem by providing a data structure that allows both point updates and range sum queries in logarithmic time. Instead of storing prefix sums, a segment tree recursively divides the array into smaller segments, storing the sum of each segment in a tree-like structure. This allows efficient updates and queries by only modifying or accessing the necessary segments instead of the entire array.  
 
-# Code
+# Building a segment Tree
+ 
+To build a segment tree, the array is represented as a complete binary tree, where each node stores the sum of a segment of the array. The root represents the sum of the entire array, and each internal node represents the sum of a subarray. The left and right children of a node correspond to the left and right halves of its segment. The tree is built recursively, with leaf nodes storing individual elements of the array.  
 
-```
-int arr[10] = [0,1,0,4]
-```
+To understand how a segment tree is structured, consider the array  
+
+```text
+a = [5, 2, 4, 3, 7, 1, 6, 8]
+```  
+
+The segment tree is constructed as follows. The root stores the sum of the entire array, which is  
+
+```text
+5 + 2 + 4 + 3 + 7 + 1 + 6 + 8 = 36
+```  
+
+The left child of the root stores the sum of the first half of the array,  
+
+```text
+5 + 2 + 4 + 3 = 14
+```  
+
+The right child stores the sum of the second half,  
+
+```text
+7 + 1 + 6 + 8 = 22
+```  
+
+Each of these nodes is further divided recursively. The left child storing 14 is split into  
+
+```text
+5 + 2 = 7
+```  
+
+and  
+
+```text
+4 + 3 = 7
+```  
+
+Similarly, the right child storing 22 is split into  
+
+```text
+7 + 1 = 8
+```  
+
+and  
+
+```text
+6 + 8 = 14
+```  
+
+The recursion continues until every leaf stores a single element of the original array. The final segment tree is  
+
+<Figure src='/guide_images/st1.png' classExtensions='w-1/2' />
+
+Each node represents the sum of a subarray, allowing range sum queries to be answered efficiently. Instead of summing all elements in the query range, the tree is traversed to find the minimum number of segments covering the range, which takes logarithmic time.  
+
+For example, to find the sum of the elements from index 1 through 5 (inclusive), we can sum the blue nodes in the diagram below.
+
+<Figure src='/guide_images/st2.png' classExtensions='w-1/2' />
+
+
+To find the sum of the first 6 elements, we can sum the blue nodes in this diagram:
+
+<Figure src='/guide_images/st3.png' classExtensions='w-1/2' />
+
+
+In general, the number of blue nodes required to find the sum of some elements grows logarithmically. Thus, we get a logarithmic time complexity for querying the sum of a range.
+
+
+To change an element in the array (leaf node) by some amount `delta`  all we have to do is walk up the tree from the leaf node back to the root node and increment/decrement all nodes we visit by `delta`. For example if we wanted to increase the element at index 2 by a value of 5, we would have to increase the value of each red node in the following diagram by 5.
+
+<Figure src='/guide_images/st4.png' classExtensions='w-1/2' />
+
+This way, all relevant segment sums are updated.
+
+Since the height of the tree grows logarithmically with the size of the original array, the number or red nodes that we must update is always <Math inline>O(logn)</Math>. Thus, point update can also be done in logaraithmic time. 
+
+Segment trees can also be used for other assosciatite operations such as finding the minimum/maximum number in a range. To create a segment tree to find the minimum number in a range, the tree must would be constructed such that every non-leaf node stores the minimum of its children rather than the sum of its children. 
+

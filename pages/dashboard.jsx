@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useUser } from '../customStuff/useDB.js';
 import { prettyCRank } from '../customStuff/nameMapping';
-import { getAllContests } from '../customStuff/contest';
+import { getUpcomingContests } from '../customStuff/contest';
 import { useRouter } from 'next/router';
 
 export default function DashBoard({ contests }) {
@@ -174,7 +174,7 @@ export default function DashBoard({ contests }) {
 }
 
 export async function getStaticProps() {
-  const data = await getAllContests();
+  const data = await getUpcomingContests();
   data.sort((a, b) => {
     return a.startTime > b.startTime ? 1 : -1;
   });
@@ -184,3 +184,4 @@ export async function getStaticProps() {
     },
   };
 }
+

@@ -85,7 +85,7 @@ export default function Learn({ content, frontMatter, chaps }) {
             <Link
               href={`/learn/${frontMatter.rank}/${parseInt(frontMatter.id) + 1}`}
               onClick={(e) => {
-                if (frontMatter.id == 1) e.preventDefault();
+                if (frontMatter.id == chaps[frontMatter.rank].length) e.preventDefault();
               }}
               className={`mx-auto bg-neutral-700  ${
                 frontMatter.id == chaps[frontMatter.rank].length
@@ -191,7 +191,6 @@ export async function getStaticProps({ params }) {
   const { id, rank, matterResult } = await getGuideData(params.rank, params.chap);
   const serializedContent = await serialize(matterResult.content);
   const chaps = await getAllGuides();
-
   const fm = {
     id: id,
     rank: rank,
@@ -213,3 +212,4 @@ export async function getStaticPaths() {
     fallback: 'blocking',
   };
 }
+

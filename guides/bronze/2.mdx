@@ -12,21 +12,21 @@ A common, more complex form of an array, is the two-dimensional (2D) array. The 
 
 # Declaring and Initializing a 2D Array
 
-To declare a 2D array in C++, you specify the number of rows and columns it should have. Here's the basic syntax:
+To declare a 2D array in C++, specify the number of rows and columns it should have. Here's the basic syntax:
 
-```
+```cpp
 data_type array_name[row_size][column_size];
 ```
 
-Let's create a 2D array to represent a simple 3x3 grid of integers:
+For example to create a 2D array to represent a simple 3x3 grid of integers, we can write the following:
 
-```
+```cpp
 int grid[3][3];
 ```
 
 You can initialize a 2D array during declaration like so:
 
-```
+```cpp
 int matrix[2][2] = {
     {1, 2},
     {3, 4}
@@ -37,13 +37,13 @@ int matrix[2][2] = {
 
 Accessing elements in a 2D array involves using two indices — one for the row and one for the column. Similarly to one-dimensional arrays, the first row and first column of the 2D array have the index 0. Here is the general syntax to access an element.
 
-```
+```cpp
 int element = matrix[row_index][column_index];
 ```
 
 Here is an example of accessing a specific element.
 
-```
+```cpp
 int grid[3][3] = {
     {1, 2, 3},
     {4, 5, 6},
@@ -58,7 +58,7 @@ Nested loops are loops that are contained within another loop's body. Think of i
 
 Here’s the basic syntax of a single loop embedded in another loop.
 
-```
+```cpp
 for (outer initialization; outer condition; outer increment) {
     // Outer loop code
 
@@ -70,7 +70,7 @@ for (outer initialization; outer condition; outer increment) {
 
 To see how nested loops function, let’s try to output a pattern of stars. We will print a rectangle of stars with 5 rows and 10 columns.
 
-```
+```cpp
 for (int i = 0; i < 5; ++i) {
     for (int j = 0; j < 10; ++j) {
         cout << "\* ";
@@ -81,7 +81,8 @@ for (int i = 0; i < 5; ++i) {
 
 Result:
 
-```*****
+```text
+*****
 *****
 *****
 *****
@@ -95,13 +96,12 @@ These two steps are repeated 5 times because the outer loop is repeated 5 times.
 
 Here’s another simple example. It is intended to print a series of equations equivalent to a multiplication table with all integers from 1-10. Try and trace the code to figure out how it works on your own.
 
-```
-
+```cpp
 for (int i = 1; i <= 10; ++i) {
-for (int j = 1; j <= 10; ++j) {
-cout << i << " _ " << j << " = " << i _ j << endl;
-}
-cout << endl;
+    for (int j = 1; j <= 10; ++j) {
+        cout << i << " _ " << j << " = " << i _ j << endl;
+    }
+    cout << endl;
 }
 
 ```
@@ -109,13 +109,14 @@ cout << endl;
 <Exercise number='1'>
 <ExerciseQuestion>
 Write some code that outputs the following with a nested for loop:
-```10 20 30 40 50
+```text
+10 20 30 40 50
 14 24 34 44 54
 18 28 38 48 58
 ```
 </ExerciseQuestion>
 <ExerciseAnswer>
-```
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -140,7 +141,9 @@ This code runs a nested for loop. The outer loop increments a variable called `i
 Within the outer loop, an inner loop outputs a variable `j` and then the current value of `i`, where `j` is a variable that increments from 1 to 5.
 
 Now the first iteration of the outer loop looks something like this
-```10 20 30 40 50``` 
+```text
+10 20 30 40 50
+``` 
 (since `j` is incrementing from 1 to 5 but `i` is locked at 0)
 
 The second and third iteration of the outer loop continues the pattern with each number ending with 4 and 8 respectively
@@ -156,7 +159,7 @@ Nested loops can be used in any other scenario in which a repeated action itself
 
 Looping through a 2D array requires nested loops — one outer loop to iterate the rows and another inner loop for each element within the row. 
 
-```
+```cpp
 
 for (int row = 0; row < row_size; ++row) {
     for (int col = 0; col < col_size; ++col) {
@@ -171,10 +174,11 @@ On the first iteration of the outer loop, `row` is set to 0 and the entire inner
 
 Lastly, when passing 2D arrays to a function, you must specify the number of columns. See below for an example.
 
-```
+```cpp
 
 void processArray(int arr[][3]) {
-// Note that the “rows” size can be left empty but the number of columns must be specified. This is simply due to the way C++ was designed.
+// Note that the “rows” size can be left empty but the number of columns must be specified. 
+// This is simply due to the way C++ was designed.
 }
 
 ```

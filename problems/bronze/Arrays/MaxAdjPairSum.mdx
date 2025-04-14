@@ -1,0 +1,81 @@
+---
+title: 'Maximum Adjacent Pair Sum'  
+date: '2025-03-23'  
+credits: 'Ahmad Bilal'  
+time: 1  
+mem: 256  
+tcIn: ["5\n1 3 -2 4 7", "3\n-5 -2 -8", "4\n10 20 30 40", "6\n1 1 1 1 1 1"]  
+tcOut: ["11", "-3", "70", "2"]  
+---
+
+# Maximum Adjacent Pair Sum  
+
+Given an array of <Math inline>N</Math> integers, find the maximum sum of any two adjacent elements in the array.  
+
+# Input  
+
+- The first line contains an integer <Math inline>N</Math> (<Math inline>2 \leq N \leq 10^5</Math>), the number of elements in the array.  
+- The second line contains <Math inline>N</Math> space-separated integers <Math inline>A[1], A[2], ..., A[N]</Math> (<Math inline>-10^9 \leq A[i] \leq 10^9</Math>).  
+
+# Output  
+
+Print a single integer: the maximum sum of any two adjacent elements in the array.  
+
+# Example  
+
+Input:  
+```
+5  
+1 3 -2 4 7  
+```  
+
+Output:  
+```
+11
+```  
+
+The maximum adjacent sum is achieved by the last two elements <Math inline>(4 + 7 = 11)</Math>.  
+
+# Solution  
+
+<Solution>  
+
+## Approach  
+
+1. Iterate through the array while maintaining the maximum sum of adjacent elements.  
+2. Compare the sum of each adjacent pair with the current maximum sum and update accordingly.  
+
+## Implementation  
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+    
+    int A[N];
+    for (int i = 0; i < N; i++) {
+        cin >> A[i];
+    }
+
+    int maxSum = INT_MIN;
+
+    for (int i = 0; i < N - 1; i++) {
+        int sum = A[i] + A[i + 1];
+        if (sum > maxSum) {
+            maxSum = sum;
+        }
+    }
+
+    cout << maxSum << endl;
+}
+```
+
+## Complexity Analysis  
+
+Time complexity is <Math inline>O(N)</Math> as we iterate through the array once.  
+Space complexity is <Math inline>O(1)</Math> since only a few integer variables are used.  
+
+</Solution>

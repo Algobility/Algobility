@@ -1,15 +1,187 @@
 ---
-title: Topoligical Sort
+title: Union-Find Disjoint Set
 date: '2022-01-01'
+description: Also known as Disjoint Set Union
 credits: Ahmad Bilal
 ---
 
-# Motivation
+# Motivation  
 
-There is no Motivation
+Suppose we are given `n` elements, initially in separate groups, and we need to process `m` queries of the following two types:  
 
-# Code
+1. **Merge** the groups containing `x` and `y`.  
+2. **Check** if `x` and `y` belong to the same group.  
+
+A naive approach would be to maintain a list for each group and merge lists whenever a new connection is formed. However, this approach would be inefficient, as merging two lists of sizes `a` and `b` takes `O(a + b)` time, making worst-case operations take `O(n²)`.  
+
+Instead, we can use a **Union-Find Disjoint Set (UFDS)**, also known as **Disjoint Set Union (DSU)**, to efficiently manage these groups. This data structure allows us to merge two groups and check membership in **near constant time**.  
+
+# Basic Structure  
+
+Each element belongs to a set, and every set has a **representative** element, called the **leader** or **root**. Initially, each element is its own leader, meaning we start with `n` separate sets.  
+
+To implement this, we maintain an array `parent[]`, where `parent[i]` stores the parent of `i`. If `parent[i] == i`, then `i` is the leader of its set.  
+
+For example, if we have `n = 5` elements, the initial state is:  
 
 ```
-int arr[10] = [0,1,0,4]
+Index:    0  1  2  3  4  
+Parent:   0  1  2  3  4  (each element is its own leader)
 ```
+
+# Find Operation  
+
+To determine which set an element belongs to, we keep moving up the parent chain until we reach the root. This is the leader of the set.  
+
+```cpp
+int find(int x) {
+    if (parent[x] == x) return x; // x is the leader
+    return find(parent[x]); // Move up the tree
+}
+```  
+
+### Example  
+
+Suppose we have the following structure after merging some elements:  
+
+```
+Index:    0  1  2  3  4  
+Parent:   0  0  2  2  4  
+```
+
+- `find(1)` → `parent[1] = 0`, so we call `find(0)`, which returns `0`.  
+- `find(3)` → `parent[3] = 2`, so we call `find(2)`, which returns `2`.  
+
+This implementation works, but if the tree becomes too deep, `find(x)` can take **O(n) time** in the worst case.  
+
+# Union Operation  
+
+To merge two sets, we find their leaders and make one leader the parent of the other.  
+
+```cpp
+void unite(int x, int y) {
+    int leaderX = find(x);
+    int leaderY = find(y);
+    if (leaderX != leaderY) {
+        parent[leaderY] = leaderX; // Merge sets
+    }
+}
+```
+
+### Example  
+
+Initially, all elements are separate:  
+
+```
+Index:    0  1  2  3  4  
+Parent:   0  1  2  3  4  
+```
+
+1. **`unite(0, 1)`**  
+   - `find(0) = 0`, `find(1) = 1`  
+   - We set `parent[1] = 0`  
+   ```
+   Index:    0  1  2  3  4  
+   Parent:   0  0  2  3  4  
+   ```
+
+2. **`unite(3, 4)`**  
+   - `find(3) = 3`, `find(4) = 4`  
+   - We set `parent[4] = 3`  
+   ```
+   Index:    0  1  2  3  4  
+   Parent:   0  0  2  3  3  
+   ```
+
+3. **`unite(1, 4)`**  
+   - `find(1) = 0`, `find(4) = 3`  
+   - We set `parent[3] = 0`  
+   ```
+   Index:    0  1  2  3  4  
+   Parent:   0  0  2  0  3  
+   ```
+
+Now, `find(4)` would go from `4 → 3 → 0`, showing that `4` and `1` are connected.
+# Path Compression  
+
+In our current implementation, the `find(x)` function repeatedly follows parent pointers until it reaches the leader. However, this can create long chains of parent pointers, leading to inefficient queries.  
+
+For example, after performing some `unite` operations, we might end up with the following structure:  
+
+```
+Index:    0  1  2  3  4  
+Parent:   0  0  2  2  3  
+```
+
+If we call `find(4)`, the sequence of calls is:  
+
+```
+find(4) → parent[4] = 3 → find(3) → parent[3] = 2 → find(2) = 2  
+```
+
+This requires multiple recursive calls. Instead, we can optimize `find(x)` using **path compression**, which shortens the path by directly connecting every node along the way to the leader.  
+
+# Optimized Find with Path Compression  
+
+Instead of returning `find(parent[x])` directly, we update `parent[x]` to be the leader of the set.  
+
+```cpp
+int find(int x) {
+    if (parent[x] == x) return x;
+    return parent[x] = find(parent[x]); // Path compression
+}
+```
+
+With this change, whenever we call `find(x)`, every node along the path will now directly point to the leader.  
+
+### Example  
+
+If we call `find(4)`, the calls proceed as follows:  
+
+```
+find(4) → parent[4] = 3 → find(3) → parent[3] = 2 → find(2) = 2  
+```
+
+After path compression, `parent[4]` and `parent[3]` are directly set to `2`, giving us:  
+
+```
+Index:    0  1  2  3  4  
+Parent:   0  0  2  2  2  
+```
+
+Now, future `find(4)` calls return `2` in a single step.  
+
+# Effect of Path Compression  
+
+Path compression significantly reduces the height of the trees. In the worst case, without compression, the tree can become **linear**, leading to `O(n)` `find(x)`. With path compression, the time complexity reduces to **O(α(n))**, where **α(n)** is the **inverse Ackermann function**, which grows extremely slowly. For all practical inputs, `α(n) ≤ 5`, making operations **almost constant time**.  
+
+# Complete Implementation  
+
+With path compression included, the full implementation is:  
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+const int N = 100005;
+int parent[N];
+
+void init(int n) {
+    for (int i = 0; i < n; i++) parent[i] = i;
+}
+
+int find(int x) {
+    if (parent[x] == x) return x;
+    return parent[x] = find(parent[x]); // Path compression
+}
+
+void unite(int x, int y) {
+    int leaderX = find(x);
+    int leaderY = find(y);
+    if (leaderX != leaderY) {
+        parent[leaderY] = leaderX;
+    }
+}
+```
+
+This implementation allows merging and finding sets in nearly constant time. However, even with path compression, `unite(x, y)` might still create unbalanced trees. To address this, we can use **union by rank**, which ensures smaller trees always attach under larger ones.

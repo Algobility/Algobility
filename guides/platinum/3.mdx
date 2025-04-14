@@ -1,84 +1,162 @@
 ---
 title: Graph Traversal
 date: '2022-01-01'
+description: Introduction to Depth-First Search (DFS) & Breadth-First Search (BFS)
 credits: Ahmad Bilal
 ---
 
-Perhaps the two most important algorithms to understand when working with graphs are DFS (Depth-first search) and BFS (Breadth-first search). BFS and DFS are two algorithms that allow us to traverse graphs (i.e. visit every node in the graph and process them just like one would do with an array ). 
+# Motivation
+
+When you want to perform an operation on every element in an array, you have to traverse the array. Graphs are no different - to perform an arbitrary operation on every node within a graph, you must traverse the graph. However, since graphs can often end up having complex branchings, traversing a graph is not as simple as using a `for` loop.  
+
+There are two main algorithms that allow us to traverse graphs - Depth-First Search (DFS) and Breadth-First Search (BFS)
 
 
-## Depth-First Search (DFS)
+# Depth-First Search (DFS)
 
-DFS is like exploring a maze by going as far as possible along one path before backtracking to the last intersection and repeating the process. More specically, DFS follows these steps:
+Imagine you are exploring a maze. At every junction, you have multiple paths to choose from. One way to explore the maze is to keep going forward until you hit a dead end, and then backtrack to the last junction where there was an unexplored path. From here, you can go down the unexplored path and repeat. This is exactly how Depth-First Search (DFS) works. You start off at one node, and find all of its neighbors using the adjacent list/matrix used to represent the graph. Then, you visit one of these neighbors and repeat the process. If there are no unvisited neighbors, you have reached a "dead end" and need to backtrack to the most recent node that still had unvisited neighbors.  
 
-1. **Start at a node.**
+More specifically, DFS follows these steps:
 
-   Choose a starting node to begin your traversal.
+1. Start at a node.  
+2. Mark it as **visited** so we don’t visit it again (prevents an infinite loop)
+3. Perform the arbitrary operation on the node
+4. Repeat step 2 and step 3 on all unvisited neighbors of the node. The path through one unvisited neighbor should be fully explored before moving onto the next unvisited neighbor.   
+5. If we reach a dead end (a node has no unvisited neighbors), we backtrack.  
+6. Repeat until all nodes have been explored.  
 
-2. **Visit the node.**
+# Example Walkthrough  
 
-   Mark the node as visited and process it as needed.
+Consider this graph:  
 
-3. **Explore adjacent unvisited nodes.**
 
-   Move to an adjacent node that hasn't been visited yet.
+<Figure src='/guide_images/DBFS.png' classExtensions='w-1/2' />
 
-4. **Repeat steps 2 and 3.**
+Let’s say we start DFS from node `A`. The traversal will proceed as follows:  
 
-   Continue this process until there are no more unvisited adjacent nodes, then backtrack to the previous node and repeat steps 2 and 3.
+1. Start at `A`, mark it visited.  
+2. Move to `B`, mark it visited.  This is the first unvisited neighbor of A.
+3. Move to `D`, mark it visited.  This is the first unvisited neighbor of D. Note that we visit `D` before `C` because in DFS, the path down `B` must be fully explored before we move to `C` (this is where the name 'depth-first' comes from)
+4. `D` has no unvisited neighbors, so backtrack to `B`.  
+5. Move to `E`, mark it visited.  
+6. Move to `G`, mark it visited.  
+7. `G` has no unvisited neighbors, so backtrack to `E`. Since `E` also no longer has any unvisited neighbors, we backtrack to `B`, then backtrack to `A`.  
+8. Move to `C`, mark it visited. This is the second unvisited neighbor of A.  
+9. Move to `F`, mark it visited.  
+10. `F` has no unvisited neighbors, so backtrack to `C`, then backtrack to `A`.  
 
-Let's visualize this with an example:
+The order in which the nodes were visited was
+```text
+A → B → D → E → G → C → F
+```  
 
-```
-Graph:   1
-        / | \
-       2  3  4
+# Implementation  
 
-Starting at node 1, a DFS traversal might look like this:
+DFS can be implemented in **two ways**:  
 
-1 (visited) -> 2 (visited) -> 3 (visited) -> 4 (visited)
-```
+1. **Recursive DFS** (natural, but may cause stack overflow for deep graphs).  
+2. **Iterative DFS using a stack** (avoids recursion limit issues).  
 
-DFS explores as deeply as possible before backtracking. In this example, it visited all nodes along a branch before moving to the next one.
-
-## Breadth-First Search (BFS)
-
-BFS is like exploring a maze level by level. It operates in a "breadth-first" manner. Here's how BFS works:
-
-1. **Start at a node.**
-
-   Choose a starting node to begin your traversal.
-
-2. **Visit the node.**
-
-   Mark the node as visited and process it as needed.
-
-3. **Explore all adjacent unvisited nodes.**
-
-   Move to all adjacent nodes that haven't been visited yet.
-
-4. **Repeat steps 2 and 3.**
-
-   Continue this process until you have visited all reachable nodes at the current level before moving to the next level.
-
-Let's visualize BFS with an example:
+Here’s a **recursive implementation**:  
 
 ```cpp
-Graph:   1
-        / | \
-       2  3  4
+#include <bits/stdc++.h>
+using namespace std;
 
-Starting at node 1, a BFS traversal might look like this:
+const int N = 100005;
+vector<int> adj[N];
+bool visited[N];
 
-1 (visited) -> 2 (visited) -> 3 (visited) -> 4 (visited)
+void dfs(int node) {
+    visited[node] = true;
+    cout << node << " "; // Process node
+
+    for (int neighbor : adj[node]) {
+        if (!visited[neighbor]) {
+            dfs(neighbor);
+        }
+    }
+}
+```
+# How BFS Works  
+
+DFS explores **one path deeply before moving to another path**, but sometimes this isn’t the best way to explore a graph. Instead of diving deep, what if we explored **all nodes at the current level before moving deeper**? This is exactly how **Breadth-First Search (BFS)** works.  
+
+BFS works like **ripples in water**. Imagine you drop a stone in a pond—waves spread outward in circles. Similarly, BFS starts from a node and visits all **immediate neighbors** before moving on to their neighbors, and so on.  
+
+BFS is particularly useful when:  
+
+- **Finding the shortest path** in an **unweighted** graph. Since BFS explores level by level, the first time we reach a node, it must be via the shortest possible path.  
+- **Finding the connected components** of an undirected graph.  
+- **Solving puzzles like the shortest way to solve a Rubik’s cube or a knight’s shortest path on a chessboard.**  
+
+# Example Walkthrough  
+
+We use the same graph from DFS:  
+
+```
+     A
+    / \
+   B   C
+  / \   \
+ D   E   F
+      \
+       G
+```  
+
+Let’s say we start BFS from node `A`. The traversal will proceed as follows:  
+
+1. Start at `A`, mark it visited and enqueue it.  
+2. Dequeue `A` and visit its neighbors `B` and `C`, marking them visited and enqueuing them.  
+3. Dequeue `B` and visit its neighbors `D` and `E`, marking them visited and enqueuing them.  
+4. Dequeue `C` and visit its neighbor `F`, marking it visited and enqueuing it.  
+5. Dequeue `D`. It has no unvisited neighbors.  
+6. Dequeue `E` and visit its neighbor `G`, marking it visited and enqueuing it.  
+7. Dequeue `F`. It has no unvisited neighbors.  
+8. Dequeue `G`. It has no unvisited neighbors.  
+
+The order in which the nodes were visited was  
+```text
+A → B → C → D → E → F → G
+```  
+
+Unlike DFS, BFS visits all nodes **at the same level before moving deeper into the graph**. Notice how all nodes **one edge away from `A` (B and C) were visited first**, then all nodes **two edges away (D, E, F)**, and finally nodes **three edges away (G)**.  
+
+# Implementation  
+
+BFS requires a **queue** to maintain the order in which nodes should be visited.  
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+const int N = 100005;
+vector<int> adj[N];
+bool visited[N];
+
+void bfs(int start) {
+    queue<int> q;
+    q.push(start);
+    visited[start] = true;
+
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        cout << node << " "; // Process node
+
+        for (int neighbor : adj[node]) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                q.push(neighbor);
+            }
+        }
+    }
+}
 ```
 
-BFS explores all nodes at the current level before moving to the next level, providing a broader view of the graph.
+# Key Observations  
 
-## When to Use DFS or BFS
-
-- **DFS**: Use DFS when you want to explore as deeply as possible, like when searching for a path or finding connected components in an undirected graph.
-
-- **BFS**: Use BFS when you want to explore nodes level by level, like finding the shortest path between two nodes or solving problems that require finding the smallest number of steps to reach a goal.
-
-In competitive programming, having a strong grasp of DFS and BFS is invaluable, as they form the basis for solving various graph-related problems. By understanding when and how to use these algorithms, you'll be well-prepared to tackle a wide range of graph traversal challenges. Happy coding!
+- **BFS explores layer by layer** rather than diving deep like DFS.  
+- **It uses a queue** instead of recursion, ensuring that nodes are processed in the order they are discovered.  
+- **BFS guarantees the shortest path in an unweighted graph**, which DFS does not.  
+- **Unlike DFS, BFS requires more memory** since it keeps track of the entire current level before moving deeper.

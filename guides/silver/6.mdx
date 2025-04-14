@@ -1,84 +1,135 @@
 ---
-title: 'Sorting'
-description: 'Sorting arrays in ascending order'
+title: 'Recursion'
+description: 'Functions calling themselves'
 date: '2023-11-05'
 credits: Ahmad Bilal
-practicable: true
 ---
 
-Sorting is the process of taking an array and rearranging the elements such that they are ordered in ascending or descending order. C++ provides us with a built-in function that can sort an array. While the silver rank doesn't require you to understand the logic for how sorting works under the hood, you may take a look at the following resources if you are curious.
+Recursion is a powerful programming technique where a function calls itself within its own definition. Recursion is a valuable tool for solving problems that can be broken down into smaller instances of the same problem. In this article, we'll delve into recursion with a more detailed walkthrough of two classic examples: factorial calculation and the Fibonacci series.
 
-- <a href='https://cses.fi/book/book.pdf#page=35'>https://cses.fi/book/book.pdf#page=35</a>
-- <a href='https://visualgo.net/en/sorting'> https://visualgo.net/en/sorting </a>
+# Factorial Calculation
 
-# Sorting a simple array
 
-To sort an array, use `sort(arr, arr + n)` where `n` is the number of elements to be sorted. By default, the `sort()` function sorts an array in ascending order. 
+Consider the following problem:
 
-Note: `sort()` modifies the array passed in instead of simply returning a sorted version of it.
+_The factorial of a number <Math inline> n </Math>, denoted as <Math inline> n! </Math>, is the product of all positive integers from 1 to n. For instance, <Math inline>5! = 5\*4\*3\*2\*1</Math>. Write an algorithm that computes the the factorial of any given number_ 
+
+This problem can be solved using a messy for loop, however a more elegant and concise solution can be obtained using recursion. 
+
+Notice how the factorial of a number <Math inline>n</Math>, is really just <Math inline>n*(n-1!)</Math>. In other words, the factorial of any numbers, is that number multiplied by the factorial of one number less than it. For example,
+
+<Math block> 5! = 5 \* 4 \* 3 \* 2 \* 1 </Math>
+<Math block> 5! = 5 \* (4 \* 3 \* 2 \* 1) </Math>
+<Math block> 5! = 5 \* 4! </Math>
+
+
+Since the problem of finding a factorial of a number can be broken down into a smaller version of itself, we can create a recursive function that computes the factorial of a number like so:
 
 ```cpp
-#include <bits/stdc++.h>    
-using namespace std;
+int factorial(int n) {
+    return n * factorial(n - 1); //the factorial of n is just n * (n-1)!
+}
+int main(){
+    int input;
+    cin >> input;
+    cout << factorial(input);   //output the factorial of the input
+}
+```
 
-int main() {
-    int arr[] = { 2,4,2,5,2,3 };
-    sort(arr, arr + 6);
-    for (int i = 0; i < 6; i++) {
-        cout << arr[i] << ' ';
+There's one slight problem with the above code, however. If this code were to be run, it would end up running in an infinite loop and never stopping. This is because any call to the `factorial()` function would cause a  call to the `factorial()` function which would in turn cause another call to the `factorial()` function. More specifically:
+
+- `factorial(5)` calls `factorial(4)`
+- `factorial(4)` calls `factorial(3)`
+- `factorial(3)` calls `factorial(2)`
+- `factorial(2)` calls `factorial(1)`
+- `factorial(1)` calls `factorial(0)`
+- `factorial(0)` calls `factorial(-1)`
+- `factorial(-1)` calls `factorial(-2)`
+- and so on ...
+
+What we really want is for our recursive calls to stop as soon as we reach `factorial(1)`. This is known as a base case, or the smallest version of the problem where the answer can be computed directly. The correct code should look something like this:
+
+```cpp
+int factorial(int n) {
+    if (n == 0) {
+        return 1; // Base case: 0! = 1
+    } else {
+        return n * factorial(n - 1); // Recursive case
     }
 }
 ```
 
-The following code outputs
+Now the calls look something like so:
+- `factorial(5)` calls `factorial(4)`
+- `factorial(4)` calls `factorial(3)`
+- `factorial(3)` calls `factorial(2)`
+- `factorial(2)` calls `factorial(1)`
+- `factorial(1)` returns 1;
+- At this point, the base case is reached, and the recursion stops. 
+- `factorial(2)` now takes the value of `factorial(1)` and multiplies it by 2. This yields a value of 2. This value is now returned by `factoral(2)`
+- `factorial(3)`, which had called `factorial(2)` now takes the value 2 returned by `factoral(2)` and multiplies it by 3. This yields a value of 6. This value is now returned by `factorial(3)`
+- `factorial(4)` uses the value of `factorial(3)` to return 24
+- `factorial(5)` uses the value of `factorial(4)` to return 120
 
+The result is computed step by step, and the final result of `factorial(5)` is 120, which is indeed 5!.
+
+# General Structure
+
+In general, recursive functions consist of two key elements:
+
+- Recursive Case: This is where the function calls itself with modified inputs to solve a smaller instance of the problem.
+- Base Case: This is the termination condition that stops the recursion and represents the simplest form of the problem that can be solved directly. Without this, the recursion would repeat indefinitely and cause the program to eventually crash.
+
+
+# The Fibonacci Series
+
+The Fibonacci sequence is a series where each number is the sum of the two preceding ones. It begins with 0 and 1, as follows: 0, 1, 1, 2, 3, 5, 8, 13, and so on. We'll write code to find the nth Fibonacci number using recursion.
+
+Notice how the nth Fibonacci number can be obtained by simply adding the (n-1)th and (n-2)th Fibonacci numbers. Since the question can be broken down into strictly smaller versions of itself, it can be solved using recursion.
+
+```cpp
+int fibonacci(int n) {
+    if (n == 0) {
+        return 0; // Base case: Fibonacci(0) = 0
+    }
+    if (n == 1) {
+        return 1; // Base case: Fibonacci(1) = 1
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2); // Recursive case
+}
 ```
-2 2 2 3 4 5 
-```
+
+Similar to the factorial example, we have base cases to terminate the recursion. When `n` reaches 0 or 1, we return the corresponding value directly. In the recursive case, we call the `fibonacci` function for (n-1) and (n-2), summing up their results.
 
 
+Remember, recursion should be used judiciously and always incorporate a base case to prevent infinite loops. It's a powerful tool for solving problems by breaking them down into smaller, manageable pieces.
+
+# Sample Problem: Sum of an Array
 
 <Exercise>
 <ExerciseQuestion>
-Given an array of size <Math inline>n</Math>, list out the 3 largest elements it contains. It is given that <Math inline>n>2</Math>. The first line of input will contain the value of <Math inline>n</Math>. The second line will contain <Math inline>n</Math>, space-seperated, integers representing the elements of the array. Output the 3 largest elements in ascending order, seperated by spaces.
+Write some code to find the sum of elements in an array using recursion instead of a linear search.
 </ExerciseQuestion>
-
 <ExerciseAnswer>
-
-
-To solve this problem, we can simply sort the array in ascending order and then print out the last 3 elements of the modified array.
-
-```cpp
-#include <bits/stdc++.h>    
-using namespace std;
-
-int main() {
-    int n; cin >> n;
-    int arr[n];
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
-    sort(arr, arr + n);
-    for (int i = n - 3; i < n; i++) {
-        cout << arr[i] << ' ';
+Notice how the sum of an array is simply the sum of:
+- the last element of that array
+- the array without the last element
+```
+int array_sum(int arr[], int size) {
+    if (size == 0) {
+        return 0; // Base case: empty array has sum 0
+    } else {
+        return arr[size - 1] + array_sum(arr, size - 1); // Recursive case
     }
 }
 ```
-
+Note: The same idea can be achieved using the first element of the array instead of the last
 </ExerciseAnswer>
 </Exercise>
 
 
-# Sorting vectors
-Sorting vectors isn't much different. Simply use `sort(v.begin(), v.end())` (or `sort(begin(v),end(v))`). The default sort function sorts the array in ascending order. 
 
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
-
-int main() {
-	vector<int> v{1, 3, 3, 120, 4};
-	sort(v.begin(), v.end());
-    //v is now sorted
-}
-```
+# Tips for Using Recursion Wisely
+- Consider using recursion only when it simplifies the problem.
+- Always define a base case to terminate recursion. Identify these when planning your solution.
+- Ensure progress toward the base case in each recursive call.  

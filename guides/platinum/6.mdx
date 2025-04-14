@@ -1,0 +1,120 @@
+---
+title: Dynamic Programming
+date: '2022-01-01'
+description: Memoization and Tabulation
+credits: Ahmad Bilal
+---
+
+# What is Dynamic Programming?
+Dynamic programming is a problem-solving approach that involves solving a larger problem by breaking it down into smaller subproblems (similar to recursion) and more importantly, reusing solutions to those subproblems to solve the main problem. The key idea is to avoid redundant calculations in order to optimize your algorithm. Dynamic programming is more so a general problem solving technique rather than a specific algorithm.
+
+# Fibonacci Series Example
+One classic example to illustrate dynamic programming is calculating the nth number in the Fibonacci sequence. Consider the following question:
+
+*The Fibonacci sequence is a series where each number is the sum of the two preceding ones. It begins with 0 and 1, as follows: 0, 1, 1, 2, 3, 5, 8, 13, and so on. Write some code to find the <Math inline>n^\{th\}</Math> fibonacci number*
+
+## Naive Recursive approach
+A naive approach to the aforementioned problem is to use simple recursion. 
+
+```cpp
+int fibonacci(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+```
+
+The problem with this approach is its efficiency. The recursive approach for calculating Fibonacci numbers recalculates the same Fibonacci number multiple times because it doesn't remember or store the results it has already computed. This lack of memory leads to redundant work. Here's a simple breakdown of the redundant function calls:
+
+When you call `fibonacci(4)`, it calls `fibonacci(3)` and `fibonacci(2)`. These each in turn call `fibonacci()` for smaller numbers. The recurvsive function calls can be seen in the following diagram:
+
+<Figure src='/guide_images/fiblarge.png' classExtensions='w-1/2' />
+
+Notice how `fibonacci(3)` is called twice and `fibonacci(2)` is called 4 times! This causes a lot of unneeded computation.
+
+
+## Memoization Approach
+
+Memoization is one of the techniques that falls under the branch of dynamic programming. It works well for problems that can be broken down into smaller subproblems that are often repeatedly queried. It involves us storing the results when we solve such subproblems so that if we ever have to compute them again, we can find the answer with a simple array lookup.
+
+With this memoization approach we can solve the focus problem with much more efficiency. All we have to do is simply store the value of `fibonacci(3)` when it is computed once. Then, every time `fibonacci(3)` is called after that, `fibonacci(3)` can simply return the previously computed value instead of recursively calling the `fibonacci()` again (which may be quite costly for larger values). Below is the implementation of this idea:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+const int MAX_N = 100; // Adjust the maximum value of n as needed.
+int memo[MAX_N];
+
+int fibonacci(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    if (memo[n] != 0) {
+        return memo[n];
+    }
+    memo[n] = fibonacci(n - 1) + fibonacci(n - 2);
+    return memo[n];
+}
+
+int main() {
+    int n = 10;  // Change this value to compute a different Fibonacci number.
+    
+    // Initialize the memoization table with 0.
+    for (int i = 0; i <= n; i++) {
+        memo[i] = 0;
+    }
+    
+    int result = fibonacci(n);
+    cout << "Fibonacci(" << n << ") = " << result << endl;
+    return 0;
+}
+
+```
+In this code, we use the array `memo` to store the results of Fibonacci calculations. If we've already calculated the Fibonacci number for a particular <Math inline>n</Math>, we directly retrieve it from `memo`. Otherwise, we calculate it, store it in memo, and return the result. This approach has a time complexity of <Math inline>O(n)</Math> and significantly improves performance for large n.
+
+## Tabulation Approach
+Tabulation is another dynamic programming technique that involves solving subproblems iteratively from the smallest to the largest. In the context of the Fibonacci sequence, you create an array to store the results of Fibonacci numbers and build the solution from the ground up. This way, finding the <Math inline>n^\{th\}</Math>  fibonacci number can be done by computing the first fibonacci number, then the second (using the result of the first fibonacci), then the third (using the previous two results), then the fourth (using the previous two results) and so on until we reach <Math inline>n</Math>. 
+
+Here's how you can implement tabulation:
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int fibonacci(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    int dp[n + 1];
+    dp[0] = 0;
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    return dp[n];
+}
+
+int main() {
+    int n = 10;  // Change this value to compute a different Fibonacci number.
+    int result = fibonacci(n);
+    cout << "Fibonacci(" << n << ") = " << result << endl;
+    return 0;
+}
+```
+
+In this code, we use an array dp to store the results of Fibonacci calculations iteratively, starting from the base cases ( <Math inline>F(0)</Math>  and <Math inline>F(1)</Math>) up to the desired <Math inline>n</Math>. The tabulation approach also has a time complexity of <Math inline>O(n)</Math> and is efficient for calculating large Fibonacci numbers.
+
+
+# Conclusion
+In summary, while the naive recursive approach has exponential time complexity, both the memoization and tabulation approaches significantly improve the efficiency of calculating Fibonacci numbers by avoiding redundant calculations. These dynamic programming techniques are applicable to a wide range of problems where subproblem overlap occurs.
+
+In order to quickly identify if a problem can be solved with dynamic programming, look out for these properities of the problem:
+
+1. **Optimal Substructure**
+This means that the main problem can be constructed from the optimal solutions of its smaller subproblems. In other words, you can divide a complex problem into simpler, manageable parts.
+
+2. **Overlapping Subproblems**
+This means the subproblems you solve overlap or repeat. To optimize the process, you store the solutions to these subproblems so you don't need to recalculate them.
+

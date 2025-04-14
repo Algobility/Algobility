@@ -8,7 +8,7 @@ import { Menu, MenuItem } from '@mui/material';
 
 import { useUser } from '../../customStuff/useDB';
 import { useRouter } from 'next/router';
-import { FaHome, FaChalkboardTeacher, FaBook } from 'react-icons/fa';
+import { FaHome, FaCode, FaChalkboardTeacher, FaBook } from 'react-icons/fa';
 import { AiFillFileText } from 'react-icons/ai';
 import { RiSwordFill } from 'react-icons/ri';
 
@@ -66,7 +66,7 @@ export default function Nav(props) {
           />
           <Navel
             name='Practice'
-            icon={myDashboardIcon}
+            icon={FaCode}
             selected={props.selected == 'practice'}
             onClicky={() => setSendPage('/practice')}
           />
@@ -123,3 +123,4 @@ function myDashboardIcon(props) {
     </span>
   );
 }
+

@@ -1,15 +1,134 @@
 ---
-title: Meet in the Middle
+title: Euler Tour Technique
+description: Linearize trees while preserving hiearchy
 date: '2022-01-01'
 credits: Ahmad Bilal
 ---
-
 # Motivation
 
-There is no Motivation
+If we can store a tree as an array such that each subtree corresponds to a contiguous range of elements in the array, we can use range operations and data structures to efficiently perform operations on subtrees! The Euler Tour Technique is a way to achieve this by flattening the tree into an array while preserving the overall structure.
 
-# Code
+To construct an Euler Tour array, we start from the root node of the tree and traverse the tree using DFS. Every time we visit a node, we record it in the tour array. If we revisit a node after backtracking, we record it again. This process ensures that every node appears twice, once when it is first visited and once when backtracking from its last child. The position of a node’s first occurrence in the tour is called its entry time, and its second occurrence is called its exit time. These times provide a way to quickly determine whether one node is inside another’s subtree and allow subtree operations to be transformed into range queries.
 
-```
-int arr[10] = [0,1,0,4]
+The Euler Tour array records nodes in the order they are visited during DFS. Alongside this, we maintain an entry time array and an exit time array, which store the first and last occurrences of each node in the tour, respectively.
+
+If the entry time of node `u` is before the entry time of node `v`, and the exit time of `v` is before the exit time of `u`, then `v` lies inside `u`'s subtree. This follows directly from the DFS traversal, where the entire subtree of a node is explored before moving to another part of the tree.
+
+For any subtree query, we only need to consider the range `[entry[u], exit[u]]` in the Euler Tour array. Since all nodes in this range belong to `u`'s subtree, range data structures such as a segment tree or a Fenwick tree can be used to efficiently compute results.
+
+The Euler Tour with entry and exit times has a direct connection with Range Sum Queries (RSQ) and Range Minimum Queries (RMQ). If we assign a value to each node, computing the sum over a subtree becomes a simple range sum query. If we assign depth values to nodes, finding the lowest depth node in a subtree becomes a range minimum query.
+
+# Example Problem  
+
+Consider the following problem:
+
+*You are given a tree with `N` nodes, where each node has an initial value. The tree is rooted at node `1`. You need to handle two types of queries:*
+
+*1. Update the value of a node: Given a node `u`, set its value to `x`.  
+2. Compute the sum of all values in a subtree: Given a node `u`, find the sum of values for all nodes in the subtree of `u`.*  
+
+Since subtree queries involve all descendants of a node, a naive DFS solution for each query would be too slow. Instead, using Euler Tour arrays allows us to convert subtree queries into range sum queries over a 1D array.  
+
+# Solution  
+
+1. Perform an Euler Tour to flatten the tree into an array while tracking entry and exit times of each node.  
+2. The subtree of a node `u` corresponds to the range `[entry[u], exit[u]]` in the Euler Tour array.  
+3. Use a Fenwick Tree (BIT)  to efficiently update values and compute subtree sums.  
+
+This approach ensures updates and queries run in <Math inline>O(log N)</Math> time instead of <Math inline>O(N)</Math> per query in a naive DFS approach.
+
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+const int MAXN = 200005;
+vector<int> tree[MAXN];
+int entry[MAXN], exitTime[MAXN], eulerTour[MAXN], values[MAXN];
+int timer = 0;
+
+// Fenwick Tree for Range Sum Queries
+struct FenwickTree {
+    vector<long long> bit;
+    int n;
+    
+    FenwickTree(int size) {
+        n = size;
+        bit.assign(n + 1, 0);
+    }
+    
+    void update(int idx, int delta) {
+        for (; idx <= n; idx += idx & -idx)
+            bit[idx] += delta;
+    }
+    
+    long long query(int idx) {
+        long long sum = 0;
+        for (; idx > 0; idx -= idx & -idx)
+            sum += bit[idx];
+        return sum;
+    }
+    
+    long long rangeSum(int l, int r) {
+        return query(r) - query(l - 1);
+    }
+};
+
+void dfs(int node, int parent, FenwickTree &fenwick) {
+    entry[node] = ++timer;
+    eulerTour[timer] = values[node];
+    fenwick.update(timer, values[node]);  // Initialize Fenwick Tree
+    
+    for (int child : tree[node]) {
+        if (child != parent) {
+            dfs(child, node, fenwick);
+        }
+    }
+    
+    exitTime[node] = timer;
+}
+
+int main() {
+    int n, q;
+    cin >> n >> q;
+
+    // Read node values
+    for (int i = 1; i <= n; i++) {
+        cin >> values[i];
+    }
+
+    // Read tree edges
+    for (int i = 1; i < n; i++) {
+        int u, v;
+        cin >> u >> v;
+        tree[u].push_back(v);
+        tree[v].push_back(u);
+    }
+
+    // Initialize Fenwick Tree
+    FenwickTree fenwick(n);
+
+    // Compute Euler Tour and construct Fenwick Tree
+    dfs(1, -1, fenwick);
+
+    while (q--) {
+        int type;
+        cin >> type;
+        if (type == 1) {
+            // Update node value
+            int u, x;
+            cin >> u >> x;
+            int diff = x - eulerTour[entry[u]];
+            eulerTour[entry[u]] = x;
+            fenwick.update(entry[u], diff);
+        } else if (type == 2) {
+            // Query subtree sum
+            int u;
+            cin >> u;
+            cout << fenwick.rangeSum(entry[u], exitTime[u]) << "\n";
+        }
+    }
+
+    return 0;
+}
 ```

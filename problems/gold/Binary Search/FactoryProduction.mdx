@@ -1,0 +1,81 @@
+---
+title: 'Factory Production'
+date: '2023-08-25'
+credits: 'Ahmad Bilal'
+time: 2
+mem: 256
+tcIn: ["3 10 \n1 2 3  "]
+tcOut: ["16"]
+---
+
+
+You work in a factory with <Math inline>n</Math> machines. Each machine is capable of producing items at an increasing time cost. In particular, machine <Math inline>i</Math> with a rate parameter <Math inline>r[i]</Math> produces items as follows:  
+
+- The first item takes <Math inline>r[i]</Math> time units.  
+- The second item takes an additional <Math inline>2 * r[i]</Math> time units.  
+- The third item takes an additional <Math inline>3 * r[i]</Math> time units, and so on.  
+
+In other words, if machine <Math inline>i</Math> produces <Math inline>X</Math> items consecutively, the total time required is  
+
+<Math inline>r[i] * (X * (X + 1) / 2)</Math>.  
+
+All machines operate in parallel. Your goal is to produce at least <Math inline>Q</Math> items in total using these machines. Find the minimum time <Math inline>T</Math> needed so that the sum of items produced by all machines is at least <Math inline>Q</Math>.  
+
+# Input  
+
+The first line contains two integers <Math inline>n</Math> and <Math inline>Q</Math>  
+<Math inline>(1 \leq n \leq 10^5, 1 \leq Q \leq 10^9)</Math>.  
+
+The second line contains <Math inline>n</Math> integers <Math inline>r[1], r[2], \dots, r[n]</Math>  
+<Math inline>(1 \leq r[i] \leq 10^6)</Math>.  
+
+# Output  
+
+Print a single integer: the minimum time <Math inline>T</Math> required to produce at least <Math inline>Q</Math> items.  
+
+# Example  
+
+Input:
+```
+3 10  
+1 2 3  
+```  
+
+Output:  
+```
+16  
+```  
+
+Explanation:
+
+Let’s verify <Math inline>T = 16</Math>:  
+
+- **Machine 1** <Math inline>(r = 1)</Math>: Find the maximum <Math inline>X</Math> such that  
+  <Math inline>1 * (X * (X + 1) / 2) \leq 16</Math>.  
+  Here, <Math inline>X = 5</Math> works since <Math inline>5 * 6 / 2 = 15 \leq 16</Math>, but <Math inline>X = 6</Math> would require <Math inline>6 * 7 / 2 = 21 > 16</Math>.  
+
+- **Machine 2** <Math inline>(r = 2)</Math>: Find the maximum <Math inline>X</Math> such that  
+  <Math inline>2 * (X * (X + 1) / 2) \leq 16</Math>, i.e. <Math inline>X * (X + 1) \leq 16</Math>.  
+  <Math inline>X = 3</Math> is the maximum, as <Math inline>3 * 4 = 12 \leq 16</Math> but <Math inline>4 * 5 = 20 > 16</Math>.  
+
+- **Machine 3** <Math inline>(r = 3)</Math>: Find the maximum <Math inline>X</Math> such that  
+  <Math inline>3 * (X * (X + 1) / 2) \leq 16</Math>.  
+  <Math inline>X = 2</Math> works since <Math inline>3 * (2 * 3) / 2 = 9 \leq 16</Math>, while <Math inline>X = 3</Math> would require <Math inline>3 * (3 * 4) / 2 = 18 > 16</Math>.  
+
+The total items produced are <Math inline>5 + 3 + 2 = 10</Math>, which meets the target <Math inline>Q = 10</Math>.  
+
+
+
+# Solution
+<Solution>
+
+A natural way to solve the problem is to perform a binary search on <Math inline>T</Math>, the minimum time required. For each candidate time <Math inline>T</Math>, determine if the sum of items produced by all machines is at least <Math inline>Q</Math>.  
+
+For each machine <Math inline>i</Math> and a fixed <Math inline>T</Math>, we need to compute the maximum number of items <Math inline>X</Math> such that:  
+
+<Math inline>r[i] * (X * (X + 1) / 2) \leq T</Math>.  
+
+Since the function on the left is strictly increasing in <Math inline>X</Math>, you can use binary search (or a closed-form solution via quadratic equations if you are comfortable handling precision issues) to find this maximum <Math inline>X</Math>. This inner binary search, performed for each machine, is nested within the outer binary search on <Math inline>T</Math>.  
+
+By combining these two layers of binary search, you can efficiently compute the answer even with large input constraints.  
+</Solution>

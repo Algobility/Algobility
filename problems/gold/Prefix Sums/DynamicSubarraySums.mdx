@@ -1,0 +1,93 @@
+---
+
+title: 'Dynamic Subarray Sum Queries'  
+date: '2025-03-21'  
+credits: 'Ahmad Bilal'  
+time: 5  
+mem: 512  
+tcIn: ["5 5\n1 2 3 4 5\n2 1 5 6\n1 3 10\n2 2 5 15\n1 5 -2\n2 1 5 10"]  
+tcOut: ["2\n1\n3"]  
+
+---
+
+You are given an array of <Math inline>N</Math> integers, <Math inline>A[1]</Math>, <Math inline>A[2]</Math>, …, <Math inline>A[N]</Math>. You must process <Math inline>Q</Math> queries on this array. There are two types of queries:
+
+1. **Update Query (Format: `1 i X`):** For this query, set `A[i] = X`.
+
+2. **Count Query (Format: `2 L R X`):** Count the number of contiguous subarrays of the subarray <Math inline>A[L..R]</Math> whose sum is exactly <Math inline>X</Math>.
+
+For example, consider the array <Math inline>A = [1, 2, 3, 4, 5]</Math> and a count query <Math inline>2 1 5 6</Math>. The subarrays of <Math inline>A[1..5]</Math> with sum <Math inline>6</Math> are <Math inline>[1,2,3]</Math> and <Math inline>[2,4]</Math> (if there were such a combination). 
+
+# Input
+
+- The first line contains two integers <Math inline>N</Math> and <Math inline>Q</Math> (<Math inline>1 ≤ N, Q ≤ 2*10^5</Math>).
+- The second line contains <Math inline>N</Math> integers <Math inline>A[1]</Math>, <Math inline>A[2]</Math>, …, <Math inline>A[N]</Math> (<Math inline>|A[i]| ≤ 10^9</Math>).
+- Each of the next <Math inline>Q</Math> lines contains a query in one of the following formats:
+  - <Math inline>1 i X</Math> for an update query (<Math inline>1 ≤ i ≤ N</Math> and <Math inline>|X| ≤ 10^9</Math>).
+  - <Math inline>2 L R X</Math> for a count query (<Math inline>1 ≤ L ≤ R ≤ N</Math> and <Math inline>|X| ≤ 10^15</Math>).
+
+# Output
+
+For each query of type 2, output a single integer: the number of subarrays of <Math inline>A[L..R]</Math> whose sum is exactly <Math inline>X</Math>.
+
+# Example
+
+Input:  
+```text
+1 2 3 4 5
+2 1 5 6
+1 3 10
+2 2 5 15
+1 5 -2
+2 1 5 10
+```
+
+Output:  
+```text
+2
+1
+3
+```
+
+Explanation:
+
+- The first query is of type 2 on the array <Math inline>[1,2,3,4,5]</Math> asking for the number of subarrays with sum <Math inline>6</Math> in the range <Math inline>[1,5]</Math>.
+- The second query updates <Math inline>A[3]</Math> to <Math inline>10</Math>, so the array becomes <Math inline>[1,2,10,4,5]</Math>.
+- The third query asks for the number of subarrays with sum <Math inline>15</Math> in the range <Math inline>[2,5]</Math>.
+- The fourth query updates <Math inline>A[5]</Math> to <Math inline>-2</Math>, so the array becomes <Math inline>[1,2,10,4,-2]</Math>.
+- The final query asks for the number of subarrays with sum <Math inline>10</Math> in the range <Math inline>[1,5]</Math>.
+
+<Solution>
+
+This problem is challenging because it combines dynamic array updates with subarray sum queries, a scenario where traditional prefix sum techniques (which work excellently for static arrays) must be augmented with advanced data structures to handle modifications. A naive approach that recomputes prefix sums for every query would be too slow given the constraints.
+
+The key insights and techniques to solve the problem are:
+
+1. <Math inline>Prefix Sum</Math> Foundation:  
+   For a static array, the sum of any subarray <Math inline>A[L..R]</Math> can be computed using prefix sums:  
+   <Math inline>S[i] = A[1] + A[2] + … + A[i]</Math>, and the sum of the subarray is <Math inline>S[R] - S[L-1]</Math>.  
+   However, with update queries, these prefix sums need to be maintained dynamically.
+
+2. Data Structures for Dynamic Updates:  
+   To efficiently support both updates and range queries, one may use a segment tree or a binary indexed tree (Fenwick tree).  
+   The segment tree must be augmented to store more than just the sum. In particular, it should help count the number of subarrays with a given sum in a queried range.  
+   One common approach is to store in each segment tree node a mapping (for example, using a balanced binary search tree or a hash map) from possible prefix sums within that segment to their frequency counts.
+
+3. Merging Segments:  
+   When combining two segments (say, left segment <Math inline>L</Math> and right segment <Math inline>R</Math>), the total number of subarrays with sum exactly <Math inline>X</Math> in the merged segment can be computed by:  
+   - Counting subarrays fully in the left segment.  
+   - Counting subarrays fully in the right segment.  
+   - Counting subarrays that start in the left segment and end in the right segment.  
+   The last count requires, for each prefix sum value <Math inline>p</Math> from the left segment, looking up how many prefix sums in the right segment equal <Math inline>X - (total sum of left segment) - p</Math>.
+
+4. Handling Updates:  
+   When an update query <Math inline>1 i X</Math> occurs, the data structure must update the value at index <Math inline>i</Math> and appropriately adjust the stored prefix sums and frequency mappings along the path in the segment tree.  
+   This requires careful re-computation of the prefix sums for affected segments.
+
+5. Complexity Considerations:  
+   With <Math inline>N, Q ≤ 2*10^5</Math>, each query should ideally be processed in roughly <Math inline>O(\log N)</Math> time (with additional logarithmic factors due to merging frequency mappings).  
+   The overall complexity is roughly <Math inline>O(Q \cdot (\log N)^2)</Math>, which is acceptable under the given constraints if implemented with efficient data structures and careful optimization.
+
+In summary, solving this problem requires a deep understanding of prefix sums in a dynamic context, and it combines range query data structures with advanced merging techniques. The problem tests both theoretical knowledge of prefix sum properties and practical skills in implementing efficient data structures under tight performance constraints.
+
+</Solution>

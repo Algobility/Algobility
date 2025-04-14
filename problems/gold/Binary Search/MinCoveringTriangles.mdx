@@ -1,0 +1,77 @@
+---
+title: "Minimal Covering Triangle"  
+date: "2025-03-21"
+credits: "Ahmad Bilal"
+time: 3  
+mem: 512  
+tcIn: ["4\n0 0\n3 0\n0 4\n1 1"]  
+tcOut: ["6.000000"]  
+---
+
+You are given <Math inline>N</Math> points on the plane. Your task is to determine the smallest possible area of a triangle that encloses at least <Math inline>N-1</Math> points. A triangle encloses a point if the point lies inside or on the boundary of the triangle.  
+
+For example, if <Math inline>N = 3</Math>, the minimal triangle enclosing at least two points is simply the line segment between the two closest points, which has zero area. However, for larger <Math inline>N</Math>, the triangle must be carefully selected to minimize its area while still enclosing all but one point.  
+
+# Input  
+
+- The first line contains an integer <Math inline>N</Math> (<Math inline>3 ≤ N ≤ 200</Math>).  
+- The next <Math inline>N</Math> lines each contain two integers <Math inline>x[i]</Math> and <Math inline>y[i]</Math> (<Math inline>-10^4 ≤ x[i], y[i] ≤ 10^4</Math>), representing the coordinates of the <Math inline>i</Math>-th point.  
+
+# Output  
+
+Output a single floating-point number: the minimum area of a triangle that encloses at least <Math inline>N-1</Math> points. Your answer should have an absolute or relative error of at most <Math inline>10^{-6}</Math>.  
+
+# Example  
+
+Input:  
+```text
+4
+0 0
+3 0
+0 4
+1 1
+```
+
+Output:  
+```text
+6.000000
+```
+
+Explanation:  
+
+The smallest triangle enclosing at least 3 points is the one formed by <Math inline>(0,0)</Math>, <Math inline>(3,0)</Math>, and <Math inline>(0,4)</Math>. The point <Math inline>(1,1)</Math> is enclosed within it, and the area is <Math inline>\frac\{1\}\{2\} \cdot 3 \cdot 4 = 6</Math>.  
+
+<Solution>  
+
+This problem is difficult because the optimal triangle must be found among a large number of possibilities. The key insight is that at least one of the triangle’s vertices should be a given point, and the rest should be chosen to minimize the area while still enclosing <Math inline>N-1</Math> points.  
+
+# Observations  
+- If <Math inline>N = 3</Math>, the answer is trivially <Math inline>0.0</Math> because two points define a degenerate triangle (a line segment).  
+- The optimal triangle must have its vertices among the given <Math inline>N</Math> points, since otherwise, a smaller enclosing triangle could always be found by shifting a vertex to an existing point.  
+- The enclosing condition can be checked using the **point-in-triangle test**, which determines if a point lies inside or on the edges of a given triangle using barycentric coordinates or the cross-product method.  
+
+# Solution Approach  
+1. **Iterate Over Triangle Choices:**  
+   - Try every triplet of points as a candidate triangle.  
+   - Compute the area of the triangle using the determinant formula:  
+
+   <Math inline>A = \frac{1}{2} \left| x_1(y_2 - y_3) + x_2(y_3 - y_1) + x_3(y_1 - y_2) \right|</Math>  
+
+2. **Check the Enclosing Condition:**  
+   - For each triangle, count how many points lie inside or on the boundary using the point-in-triangle test.  
+   - If at least <Math inline>N-1</Math> points are inside, update the minimum area found.  
+
+3. **Binary Search on Area (Optimization Trick):**  
+   - Instead of iterating over all triangles, use **binary search** on the minimal area.  
+   - For a candidate area <Math inline>A</Math>, check if there exists a triangle with area ≤ <Math inline>A</Math> that encloses <Math inline>N-1</Math> points.  
+   - If such a triangle exists, try a smaller area; otherwise, try a larger one.  
+
+# Complexity Analysis  
+- The brute-force method of checking all <Math inline>O(N^3)</Math> triangles works for <Math inline>N \leq 200</Math>, but checking the enclosing condition for each triangle requires <Math inline>O(N)</Math> operations, leading to <Math inline>O(N^4)</Math> worst-case complexity.  
+- Using a **sorted angle sweep** or **convex hull optimizations**, we can reduce this to approximately <Math inline>O(N^3 \log(\text\{Precision\}))</Math>, which is feasible.  
+
+# Precision Considerations  
+- Use floating-point comparisons with a small epsilon <Math inline>\varepsilon = 10^{-9}</Math> to avoid numerical instability.  
+- Avoid exact equality checks for floating-point values and use cross-product methods instead of division to prevent precision loss.  
+
+</Solution>

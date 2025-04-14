@@ -4,9 +4,10 @@ import { Button, IconButton, Slide, useDisclosure, Box, Lorem, CloseButton } fro
 import { HamburgerIcon } from '@chakra-ui/icons';
 import Navel from './navel';
 import Mnavel from './Mnavel.jsx';
-import { FaHome, FaChalkboardTeacher, FaCode } from 'react-icons/fa';
+import { FaHome, FaBook, FaChalkboardTeacher, FaCode } from 'react-icons/fa';
 import { BsConeStriped } from 'react-icons/bs';
 import { useRouter } from 'next/router';
+import { RiSwordFill } from 'react-icons/ri';
 
 function myDashboardIcon(props) {
   return (
@@ -59,8 +60,8 @@ export default function MobileNav(props) {
           <div className='flex flex-col justify-start items-start h-1/2 mt-24'>
             <Mnavel name='Home' icon={FaHome} selected={props.selected == 'home'} onClicky={() => setSendPage('/')} />
             <Mnavel
-              name='Train'
-              icon={BsConeStriped}
+              name='Guides'
+              icon={FaBook}
               selected={props.selected == 'learn'}
               onClicky={() => setSendPage('/learn')}
             />
@@ -71,10 +72,10 @@ export default function MobileNav(props) {
               onClicky={() => setSendPage('/practice')}
             />
             <Mnavel
-              name='Dashboard'
-              icon={myDashboardIcon}
-              selected={props.selected == 'dashboard'}
-              onClicky={() => setSendPage('/dashboard')}
+              name='Compete'
+              icon={RiSwordFill}
+              selected={props.selected == 'compete'}
+              onClicky={() => setSendPage('/compete')}
             />
           </div>
           <div className='w-full rounded-md border border-neutral-400 bg-neutral-600 mx-auto robo p-8'>
@@ -89,3 +90,4 @@ export default function MobileNav(props) {
     </>
   );
 }
+

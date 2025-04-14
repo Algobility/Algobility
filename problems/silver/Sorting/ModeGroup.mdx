@@ -1,0 +1,58 @@
+---
+
+title: 'Most Frequent Group'  
+date: '2025-03-21'  
+credits: 'Ahmad Bilal'  
+time: 3  
+mem: 256  
+tcIn: ["5\n A B C\n D A E\n A B C\n E D A\n B A C"]  
+tcOut: ["4"]
+
+---
+
+Given a series of three letters groups, your task is to determine the most frequently occurring group. The order of letters within a group does not matter — two groups are identical if they contain the same three letters, regardless of order. 
+
+# Input  
+
+- The first line contains an integer `n` (1 ≤ n ≤ 1000), the number of groups.  
+- The next `n` lines each contain three space-separated letters, where each name consists of uppercase letters (A-Z) with a length between 1 and 10.  
+
+# Output  
+
+- Print a single integer: the maximum number of times any group appears.  
+
+# Example  
+
+Input: 
+```
+5
+A B C
+D A E
+A B C
+E D A
+B A C
+```
+
+Output: 
+```
+3
+```
+
+Explanation:
+The group `A B C` appears 3 times, which is the maximum.  It is written twice as `A B C` and once as `B A C`.
+
+
+# Solution
+
+<Solution>
+
+1. Read the input values and initialize a frequency map to count occurrences of each group.  
+2. For each observation:  
+   - Sort the three items in the group to ensure identical groups are treated the same.  
+   - Convert the sorted group into a tuple and update its count in the frequency map.  
+3. Output the maximum value from the frequency map.  
+
+This approach efficiently handles the problem in <Math inline>O(n)</Math> time using a hash map.
+
+</Solution>
+

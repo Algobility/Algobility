@@ -1,132 +1,149 @@
 ---
-title: 'Coordinate Geometry and Pairs'
-description: 'Learn how to tackle basic coordinate geometry questions'
+title: 'Maps and Sets'
+description: 'Advanced data structures'
 date: '2022-01-01'
 credits: Ahmad Bilal
-practicable: true
-number: 1
+number: 4
 ---
 
-Coordinate geometry is a fundamental concept in mathematics that involves understanding the relationships between points on a plane using their numerical coordinates. In competitive programming, coordinate geometry is often used to solve problems involving points, lines, and shapes in a two-dimensional space. This guide will walk you through the basics of coordinate geometry using C++ and show you how to tackle common problems like finding the farthest two points, calculating the area of a rectangle, and checking for collision between rectangles.
+# Unordered Maps
 
-## Understanding Coordinates
+Unordered Maps are data strucutres which can store data in **key-value pairs**. Instead of storing values in a 1D sequence, unordered maps store each entry consists of a unique key (of any data type) and a corresponding value (of any data type). The value corresponding to a specific key can then be looked up in <Math inline>O(1)</Math> time (the key corresponding to a certain value, however, cannot be looked up in constant time). Under the hood, this time complexity is made possible by something known as a hash map. However, the inner workings of hash maps is beyond the scope of this guide.
 
-Coordinates represent the position of a point on a two-dimensional plane using two values: x-coordinate (horizontal) and y-coordinate (vertical). The format for representing a point `(x, y)` is common, where `x` and `y` are real numbers. The intersection of the x and y axes is known as the origin `(0, 0)`.
 
-## Using std::pair for Coordinates
 
-In C++, the `std::pair` data type can be used to represent a coordinate point neatly. It's a convenient way to store and manipulate coordinates together. Here's how you can use it:
+# Creating an Unordered Map
 
-```cpp
-#include <iostream>
-#include <utility> // Include the utility header for std::pair
-
-using namespace std;
-
-int main() {
-    pair<int, int> point1 = make_pair(3, 5);
-    cout << "Point 1: (" << point1.first << ", " << point1.second << ")" << endl;
-
-    return 0;
-}
-```
-
-## Distance between Two Points
-
-To calculate the distance between two points `A(x1, y1)` and `B(x2, y2)`, you can use the distance formula:
-
-```
-distance = sqrt((x2 - x1)^2 + (y2 - y1)^2)
-```
-
-This formula is based on the Pythagorean theorem.
+To declare an unordered map, use the following syntax:
 
 ```cpp
-#include <iostream>
-#include <cmath> // Include the math header for sqrt
-#include <utility>
-
-using namespace std;
-
-double distance(pair<int, int> A, pair<int, int> B) {
-    int dx = B.first - A.first;
-    int dy = B.second - A.second;
-    return sqrt(dx * dx + dy * dy);
-}
-
-int main() {
-    pair<int, int> point1 = make_pair(1, 2);
-    pair<int, int> point2 = make_pair(4, 6);
-
-    double dist = distance(point1, point2);
-    cout << "Distance between points: " << dist << endl;
-
-    return 0;
-}
+unordered_map<KeyType, ValueType> mapName;
 ```
 
+Here, KeyType is the data type of the keys, and ValueType is the data type of the associated values.
 
-## Area of a Rectangle
 
-Given coordinates of two opposite corners `(x1, y1)` and `(x2, y2)` of a rectangle, you can calculate its area using the formula:
+# Inserting and Accessing Elements
 
-```
-area = |x2 - x1| * |y2 - y1|
-```
+You can access and insert elements in a map using their keys with square-bracket notation. This operation takes constant time:
 
 ```cpp
-#include <iostream>
-#include <cmath>
-#include <utility>
-
-using namespace std;
-
-int rectangleArea(pair<int, int> A, pair<int, int> B) {
-    int width = abs(B.first - A.first);
-    int height = abs(B.second - A.second);
-    return width * height;
-}
-
-int main() {
-    pair<int, int> corner1 = make_pair(1, 2);
-    pair<int, int> corner2 = make_pair(5, 5);
-
-    int area = rectangleArea(corner1, corner2);
-    cout << "Rectangle area: " << area << endl;
-
-    return 0;
-}
+studentMarks["Bill"] = 98;  //inserting into the unordered map
+int marks = studentMarks["Bill"]; // retrieving the marks of bill
 ```
 
-## Checking Rectangle Collision
+# Removing Elements
 
-To check if two rectangles are colliding, compare their x and y ranges. If the x-range and y-range of one rectangle overlap with the x-range and y-range of the other rectangle, then they are colliding.
+To remove elements from a map, use the erase method with the key:
 
 ```cpp
-#include <iostream>
-#include <cmath>
-#include <utility>
+studentMarks.erase("Bill"); // Removes entry with key "Bill"
+```
 
-using namespace std;
+# Iterating Over a Map
 
-bool isColliding(pair<int, int> A1, pair<int, int> A2, pair<int, int> B1, pair<int, int> B2) {
-    bool xOverlap = (A1.first <= B2.first && B1.first <= A2.first);
-    bool yOverlap = (A1.second <= B2.second && B1.second <= A2.second);
-    return xOverlap && yOverlap;
-}
+You can iterate over a map using iterators which point to a pair for each entry. The first value in the pair is the entry key while the second value is the entry value:
 
-int main() {
-    pair<int, int> rect1A = make_pair(1, 2);
-    pair<int, int> rect1B = make_pair(4, 5);
-    pair<int, int> rect2A = make_pair(3, 4);
-    pair<int, int> rect2B = make_pair(6, 7);
-
-    bool colliding = isColliding(rect1A, rect1B, rect2A, rect2B);
-    if (colliding)
-        cout << "Rectangles are colliding." << endl;
-    else
-        cout << "Rectangles are not colliding." << endl;
-
-    return 0;
+```cpp
+for (unorderd_map<string, int>::iterator iter = studentMarks.begin(); iter != studentMarks.end(); ++iter) {
+    cout << "Student Name: " << iter->first << ", Marks: " << iter->second << endl;
 }
 ```
+
+Alteratively use the shorthand for the above:
+
+```cpp
+for(auto &x:studentMarks){
+    //Do something with x.first (key) or x.second (value)
+}
+```
+
+# Map Size and Clearing
+
+To get the size of a map, use the size method:
+
+```cpp
+int size = myMap.size();
+```
+
+To empty out a map, use the clear method. This removes all the enteries in the map
+
+```cpp
+myMap.clear();
+```
+
+# Time Complexity Summary
+
+Here is a summary of the time complexity of all the above operations
+
+- Insertion: <Math inline>O(1)</Math> on average
+- Access/Update: <Math inline>O(1)</Math> on average
+- Deletion: <Math inline>O(1)</Math> on average
+
+# Unorderd map efficiency
+
+The <Math inline>O(1)</Math> access time complexity of hash maps makes them quite efficient for many use cases. For example, a hash map is almost always better than using an array of pairs if you have to search for corresponding numbers. This is because, with an array of pairs you would have to search the entire array for the correct pair whilst a hash map allows you to look up, the corresponding value of a certain key in <Math inline>O(1)</Math> time.
+
+# Ordered Maps
+
+Ordered maps, like `unordered_map`s are used to store data in key-value pairs. However key-value pairs are automatically sorted in ordered maps (by default, in ascending order of keys). This makes the map slightly slower in terms of inserting and accessing elements (usually <Math inline>O(logn)</Math> where <Math inline>n</Math> is the size of the map). Under the hood, these use a binary search tree which, again, is beyond the scope of this guide. Ordered Maps have the same functions with the only visible difference being that when iterating over an ordered map, the entries are iterated in order.
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    map<string, int> myMap;
+    myMap["aaa"] = 4;
+    myMap["ccc"] = 8;
+    myMap["bbb"] = 12;
+    for(const auto &x:myMap){
+        cout << x.second;   //outputs value in each key-value pair
+    }
+}
+```
+
+The above code spits out the following
+
+```text
+4
+12
+8
+```
+
+12 appears before 8 because the key-value pairs were processed in ascending order of keys. 12 had a key of `"bbb"` which comes before the key of 8, `"ccc"` in ascending lexicographical ordering.
+
+# Unordered Sets
+
+Unordered sets are data structures that can efficiently store elements and check if an element exists. Unordered sets have 2 unique properties:
+
+- Inserted elements cannot be changed
+- Duplicate elements cannot be inserted. If an element that already exists in a set is inserted, the element will not be inserted again.
+
+Unordered sets use hash maps under the hood to gain efficiency. However, they do not store enteries in key-value paris. Instead each entry only consists of a single value. An unordered set supports the operations shown in the below code example
+
+```cpp
+unordered_set<int> s;   //create set to store integers
+s.insert(1);    //insert element into set
+s.insert(4);
+s.insert(2);
+s.insert(4);    // does nothing because 4 is already in the set
+cout << s.count(4) << endl;  // Outputs 1 since 4 is in the set
+cout << s.count(5) << endl;  // Outputs 0 since 5 is not in the set
+s.erase(1); //deletes element from set
+```
+
+# Ordered Sets
+
+These support the same operations as unordered sets but are slower and store elements in order. Inserting/Accessing usually takes <Math inline>O(logn)</Math> time. They can be created with the following syntax
+
+```cpp
+set<string> s; //creates a set of strings named s
+```
+
+# Use Cases of Sets
+
+Sets are primarily used in two cases:
+
+- When elements need to efficiently be checked for existence
+- When duplicates need to be removed from an array or other data structure

@@ -83,6 +83,16 @@ export default function Search({ probs, rank, topic, chaps }) {
     go();
   }, [rankVal]);
 
+  useEffect(() => {
+    if (router.asPath) {
+      const pathParts = router.asPath.split('/');
+      const lastPart = decodeURIComponent(pathParts[pathParts.length - 1]); // Extract last part of URL
+      if (topicsList.includes(lastPart)) {
+        setTopicVal(lastPart);
+      }
+    }
+  }, [router.asPath, topicsList]);
+
   const handleSearch = async () => {
     const routeParam = makeFirstCharacterLowercase(omitCurrentRank(rankVal));
     const topicParam = topicVal == 'Any Topic' ? 'anytopic' : topicVal;
@@ -103,14 +113,14 @@ export default function Search({ probs, rank, topic, chaps }) {
         </div>
       </div>
       <div className='block min-h-screen h-full mt-32'>
-        <div className='w-full flex flex-col justify-start items-center rounded-lg  '>
+        <div className='w-full flex flex-col justify-start items-center rounded-lg '>
           <div className='rounded-lg w-3/4 robo py-8 '>
-            <h1 className='mont text-5xl md:text-6xl text-primc '>Search Problemset</h1>
+            <h1 className='mont text-3xl md:text-6xl text-primc '>Search Problemset</h1>
             <h2 className='mt-3 text-neutral-300'>
               Practice your implementation skills by solving practice problems. You can find problems from past contests
               here as well.
             </h2>
-            <div className='mt-16 flex flex-col gap-4 md:gap-0 md:flex-row justify-center  items-stretch w-full md:px-4 border-b pb-12'>
+            <div className='mt-16 scale-90 md:scale-100 flex flex-col gap-4 md:gap-0 md:flex-row justify-center  items-stretch w-full md:px-4 border-b pb-12'>
               <div className=' md:w-1/3 ,md:px-4'>
                 <Autocomplete
                   options={ranksList}
@@ -150,15 +160,15 @@ export default function Search({ probs, rank, topic, chaps }) {
                   <img src={`/rank-icons/${rank}.png`} alt='rank icon' />
                 </div>
                 <div>
-                  <h2 className='robo text-2xl flex justify-start items-center gap-4'>
+                  <h2 className=' mr-14 robo text-2xl flex justify-start items-center gap-4'>
                     {element.title}{' '}
                     {element.external ? (
-                      <span className='text-sm bg-primc rounded-full px-3 py-1'>External Site</span>
+                      <span className='text-sm bg-primc rounded-full px-3 text-wrap py-1'>External Site</span>
                     ) : (
                       ''
                     )}{' '}
                   </h2>
-                  <p className='robo'>{element.credits}</p>
+                  <p className='robo'>{element.difficulty}</p>
                 </div>
                 <div className='absolute right-12 text-4xl'>
                   <GoLinkExternal />
@@ -192,3 +202,4 @@ export async function getStaticPaths() {
     fallback: 'blocking',
   };
 }
+

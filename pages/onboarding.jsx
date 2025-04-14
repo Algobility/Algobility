@@ -26,7 +26,6 @@ import { queryStorageFieldExists, setStorage } from '../customStuff/useDB';
 
 import { useRouter } from 'next/router';
 
-import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 export default function onboarding() {
@@ -254,3 +253,4 @@ export default function onboarding() {
     </NicePage>
   );
 }
+

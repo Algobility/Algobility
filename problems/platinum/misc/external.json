@@ -1,12 +1,7 @@
 [
     {
-        "title": "White Sheet", 
+        "title": "Lorem Ipsum", 
         "credits": "Codeforces.com",
         "link": "https://codeforces.com/contest/1216/problem/C"
-    },
-    {
-        "title": "Two Tables", 
-        "credits": "Codeforces.com",
-        "link": "https://codeforces.com/problemset/problem/1555/B"
     }
 ]

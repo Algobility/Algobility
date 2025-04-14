@@ -1,0 +1,72 @@
+---
+
+title: 'Constrained Subarray'  
+date: '2025-03-21'  
+credits: 'Ahmad Bilal'  
+time: 3  
+mem: 256  
+tcIn: ["7 15 4\n2 5 1 2 8 1 3"]  
+tcOut: ["4"]
+
+---
+
+You are given an array of <Math inline>N</Math> non-negative integers, <Math inline>A[1]</Math>, <Math inline>A[2]</Math>, …, <Math inline>A[N]</Math>, and two integers <Math inline>S</Math> and <Math inline>D</Math>. Your task is to determine the length of the longest contiguous subarray such that the sum of its elements is at most <Math inline>S</Math> and the difference between its maximum and minimum elements is at most <Math inline>D</Math>. If no subarray satisfies these conditions, output <Math inline>0</Math>.
+
+# Input
+
+- The first line contains three integers <Math inline>N</Math>, <Math inline>S</Math>, and <Math inline>D</Math> (<Math inline>1 \leq N \leq 10^5</Math>, <Math inline>0 \leq A[i] \leq 10^9</Math>, <Math inline>0 \leq S \leq 10^{15}</Math>, <Math inline>0 \leq D \leq 10^9</Math>).
+- The second line contains <Math inline>N</Math> space-separated integers <Math inline>A[1]</Math>, <Math inline>A[2]</Math>, …, <Math inline>A[N]</Math>.
+
+# Output
+
+Output a single integer, the maximum length of a contiguous subarray that satisfies the given conditions.
+
+# Example
+
+Input:  
+```
+7 15 4
+2 5 1 2 8 1 3
+```
+
+Output:  
+```
+4
+```
+
+Explanation:
+
+One valid subarray is <Math inline>[2,5,1,2]</Math> with a sum of <Math inline>10</Math> (which is at most <Math inline>15</Math>), and its maximum and minimum elements are <Math inline>5</Math> and <Math inline>1</Math> respectively, so the difference is <Math inline>4</Math> (which is at most <Math inline>4</Math>). No longer subarray satisfies both conditions.
+
+<Solution>
+
+To solve this problem, a two pointers (or sliding window) approach is effective, but the challenge comes from maintaining two dynamic conditions simultaneously:
+
+1. The sum of the current window, which must be at most <Math inline>S</Math>.
+2. The range (i.e. the difference between the maximum and minimum elements) within the current window, which must be at most <Math inline>D</Math>.
+
+A detailed outline of the solution is as follows:
+
+1. Define two pointers, <Math inline>l</Math> (left) and <Math inline>r</Math> (right), to represent the current subarray <Math inline>A[l \ldots r]</Math>. Maintain a variable <Math inline>current\_sum</Math> for the sum of elements in the window.
+
+2. To efficiently obtain the maximum and minimum elements in the window, use two deques:
+   - A deque <Math inline>maxDeque</Math> to maintain candidate indices for the maximum value in descending order.
+   - A deque <Math inline>minDeque</Math> to maintain candidate indices for the minimum value in ascending order.
+
+3. Expand the window by moving <Math inline>r</Math> to the right, and update <Math inline>current\_sum</Math> by adding <Math inline>A[r]</Math>. Also, update the deques:
+   - For <Math inline>maxDeque</Math>, while the back element corresponds to a value less than <Math inline>A[r]</Math>, remove it, then add index <Math inline>r</Math>.
+   - For <Math inline>minDeque</Math>, while the back element corresponds to a value greater than <Math inline>A[r]</Math>, remove it, then add index <Math inline>r</Math>.
+
+4. After each extension of the window, check if the window satisfies both conditions:
+   - <Math inline>current\_sum \leq S</Math>.
+   - The current maximum (given by <Math inline>A[maxDeque.front()]</Math>) and the current minimum (given by <Math inline>A[minDeque.front()]</Math>) satisfy <Math inline>A[maxDeque.front()] - A[minDeque.front()] \leq D</Math>.
+
+5. If any condition is violated, increment <Math inline>l</Math> to shrink the window. While shrinking:
+   - Subtract <Math inline>A[l]</Math> from <Math inline>current\_sum</Math>.
+   - If <Math inline>l</Math> equals the front index of either deque, remove that index from the corresponding deque.
+
+6. Throughout the process, maintain the maximum window length that satisfies both conditions.
+
+This approach uses a two pointers method with deques, and the overall time complexity is <Math inline>O(N)</Math>, as each element is processed at most twice.
+
+</Solution>

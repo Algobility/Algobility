@@ -1,203 +1,64 @@
 ---
-title: Loops
+title: Dynamic Programming applications
+description: Knapsack, Bitmask, and Range DP problems
+date: '2022-01-01'
 credits: Ahmad Bilal
-description: Automate repition in code
-practicable: true
----
+--- 
 
-In programming, loops are essential constructs that allow us to repeat a block of code multiple times. They save us from writing repetitive code and make our programs more readable and maintainable. In this guide, we'll explore loops in C++ and how they can be used effectively.
+# Knapsack DP
+Imagine you are a thief who has broken into a store. You have a bag that can carry up to a certain weight, and you want to steal the most valuable items without exceeding this weight limit. Each item has a weight and a value. The goal is to maximize the total value of stolen goods while ensuring that their combined weight does not exceed the bag's limit.
 
-# Repetitive Code: The Problem
+This is the classical version of the Knapsack Problem. Given a set of items, each with a weight and a value, and a knapsack with a weight limit, we must find the maximum possible value we can achieve without exceeding the weight limit. 
 
-Let's begin with an example of repetitive code. Consider a simple scenario where we want to print the numbers from 1 to 5. Here's one way we could do it without using loops:
+There are many variations of knapsack problems, each with different constraints and solution techniques:
 
-```
-#include <iostream>
-using namespace std;
+1. 0/1 Knapsack: Either take an item completely or leave it.
+2. Fractional Knapsack: Items can be taken partially (solvable greedily).
+3. Bounded Knapsack: Each item has a limited quantity.
+4. Unbounded Knapsack: Each item can be taken an unlimited number of times.
+5. Multi-Dimensional Knapsack: Multiple constraints instead of just one (e.g., weight and volume).
+6. Subset Sum: A special case where each item has a weight but no value (just determine if a certain weight sum is possible).
+7. Knapsack with Dependencies: Items depend on each other (e.g., you can’t take item B without taking item A).
 
-int main() {
-    // Print the numbers from 1 to 5
-    cout << "1" << endl;
-    cout << "2" << endl;
-    cout << "3" << endl;
-    cout << "4" << endl;
-    cout << "5" << endl;
-}
-```
+Knapsack-type problems can generally be solved efficiently using dynamic programming. The following is an approach for the 0/1 variation of the problem.
 
-While this code works, it is not efficient or maintainable. If we wanted to print the numbers from 1 to 1000, it would be impractical to write 1000 lines of code manually.
+# Understanding the 0/1 Knapsack  
 
-Now let's say we are creating a program for a simple guessing game where the user tries to guess a secret number by repeatedly inputting random numbers. We could do this by copy and pasting a million `if else` statements like so:
+Given `N` items, each with:  
 
-```
-#include <iostream>
-using namespace std;
+- Weight: `weight[i]`  
+- Value: `value[i]`  
+- Knapsack Capacity: `W`  
 
-int main() {
-  int input;
-  cout << "I have thought of a number.\nTry guessing what number it is.\nEnter your guess: ";
-  cin >> input;
+We must **maximize total value** while ensuring the total weight does not exceed `W`.  
 
-  // Check if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
+# Example  
 
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Now check again if input is some number other than 5. If so, re-prompt
-  // user. Otherwise say 'that is correct' and exit program
-  if (input != 5) {
-    cout << "\nNot quite. Enter another guess: ";
-    cin >> input;
-  } else {
-    cout << "\nThat is correct!";
-    return 0;
-  }
-
-  // Imagine this code has been copy pasted a million times
-}
+```text
+Item 1: Weight = 2, Value = 3  
+Item 2: Weight = 3, Value = 4  
+Item 3: Weight = 4, Value = 5  
+Item 4: Weight = 5, Value = 8  
 ```
 
-However, I hope you can see why this is terrible code. The `while` loop allows us to write such repeated blocks of code in a much better way.
+If `W = 5`, we must pick the best combination. The optimal solution is taking **Item 4 alone** (value `8`).  
 
-# The `while` loop
+# Dynamic Programming Approach  
 
-To solve this problem, we can use a `while` loop. The `while` loop executes a block of code repeatedly as long as a certain condition is true. More precisely, it checks if a condition is true and if so, executes some code. If the condition is false, it will skip the execution of the code block and move on, just like an `if` statement. However, it repeats this process of checking an executing until the condition is false. Here's the general syntax of a `while` loop.
+We define `dp[i][w]` as the **maximum value achievable using the first `i` items and a knapsack of capacity `w`**.  
 
-```
-#include <iostream>
-using namespace std;
+The recurrence follows:  
 
-int main() {
-    while(condition){
-        //code to be repeatedly executed as long as condition is true
-    }
-}
-```
+<Math block> dp[i][w] = \max(dp[i-1][w], dp[i-1][w - weight[i]] + value[i]) </Math>
 
-Let's tidy up the previous example of a guessing game using the `while` loop.
+Base case:  
 
-```
-#include <iostream>
-using namespace std;
+<Math block> dp[0][w] = 0</Math> 
+The base case applies if no items or weight capacity is zero.
 
-int main() {
-  int input;
-  cout << "I have thought of a number.\\nTry guessing what number it is. \\n"
-          "Enter your guess: ";
-  cin >> input;
-  while (input !=5) // repeat below code as long as inputted number is not equal to 5
-  {
-    cout << "\\nNot quite. Enter another guess: ";
-    cin >> input;
-  }
-  cout << "\\nThat is correct!";
-}
-```
+This ensures that at every step, we either:  
 
-Let's go through what this code does step-by-step. First we prompt the user to enter a random number. If the inputted number was 5, the `while` loop is completely skipped as the condition becomes false. The `cout` statement below is directly executed. However, if the inputted number was not 5, the `while` loop begins (since the condition is true). We re-prompt the user for another number and store it in `input` again. If this time, the inputted number is indeed 5 and the condition becomes false, the code execution exits from the while loop and moves on to the `cout` statement below. If not, the while loop runs again and again until the inputted number is 5 and the condition becomes false.
+1. **Skip the item**: Use the best value found so far (`dp[i-1][w]`).  
+2. **Take the item (if it fits)**: Add its value to the best value achievable with remaining capacity (`dp[i-1][w - weight[i]] + value[i]`).  
 
-Note: The while loop only checks the condition before executing the code block.
 
-Here is another example of a `while` loop. This `while` loop repeats a code block exactly 5 times using the help of a counter variable.
-
-```
-#include <iostream>
-using namespace std;
-
-int main() {
-int i = 1; // Initialize a counter variable
-
-    while (i <= 5) {
-        cout << i << endl;
-        i++; // Increment the counter variable
-    }
-}
-```
-
-We first set our counter variable to 1. This variable keeps track of how many times we have gone through our while loop. Then, the while loop begins and starts by checking the condition `(i <= 5)`. Since the condition is true, the code inside the loop (printing the value of `i`) is executed. After that, the counter variable `i` is incremented using `i++` (which is equivalent to `i = i + 1`).
-
-The loop continues executing as long as the condition remains true. In this example, the loop will print the numbers 1 to 5 and then terminate when i becomes 6 (as 6 is no longer less than or equal to 5).
-
-# The `for` Loop Shorthand
-
-It turns out, running a while loop for a fixed number of times is such a common occurance in code that C++ has its own shorthand for it (known as the `for` loop). It combines the initialization, condition, and incrementation of the counter variable into a single line.
-
-The syntax of a `for` loop is as follows:
-
-```
-for (initialization; condition; incrementation) {
-    // Code to be repeated
-}
-```
-
-Under the hood, a `for` loop simply runs a `while` loop with the `condition` given. However, it also adds the `initialization` line right before executing the `while loop` and adds the `incremntation` line at the end of the `while` loop code block.
-
-Let's rewrite the previous `while` loop example using a for loop:
-
-```
-#include <iostream>
-using namespace std;
-
-int main() {
-    for (int counter = 1; counter <= 10; counter++) {
-        cout << counter << endl;
-    }
-}
-```
-
-Note: The `for` loop does not add any functionality and simply makes code look a lot cleaner. Under the hood it is converted to a while loop.

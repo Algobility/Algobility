@@ -5,10 +5,10 @@ date: '2022-01-01'
 credits: Ahmad Bilal
 ---
 
-There are several ways to represent graphs in code. Each method has its own strengths and weaknesses, so understanding when to use them is crucial.
+So far we have only seen the idea of graphs in abstract. In this chapter, we'll discuss how the different methods to implement this data structure. There are 3 main methods for this: Adjacency Lists, Adjacency Matricies, and Edge lists
 
-## Adjacency Lists
-Adjacency lists are the most common and versatile way to represent graphs. In this representation, you maintain an array of vectors, with each vector representing the neighbors of a specific node. This method is efficient for 'sparse graphs', where the number of edges is much less than the number of total possible edges. 
+# Adjacency Lists
+Adjacency lists are the most common and versatile way to represent graphs. In this representation, you maintain an array of vectors, with each vector representing the neighbors of a specific node. This method is efficient for **sparse graphs**, where the number of edges is much less than the number of total possible edges. 
 
 Here's how you can implement an adjacency list in C++:
 
@@ -33,7 +33,7 @@ void addEdge(int u, int v) {
 - Requires extra memory for storing lists.
 
 
-## Adjacency Matrices
+# Adjacency Matrices
 In an adjacency matrix, you use a 2D array to represent the graph. Each cell matrix[u][v] is 1 if there's an edge from node u to node v, and 0 otherwise. This method is efficient for dense graphs, where most pairs of nodes are connected.
 
 Here's how you can implement an adjacency matrix in C++:
@@ -59,7 +59,7 @@ Efficient for dense graphs.
 - High memory usage for large graphs.
 - Inefficient for sparse graphs.
 
-## Edge Lists
+# Edge Lists
 In an edge list, you simply list all the edges in the graph. This representation is suitable for a wide range of graphs, regardless of their density. However, for many algorithms, edge lists are harder to work with as it is not as straightfoward to figure out what neighbors a node has.
 
 Here's how you can implement an edge list in C++:

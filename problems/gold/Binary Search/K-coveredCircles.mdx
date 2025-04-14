@@ -1,0 +1,69 @@
+---
+title: 'K-Covered Circle  '
+date: '2023-08-25'
+credits: 'Ahmad Bilal'
+time: 2
+mem: 256
+tcIn: ["3 2\n0 0\n0 2\n2 0 "]
+tcOut: ["1.000000"]
+---
+
+
+
+You are given <Math inline>N</Math> points on the plane and an integer <Math inline>K</Math>. Your task is to determine the smallest possible radius <Math inline>R</Math> such that there exists a circle with radius <Math inline>R</Math> that covers at least <Math inline>K</Math> of the given points. A point is considered covered if its Euclidean distance from the circle’s center is at most <Math inline>R</Math>.  
+
+For example, if <Math inline>K = 1</Math>, a circle of radius 0 centered at any point already covers one point. However, for larger <Math inline>K</Math>, the circle may need to be larger or placed very strategically to cover enough points.  
+
+# Input  
+
+- The first line contains two integers <Math inline>N</Math> and <Math inline>K</Math> (<Math inline>1 ≤ K ≤ N ≤ 200</Math>).  
+- The next <Math inline>N</Math> lines each contain two integers <Math inline>x[i]</Math> and <Math inline>y[i]</Math> (<Math inline>-10^4 ≤ x[i], y[i] ≤ 10^4</Math>), representing the coordinates of the <Math inline>i</Math>-th point.  
+
+# Output  
+
+Output a single floating-point number: the minimum radius <Math inline>R</Math> such that there exists a circle of radius <Math inline>R</Math> that covers at least <Math inline>K</Math> points. Your answer should have an absolute or relative error of at most <Math inline>10^{-6}</Math>.  
+
+# Example  
+
+Input:  
+```
+3 2
+0 0
+0 2
+2 0
+```
+
+Output:  
+```
+1.000000
+```
+
+Explanation:
+
+One optimal solution is to place the circle’s center at <Math inline>(0, 1)</Math>, which covers the points <Math inline>(0,0)</Math> and <Math inline>(0,2)</Math> with a radius of <Math inline>1</Math>.  
+
+
+<Solution>
+
+
+This problem is challenging because the optimal circle is not necessarily defined by a single point or even by two points; it might graze several points simultaneously. One common approach to solve the problem is as follows:  
+
+Basic observations:
+- If <Math inline>K = 1</Math>, the answer is trivially <Math inline>0.0</Math>.  
+- For <Math inline>K ≥ 2</Math>, notice that an optimal circle often has its boundary passing through one or two of the input points.  
+
+Solution steps:
+- For every pair of points, compute the circle that has the two points on its boundary (if possible). The center of such a circle is at the midpoint, and the radius is half the distance between the two points.  
+- However, note that a candidate circle based solely on a pair might not be optimal if a circle of even smaller radius can cover <Math inline>K</Math> points when placed at a different location.  
+- Perform a binary search on <Math inline>R</Math>. For a given candidate radius <Math inline>R</Math>, check whether there exists a circle of radius <Math inline>R</Math> that covers at least <Math inline>K</Math> points.  
+- To do the feasibility check for a fixed <Math inline>R</Math>:  
+  - For each point, consider it as a potential anchor.  
+  - Compute, for every other point, the angular range over which a circle of radius <Math inline>R</Math> (with its center on a circle of radius <Math inline>R</Math> around the anchor) would cover the other point.  
+  - Use an angular sweep technique to determine if there exists an angle at which at least <Math inline>K</Math> points are covered.  
+- If such a configuration exists for the candidate <Math inline>R</Math>, then try a smaller radius; otherwise, try a larger one.  
+- Pay careful attention to floating-point precision issues when performing geometric computations (e.g., using an appropriate epsilon when comparing distances and angles).  
+
+This combination of binary search with an angular sweep (or an alternative geometric check) leads to a solution with an overall time complexity roughly in the order of <Math inline>O(N^2 \log(\text{Precision}))</Math> in the worst case, which is acceptable given <Math inline>N ≤ 200</Math>.  
+
+
+</Solution>

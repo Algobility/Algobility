@@ -1,0 +1,71 @@
+---
+
+title: 'Subarray Threshold Search'  
+date: '2025-03-21'  
+credits: 'Ahmad Bilal'  
+time: 3  
+mem: 256  
+tcIn: ["7 10 5\n3 1 4 1 5 9 2"]  
+tcOut: ["3"]
+
+---
+
+You are given an array of <Math inline>N</Math> integers, <Math inline>A[1]</Math>, <Math inline>A[2]</Math>, …, <Math inline>A[N]</Math>, and two integers <Math inline>S</Math> and <Math inline>M</Math>. Your task is to find the minimum length <Math inline>L</Math> such that there exists a contiguous subarray of length <Math inline>L</Math> satisfying both of the following conditions:
+
+1. The sum of its elements is at least <Math inline>S</Math>.
+2. The maximum element in the subarray is at most <Math inline>M</Math>.
+
+If no such subarray exists, output <Math inline>-1</Math>.
+
+# Input
+
+- The first line contains three integers <Math inline>N</Math>, <Math inline>S</Math>, and <Math inline>M</Math> (<Math inline>1 \leq N \leq 10^5</Math>, <Math inline>0 \leq A[i] \leq 10^9</Math>, <Math inline>0 \leq S \leq 10^{15}</Math>, <Math inline>0 \leq M \leq 10^9</Math>).
+- The second line contains <Math inline>N</Math> space-separated integers <Math inline>A[1]</Math>, <Math inline>A[2]</Math>, …, <Math inline>A[N]</Math>.
+
+# Output
+
+Output a single integer: the minimum length <Math inline>L</Math> of a contiguous subarray that satisfies the above conditions. If no such subarray exists, output <Math inline>-1</Math>.
+
+# Example
+
+Input:  
+```
+7 10 5
+3 1 4 1 5 9 2
+```
+
+Output:  
+```
+3
+```
+
+
+The subarray <Math inline>[4,1,5]</Math> (among others) has length <Math inline>3</Math>, sum <Math inline>10</Math>, and its maximum element is <Math inline>5</Math>, satisfying both conditions. There is no subarray of length less than <Math inline>3</Math> that meets the requirements.
+
+<Solution>
+
+To solve this problem efficiently, we can perform a binary search on the possible subarray lengths combined with a sliding window technique to check whether a subarray of a given length meets the conditions.
+
+The main ideas are as follows:
+
+1. <Math inline>Binary Search on L</Math>:  
+   The answer <Math inline>L</Math> lies between <Math inline>1</Math> and <Math inline>N</Math>. For each candidate length <Math inline>L</Math>, we need to decide if there exists at least one contiguous subarray of length <Math inline>L</Math> whose sum is at least <Math inline>S</Math> and whose maximum element is at most <Math inline>M</Math>.
+
+2. <Math inline>Sliding Window Check</Math>:  
+   For a fixed length <Math inline>L</Math>, we can slide a window of length <Math inline>L</Math> over the array and maintain:
+   - The sum of the elements in the current window, which can be computed in <Math inline>O(1)</Math> time per move using prefix sums.
+   - The maximum element in the current window. To efficiently retrieve and update this value as the window slides, we can use a deque that maintains candidate indices in descending order of <Math inline>A[i]</Math>.
+
+3. <Math inline>Checking the Conditions</Math>:  
+   For each window <Math inline>A[i \ldots i+L-1]</Math>, check:
+   - If <Math inline>\text\{sum\} \geq S</Math>.
+   - If the maximum element (obtained from the front of the deque) is at most <Math inline>M</Math>.
+
+   If both conditions are satisfied for any window, then a subarray of length <Math inline>L</Math> exists that meets the requirements.
+
+4. <Math inline>Overall Complexity</Math>:  
+   The binary search performs <Math inline>O(\log N)</Math> iterations. For each candidate length, the sliding window check takes <Math inline>O(N)</Math> time. Thus, the overall time complexity is <Math inline>O(N \log N)</Math>, which is acceptable given <Math inline>N \leq 10^5</Math>.
+
+By combining binary search with a sliding window augmented by a deque for maximum queries, we can determine the minimum valid subarray length efficiently.
+
+</Solution>
