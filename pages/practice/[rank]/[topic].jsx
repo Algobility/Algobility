@@ -193,10 +193,28 @@ export async function getStaticProps({ params }) {
   getAllPostIds();
   const chaps = await getAllGuides();
   const probs = await getFilteredPostData(params.rank, params.topic);
+
   return { props: { probs: probs, rank: params.rank, topic: params.topic, chaps: chaps } };
 }
 
 export async function getStaticPaths() {
+  //find all ranks and topics
+  let paths = [];
+  const guides = await getAllGuides();
+  for (const ranka in guides) {
+    for (const topic of guides[ranka]) {
+      if (topic.practicable == false || topic.practicable == undefined) continue;
+      paths.push({
+        params: {
+          rank: ranka, // dynamic parameter for rank
+          topic: topic.title, // dynamic parameter for topic
+        },
+      });
+    }
+  }
+
+  console.log('------------------------------------------------');
+  console.log(paths);
   return {
     paths: [],
     fallback: 'blocking',

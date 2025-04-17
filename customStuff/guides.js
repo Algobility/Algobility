@@ -60,6 +60,17 @@ export async function getGuides(rank) {
   return filteredPostsData;
 }
 
+/**
+ * Retrieves all guides categorized by rank.
+ *
+ * This function iterates through all coded ranks and reads the guide files for each rank
+ * from the file system. It parses the metadata of each guide using gray-matter and sorts
+ * the guides by their id. The result is an object where each key is a rank name and each
+ * value is an array of guides belonging to that rank.
+ *
+ * @returns {Promise<Object>} An object containing arrays of guide data, categorized by rank.
+ */
+
 export async function getAllGuides() {
   const result = {};
   await codedRanks.forEach((rankName) => {
@@ -99,3 +110,4 @@ export async function getSpecialGuideData() {
   const matterResult = await matter(fileContents);
   return { matterResult };
 }
+
