@@ -5,6 +5,7 @@ import { generatePalette } from 'palette-by-numbers';
 import { extendTheme } from '@chakra-ui/react';
 import { createTheme } from '@mui/material/styles';
 import { MathJaxContext } from 'better-react-mathjax';
+import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script.js';
 
 const muiTheme = createTheme({
@@ -70,6 +71,7 @@ function MyApp({ Component, pageProps }) {
             strategy='lazyOnload'
           ></Script>
           <Component {...pageProps} />
+          <Analytics />
         </MathJaxContext>
       </ThemeProvider>
     </ChakraProvider>
