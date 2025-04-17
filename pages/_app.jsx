@@ -8,6 +8,10 @@ import { MathJaxContext } from 'better-react-mathjax';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Script from 'next/script.js';
+import Router from 'next/router';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css'; // You must import the CSS
+import '../styles/globals.css';
 
 const muiTheme = createTheme({
   palette: {
@@ -60,6 +64,11 @@ const theme = extendTheme({
     },
   },
 });
+
+// These events fire on route changes
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({ Component, pageProps }) {
   return (
