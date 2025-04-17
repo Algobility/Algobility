@@ -6,6 +6,7 @@ import { extendTheme } from '@chakra-ui/react';
 import { createTheme } from '@mui/material/styles';
 import { MathJaxContext } from 'better-react-mathjax';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import Script from 'next/script.js';
 
 const muiTheme = createTheme({
@@ -72,6 +73,7 @@ function MyApp({ Component, pageProps }) {
           ></Script>
           <Component {...pageProps} />
           <Analytics />
+          <SpeedInsights />
         </MathJaxContext>
       </ThemeProvider>
     </ChakraProvider>
